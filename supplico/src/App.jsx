@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,  } from "react-router-dom";
 import './styles/app.css'
 import siteImg from './assets/logo.png'
 import Header from './components/layout/Header'
@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Header siteImg={img}/>
       <Routes>
-        <Route path='/' element={<Home siteImg={img} />} />
+        <Route path='/' element={<Home siteImg={img}/>} />
         <Route path='login' element={<Login />} />
       </Routes>
       <Footer />

@@ -20,6 +20,7 @@
   .Navigation a:hover:not(:first-child, :last-child) {
     color: #ff851b;
     background-color: rgba(134, 133, 133, 0.452);
+    border-radius: 50px;
   }
 
   .Navigation a:last-child{
@@ -31,6 +32,7 @@
   .isActiveNav:not(:first-child, :last-child) {
     color: white;
     background-color: #ff851b;
+    border-radius: 50px;
   }
   
   #siteImg {
@@ -62,20 +64,12 @@
     color: white;
     transition: 0.3s linear;
     border-radius: 100%;
+    border: solid 1px white;
   }
 
-
-  .icons-text{
-    color: white;
-    width: 12.7% !important;
-    text-align: center;
-    font-size: 20px;
-    margin: 0;
-    padding: 0 !important;
-  }
   
   .icons:hover,
-  .about:hover {
+  .additional-links:hover {
     color: white;
     opacity: 0.8;
   }
@@ -101,7 +95,7 @@
     background-color: rgb(255, 43, 43);
   }
   
-  .about {
+  .additional-links {
     cursor: pointer;
     font-size: 24px;
     background-color: #ff851b;
@@ -111,6 +105,7 @@
     padding: 0.25em;
     transition: 0.3s linear;
     border-radius: 50px;
+    border: solid 1px white;
   }
   
   .copyrights {
@@ -118,4 +113,13 @@
     text-align: start;
     color: white;
     padding-left: 0.5em;
+  }
+
+  :root{
+    --primary-color: #ff851b;
+  }
+
+  .btn-primary{
+    background-color: #ff851b !important;
+    border-color: white !important;
   }
