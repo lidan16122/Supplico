@@ -5,14 +5,14 @@ export default function Navigation({ links }) {
     if (!links) return null;
     return (
         <>
-            <ul className="Navigation">
+            <ul className="navigation">
                 
                 {links.map((l, i) => {
                     return (
                         <NavLink
                             key={i}
                             to={l.route}
-                            className={({ isActive }) => isActive ? "isActiveNav" : ""}
+                            className={({ isActive }) => isActive ? "is-active-nav" : ""}
                         >
                             {l.text}
                         </NavLink>

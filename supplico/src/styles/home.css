@@ -1,3 +1,6 @@
+main{
+    animation: fadeIn ease 2s;
+}
 #homeVideo{
     max-width: 100%;
     z-index:-1;
@@ -89,6 +92,7 @@
     height: 50vw;
     color: black;
     background-image: url('../assets/how-background.jpg');
+    background-size: cover;
     padding-top: 3em;
 }
 .how-article-title{
@@ -113,7 +117,8 @@
     height: 35vw;
     text-align: center;
     background-image: url('../assets/join-background.jpg');
-    background-position: bottom;
+    background-size: cover;
+    background-position: center;
     padding-top: 9em;
 }
 .join-article-title{
@@ -139,4 +144,13 @@
 .join-article-p{
     font-size: 28px;
     font-weight: bold;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }

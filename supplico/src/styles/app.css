@@ -1,4 +1,4 @@
-.Navigation {
+.navigation {
     font-size: 28px;
     display: flex;
     background-color: black;
@@ -7,7 +7,7 @@
     padding-left: 0.5em;
   }
   
-  .Navigation a:not(:first-child) {
+  .navigation a:not(:first-child) {
     color: white;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
@@ -17,19 +17,19 @@
     transition: 0.5s ease;
   }
   
-  .Navigation a:hover:not(:first-child, :last-child) {
+  .navigation a:hover:not(:first-child, :last-child) {
     color: #ff851b;
     background-color: rgba(134, 133, 133, 0.452);
     border-radius: 50px;
   }
 
-  .Navigation a:last-child{
+  .navigation a:last-child{
     align-self: flex-end;
     margin-left: auto;
     margin-right: 0.25em;
   }
   
-  .isActiveNav:not(:first-child, :last-child) {
+  .is-active-nav:not(:first-child, :last-child) {
     color: white;
     background-color: #ff851b;
     border-radius: 50px;
@@ -122,4 +122,8 @@
   .btn-primary{
     background-color: #ff851b !important;
     border-color: white !important;
+  }
+
+  .form-control{
+    border: 1px solid black !important;
   }

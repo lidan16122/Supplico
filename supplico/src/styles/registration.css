@@ -1,0 +1,35 @@
+.registration{
+    background-image: url("../assets/registration.jpg");
+    background-position: center;
+    height: 80vh;
+}
+.registration-form{
+    text-align: center;
+    margin: 2em 30%;
+    padding: 80px 9%;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+}
+
+.registration-title{
+    font-weight: bold;
+}
+
+.registration-btn{
+    border: 1px solid black !important;
+    font-size: 20px !important;
+    width: 5em;
+
+}
+.not-registered{
+    font-size: 16px;
+    color: #ff851b;
+}
+
+.register-image-text{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+}
