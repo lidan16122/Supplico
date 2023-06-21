@@ -4,7 +4,6 @@ import AuthContext from "../context/AuthContext";
 
 const ProtectedRoute = ({children}) => {
     let {isLoggedIn} = useContext(AuthContext);
-    {console.log(isLoggedIn)}
     if (isLoggedIn) {
         return children
     }

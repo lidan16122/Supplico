@@ -18,7 +18,6 @@ function Register () {
             return "export and import"
         }
     }
-    console.log(registerRole);
     return(
         <div className="registration">
         <p style={{visibility:"hidden"}}>2</p>

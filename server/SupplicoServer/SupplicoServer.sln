@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupplicoWebAPI", "SupplicoWebAPI\SupplicoWebAPI.csproj", "{7F2C0AA3-4C98-4DE7-976A-8B2487854E89}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72} = {EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupplicoDAL", "SupplicoDAL\SupplicoDAL.csproj", "{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F2C0AA3-4C98-4DE7-976A-8B2487854E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2C0AA3-4C98-4DE7-976A-8B2487854E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2C0AA3-4C98-4DE7-976A-8B2487854E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2C0AA3-4C98-4DE7-976A-8B2487854E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDDDD7B8-D5A6-4727-AC9A-2F56E29CAB72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7C923CA-07D2-453A-8C56-0C0AD5E55ECF}
+	EndGlobalSection
+EndGlobal
