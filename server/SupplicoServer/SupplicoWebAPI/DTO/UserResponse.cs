@@ -5,7 +5,7 @@ namespace SupplicoWebAPI.DTO
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public int RoleID { get; set; }
+        public int? RoleID { get; set; }
         public string RoleName { get; set; }
 
         public UserResponse() { }

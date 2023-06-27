@@ -102,7 +102,7 @@ const Home = (props) => {
           <li>It's easy to use, just order what you like.</li>
           <li>Every shipment has a receipt that is stored in our server.</li>
           <li>
-            Every business, suppiler or driver has to be confirmed by the system
+            Every business, supplier or driver has to be confirmed by the system
             before using Supplico.
           </li>
         </ul>

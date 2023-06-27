@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/app.css";
 import siteImg from "./assets/logo.png";
@@ -10,14 +10,67 @@ import ProtectedRoute from "./components/registration/ProtectedRoute";
 import AuthContext from "./components/context/AuthContext";
 import Register from "./components/registration/Register";
 import Products from "./components/products/Products";
+import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
+import { SupplicoWebAPI_URL } from "./utils/settings";
+import axios from "axios";
+
+
 function App() {
   let img = siteImg;
   let [isLoggedIn, setIsLoggedIn] = useState(true);
-  let [role, setRole] = useState('business');
+  let [roleID, setRole] = useState(0);
+
+  useEffect(() => {
+    console.log("App useEffect", Date());
+    console.log("settings.js SupplicoWebAPI_URL", SupplicoWebAPI_URL);
+    //create a loop that refresh the tokens only if there is refreshToken
+    if (getItem(Keys.refreshToken) && isNaN(timerID)) {
+      setRefreshTokenInterval();
+      refreshToken();
+    }
+  }, []);
+  
+  function setRefreshTokenInterval() {
+    if (isNaN(timerID)) {
+      let expiresInSeconds = getItem(Keys.expiresInSeconds);
+      let refreshInterval = expiresInSeconds
+        ? Number(expiresInSeconds) / 2
+        : 30;
+      timerID = setInterval(refreshToken, refreshInterval * 1000);
+      console.log("starting refreshToken", refreshInterval, Date());
+    }
+  }
+  
+  function refreshToken() {
+    console.log("refreshToken", Date());
+    axios
+      .post(SupplicoWebAPI_URL + "/users/refreshToken", {
+        refreshToken: getItem(Keys.refreshToken),
+      })
+      .then((response) => {
+        login(response.data);
+      })
+      .catch((error) => {
+        logout();
+      });
+  }
+  
+  function login(loginData) {
+    setLoginData(loginData.userResponse, loginData.tokensData);
+    setRefreshTokenInterval();
+    setRoleID(loginData.userResponse[Keys.roleID]);
+    setIsLoggedIn(true);
+  }
+  
+  function logout() {
+    clearTimeout(timerID);
+    removeLoginData();
+    setIsLoggedIn(false);
+  }
 
   return (
     <>
-      <AuthContext.Provider value={{ isLoggedIn, role }}>
+      <AuthContext.Provider value={{ isLoggedIn, roleID, login, logout }}>
         <BrowserRouter>
           <Header siteImg={img} />
           <Routes>

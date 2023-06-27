@@ -4,24 +4,28 @@
     height: 80vh;
 }
 .registration-form{
-    text-align: center;
     margin: 2em 30%;
-    padding: 80px 9%;
+    padding: 20px 8%;
     border: 1px solid black;
     border-radius: 20px;
     background-color: white;
     color: black;
+    text-align: center;
+}
+
+.registration-form > *:not(.registration-btn,.registration-title){
+    text-align: start;
 }
 
 .registration-title{
     font-weight: bold;
+    text-align: center;
 }
 
 .registration-btn{
     border: 1px solid black !important;
     font-size: 20px !important;
     width: 5em;
-
 }
 .not-registered{
     font-size: 16px;
@@ -29,7 +33,11 @@
 }
 
 .register-image-text{
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     color: rgb(255, 0, 0);
+}
+
+.registration-label{
+    margin-bottom: 0 !important;    
 }
