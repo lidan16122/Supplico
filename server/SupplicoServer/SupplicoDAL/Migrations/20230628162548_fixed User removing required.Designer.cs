@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplicoDAL;
 
@@ -11,9 +12,11 @@ using SupplicoDAL;
 namespace SupplicoDAL.Migrations
 {
     [DbContext(typeof(SupplicoContext))]
-    partial class SupplicoContextModelSnapshot : ModelSnapshot
+    [Migration("20230628162548_fixed User removing required")]
+    partial class fixedUserremovingrequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,17 +285,6 @@ namespace SupplicoDAL.Migrations
                             PhoneNumber = "0501234567",
                             RoleId = 2,
                             UserName = "driver"
-                        },
-                        new
-                        {
-                            UserId = 5,
-                            Email = "admin@gmail.com",
-                            FullName = "Admin Rashi",
-                            IsAccepted = true,
-                            Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==",
-                            PhoneNumber = "000000000",
-                            RoleId = 4,
-                            UserName = "admin"
                         });
                 });
 

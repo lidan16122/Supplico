@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Row } from "react-bootstrap";
+import axios from "axios";
+import { SupplicoWebAPI_URL } from "../../utils/settings";
 
 export default function Register() {
   let [registerRole, setRegisterRole] = useState(1);
@@ -12,17 +15,8 @@ export default function Register() {
   let [registerUserName, setRegisterUserName] = useState("");
   let [registerPassword, setRegisterPassword] = useState("");
   let [passwordType, setpasswordType] = useState("password");
+  let navigate = useNavigate();
   
-
-  function imageText() {
-    if (registerRole == 1) {
-      return "business";
-    } else if (registerRole == 2) {
-      return "driver";
-    } else {
-      return "export and import";
-    }
-  }
 
   function showPassword(){
     if (passwordType == "password"){
@@ -32,10 +26,46 @@ export default function Register() {
       setpasswordType("password")
   }
 
+  function ImageText(){
+    if (registerRole == 1) 
+        return "business"
+    else if (registerRole == 2)
+        return "driving"
+     else return "import and export"
+  }
+
+  async function OnRegister(e){
+    e.preventDefault();
+    if (registerUserName) {
+      const formData = new FormData();
+      formData.append("userName", registerUserName);
+      formData.append("password", registerPassword);
+      formData.append("fullName", registerName);
+      formData.append("email", registerEmail);
+      formData.append("phoneNumber", registerPhone);
+      formData.append("roleId", registerRole);
+      formData.append("image", registerImage);
+      try {
+        const response = await axios({
+          method: "post",
+          url: `${SupplicoWebAPI_URL}/users/register`,
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        alert("Saved");
+        navigate("/");
+      } catch (error) {
+        alert(error);
+      }
+    } else {
+      alert("Name and price data are mandatory");
+    }
+  }
+
   return (
     <div className="registration">
       <p style={{ visibility: "hidden" }}>2</p>
-      <Form className="registration-form">
+      <Form onSubmit={OnRegister} className="registration-form" encType="multipart/form-data" method="post">
         <h1 className="registration-title">Register</h1>
         <h3 className="mb-2">What is your role?</h3>
 
@@ -52,7 +82,7 @@ export default function Register() {
 
         <Form.Group controlId="formFile" className="mb-2">
           <Form.Label className="register-image-text">
-            Please upload a valid {imageText()} license
+            Please upload a valid {ImageText()} license
           </Form.Label>
           <Form.Control
             required
@@ -123,7 +153,7 @@ export default function Register() {
         </p>
         <Button
           variant="primary"
-          type="button"
+          type="submit"
           className="registration-btn mb-2"
         >
           Register

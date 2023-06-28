@@ -9,13 +9,13 @@ public partial class User
 
     public string UserName { get; set; } = null!;
 
-    public string Passowrd { get; set; } = null!;
+    public string Password { get; set; } = null!;
 
-    public string FullName { get; set; } = null!;
+    public string? FullName { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; } = null!;
 
-    public string PhoneNumber { get; set; } = null!;
+    public string? PhoneNumber { get; set; } = null!;
 
     public int? RoleId { get; set; }
 
@@ -23,9 +23,9 @@ public partial class User
 
     public DateTime? RefreshTokenExpires { get; set; }
 
-    public string ImageName { get; set; } = null!;
+    public string? ImageName { get; set; } = null!;
 
-    public string ImageData { get; set; } = null!;
+    public string? ImageData { get; set; } = null!;
 
     public bool IsAccepted { get; set; }
 

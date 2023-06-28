@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/app.css";
 import siteImg from "./assets/logo.png";
@@ -17,8 +17,9 @@ import axios from "axios";
 
 function App() {
   let img = siteImg;
-  let [isLoggedIn, setIsLoggedIn] = useState(true);
-  let [roleID, setRole] = useState(0);
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [roleID, setRoleID] = useState(0);
+  let timerID = useRef();
 
   useEffect(() => {
     console.log("App useEffect", Date());

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplicoDAL;
 
@@ -11,9 +12,11 @@ using SupplicoDAL;
 namespace SupplicoDAL.Migrations
 {
     [DbContext(typeof(SupplicoContext))]
-    partial class SupplicoContextModelSnapshot : ModelSnapshot
+    [Migration("20230628150629_fixed User.Password")]
+    partial class fixedUserPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,20 +162,24 @@ namespace SupplicoDAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("ImageData")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("ImageName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -189,6 +196,7 @@ namespace SupplicoDAL.Migrations
                         .HasDefaultValueSql("(N'')");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -214,16 +222,13 @@ namespace SupplicoDAL.Migrations
                         .HasName("PK__Users__1788CC4CA06EA235");
 
                     b.HasIndex(new[] { "PhoneNumber" }, "UQ__Users__85FB4E381107C15E")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex(new[] { "FullName" }, "UQ__Users__89C60F11576F77BB")
-                        .IsUnique()
-                        .HasFilter("[FullName] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex(new[] { "Email" }, "UQ__Users__A9D105343F70E798")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex(new[] { "UserName" }, "UQ__Users__C9F2845679C32E47")
                         .IsUnique();
@@ -282,17 +287,6 @@ namespace SupplicoDAL.Migrations
                             PhoneNumber = "0501234567",
                             RoleId = 2,
                             UserName = "driver"
-                        },
-                        new
-                        {
-                            UserId = 5,
-                            Email = "admin@gmail.com",
-                            FullName = "Admin Rashi",
-                            IsAccepted = true,
-                            Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==",
-                            PhoneNumber = "000000000",
-                            RoleId = 4,
-                            UserName = "admin"
                         });
                 });
 
