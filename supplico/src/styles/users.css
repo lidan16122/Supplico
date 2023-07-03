@@ -1,0 +1,16 @@
+.table-users-img{
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.focused-img{
+    display: block;
+    width: 25%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    cursor: pointer;
+    z-index: 1;
+}

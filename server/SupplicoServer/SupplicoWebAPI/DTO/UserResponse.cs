@@ -7,6 +7,10 @@ namespace SupplicoWebAPI.DTO
         public string UserName { get; set; }
         public int? RoleID { get; set; }
         public string RoleName { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+
 
         public UserResponse() { }
 
@@ -15,6 +19,9 @@ namespace SupplicoWebAPI.DTO
             UserId = user.UserId;
             UserName = user.UserName;
             RoleID = user.RoleId;
+            FullName = user.FullName;
+            Email = user.Email;
+            PhoneNumber = user.PhoneNumber;
             if (RoleID == 1)
                 RoleName = "Business";
             else if (RoleID == 2)

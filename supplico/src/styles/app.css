@@ -20,7 +20,6 @@
   .navigation a:hover:not(:first-child, :last-child) {
     color: #ff851b;
     background-color: rgba(134, 133, 133, 0.452);
-    border-radius: 50px;
   }
 
   .navigation a:last-child{
@@ -32,7 +31,6 @@
   .is-active-nav:not(:first-child, :last-child) {
     color: white;
     background-color: #ff851b;
-    border-radius: 50px;
   }
   
   #siteImg {

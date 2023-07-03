@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace SupplicoDAL;
@@ -22,7 +23,6 @@ public partial class User
     public string? RefreshToken { get; set; }
 
     public DateTime? RefreshTokenExpires { get; set; }
-
     public string? ImageName { get; set; } = null!;
 
     public string? ImageData { get; set; } = null!;

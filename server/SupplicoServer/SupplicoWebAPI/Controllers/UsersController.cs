@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SupplicoDAL;
 using SupplicoWebAPI.DTO;
 using SupplicoWebAPI.Utils;
+using System;
 
 namespace SupplicoWebAPI.Controllers
 {
@@ -23,18 +24,25 @@ namespace SupplicoWebAPI.Controllers
             _FilesManager = filesManager;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            if (_SupplicoContext.Users == null) return NotFound("No users in database");
+            else return await _SupplicoContext.Users.ToListAsync();
+        }
+
         [HttpPost("login")]
         public IActionResult Login(User user)
         {
             var userInDb = _SupplicoContext.Users.FirstOrDefault(u => u.UserName == user.UserName);
-            if (userInDb == null)
-                return Unauthorized("invalid user name or password");
+            if (userInDb == null) return Unauthorized("Invalid username or password");
             else
             {
                 var ph = new PasswordHasher<User>();
                 var result = ph.VerifyHashedPassword(userInDb, userInDb.Password, user.Password);
                 if (userInDb == null || result == PasswordVerificationResult.Failed)
                     return Unauthorized("invalid user name or password");
+                else if (userInDb.IsAccepted == false && result == PasswordVerificationResult.Success && userInDb != null) return Unauthorized("Your user still waiting to be accepted by an admin, please come back later");
                 else
                 {
                     LoginResponse lr = new LoginResponse()
@@ -50,27 +58,59 @@ namespace SupplicoWebAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> RegisteImage([FromForm] UserWithImage uwi)
         {
-            await SetImage(uwi);
-            return await Register(uwi);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<User>> Register(User user)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest("request data is invalid");
+            if (_SupplicoContext.Users.Any(e => e.UserName == uwi.UserName)) return BadRequest("Username already been taken");
+            else if (_SupplicoContext.Users.Any(e => e.Email == uwi.Email)) return BadRequest("Email already been taken");
+            else if (_SupplicoContext.Users.Any(e => e.FullName == uwi.FullName)) return BadRequest("Full name already been taken");
+            else if (_SupplicoContext.Users.Any(e => e.PhoneNumber == uwi.PhoneNumber)) return BadRequest("Phone number already been taken");
+            else if (!ModelState.IsValid) return BadRequest("request data is invalid");
             else
             {
-                var ph = new PasswordHasher<User>();
-                user.Password = ph.HashPassword(user, user.Password);
-                _SupplicoContext.Users.Add(user);
-                await _SupplicoContext.SaveChangesAsync();
-                LoginResponse lr = new LoginResponse()
+                await SetImage(uwi);
+                return await Register(uwi);
+            }
+        }
+
+        public async Task<ActionResult<User>> Register(User user)
+        {
+            var ph = new PasswordHasher<User>();
+            user.Password = ph.HashPassword(user, user.Password);
+            _SupplicoContext.Users.Add(user);
+            await _SupplicoContext.SaveChangesAsync();
+            LoginResponse lr = new LoginResponse()
+            {
+                TokensData = GetNewTokensAndSave2DB(user),
+                UserResponse = new UserResponse(user)
+            };
+            return Created($"/users/{user.UserId}", lr);
+        }
+
+        [HttpPut()]
+        public async Task<IActionResult> ChangeActivation(User user)
+        {
+            var userInDb = _SupplicoContext.Users.FirstOrDefault(x => x.UserId == user.UserId);
+            if (userInDb == null) return NotFound("The specific user you are looking for is not found");
+            else
+            {
+                if (userInDb.IsAccepted)
                 {
-                    TokensData = GetNewTokensAndSave2DB(user),
-                    UserResponse = new UserResponse(user)
-                };
-                return Created($"/users/{user.UserId}", lr);
+                    userInDb.IsAccepted = false;
+                }
+                else userInDb.IsAccepted = true;
+                await _SupplicoContext.SaveChangesAsync();
+                return NoContent();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id) 
+        {
+            var user = await _SupplicoContext.Users.FindAsync(id);
+            if (user == null) return NotFound("The specific user you are looking for is not found");
+            else
+            {
+                _SupplicoContext.Users.Remove(user);
+                await _SupplicoContext.SaveChangesAsync();
+                return NoContent();
             }
         }
 
@@ -96,15 +136,15 @@ namespace SupplicoWebAPI.Controllers
         async Task SetImage(UserWithImage uwi)
         {
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    await uwi.Image.CopyToAsync(memoryStream);
-                    //pwi.ImageData = memoryStream.ToArray();
-                    uwi.ImageData = _FilesManager.GetImageString(uwi.Image.FileName, memoryStream.ToArray());
-                }
-                //_FilesManager.SaveFile(pwi.Image);//saving in file system
-                uwi.ImageName = uwi.Image.FileName;
-                      
+            using (var memoryStream = new MemoryStream())
+            {
+                await uwi.Image.CopyToAsync(memoryStream);
+                //pwi.ImageData = memoryStream.ToArray();
+                uwi.ImageData = _FilesManager.GetImageString(uwi.Image.FileName, memoryStream.ToArray());
+            }
+            //_FilesManager.SaveFile(pwi.Image);//saving in file system
+            uwi.ImageName = uwi.Image.FileName;
+
         }
 
         TokensData GetNewTokensAndSave2DB(User user)
@@ -139,5 +179,7 @@ namespace SupplicoWebAPI.Controllers
                 Expires = td.RefreshTokenExpires
             });
         }
+
+
     }
 }

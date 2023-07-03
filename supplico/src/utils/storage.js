@@ -7,6 +7,9 @@ const Keys = {
     userName: "userName",
     roleID: "roleID",
     userId: "userId",
+    fullName: "fullName",
+    phoneNumber: "phoneNumber",
+    email: "email"
   };
   
   function setItem(name, value) {
@@ -51,12 +54,18 @@ const Keys = {
     setItem(Keys.userId, userData[Keys.userId]);
     setItem(Keys.roleID, userData[Keys.roleID]);
     setItem(Keys.userName, userData[Keys.userName]);
+    setItem(Keys.fullName, userData[Keys.fullName]);
+    setItem(Keys.phoneNumber, userData[Keys.phoneNumber]);
+    setItem(Keys.email, userData[Keys.email]);
   }
   
   function removeUserData() {
     removeItem(Keys.userId);
     removeItem(Keys.roleID);
     removeItem(Keys.userName);
+    removeItem(Keys.fullName);
+    removeItem(Keys.phoneNumber);
+    removeItem(Keys.email);
   }
   
   export { setItem, getItem, removeItem,setLoginData,removeLoginData ,Keys};

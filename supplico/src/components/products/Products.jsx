@@ -3,26 +3,14 @@ import AuthContext from "../context/AuthContext";
 import DriverProducts from "./DriverProducts";
 import BusinessProducts from "./BusinessProducts";
 import SupplierProducts from "./SupplierProducts";
-import { useNavigate } from "react-router-dom";
-import Login from "../registration/Login";
+import AdminProducts from "./AdminProducts";
 
-function Products(){
-    let {roleID} = useContext(AuthContext);
-    let navigate = useNavigate();
+export default function Products() {
+  let { roleID } = useContext(AuthContext);
 
-    if(roleID == 1)
-        return <BusinessProducts />
-    
-    else if (roleID == 2)
-        return <DriverProducts />
-    
-    else if (roleID == 3)
-    return(<SupplierProducts />)
-    else
-        return(
-            <h1>Something went wrong</h1>
-        )
-        
+  if (roleID == 1) return <BusinessProducts />;
+  else if (roleID == 2) return <DriverProducts />;
+  else if (roleID == 3) return <SupplierProducts />;
+  else if (roleID == 4) return <AdminProducts />;
+  else return <h1>Something went wrong</h1>;
 }
-
-export default Products;

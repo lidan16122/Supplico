@@ -19,7 +19,8 @@ export default function Header(props) {
                     links={[
                         { route: "/", text: image },
                         { route: "/products", text: "Products" },
-                        { route: "/car-info", text: "Car Information" },
+                        { route: "/orders", text: "Orders" },
+                        { route: "/users", text: "Users" },
                         { route: "/car-comparison", text: "Car Comparison" },
                         { route: "#", text: logoutBtn}
     

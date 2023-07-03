@@ -1,42 +1,70 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Modal } from "react-bootstrap";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 
 export default function Register() {
-  let [registerRole, setRegisterRole] = useState(1);
-  let [registerImage, setRegisterImage] = useState("");
-  let [registerName, setRegisterName] = useState("");
-  let [registerPhone, setRegisterPhone] = useState("");
-  let [registerEmail, setRegisterEmail] = useState("");
-  let [registerUserName, setRegisterUserName] = useState("");
-  let [registerPassword, setRegisterPassword] = useState("");
-  let [passwordType, setpasswordType] = useState("password");
-  let navigate = useNavigate();
-  
 
-  function showPassword(){
-    if (passwordType == "password"){
-      setpasswordType("text")
-    }
-    else
-      setpasswordType("password")
+  const [registerRole, setRegisterRole] = useState(1);
+  const [registerImage, setRegisterImage] = useState("");
+  const [registerName, setRegisterName] = useState("");
+  const [registerPhone, setRegisterPhone] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerUserName, setRegisterUserName] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [passwordType, setpasswordType] = useState("password");
+  const [userNameValidation, setUserNameValidation] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState(false);
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [phoneValidation, setPhoneValidation] = useState(false);
+  const [nameValidation, setNameValidation] = useState(false);
+  const [imageValidation, setImageValidation] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Error");
+  const [modalBody, setModalBody] = useState("");
+  const [modalBtn, setModalBtn] = useState(
+    <Button variant="primary" onClick={handleCloseError}>
+      Close
+    </Button>
+  );
+
+  function handleCloseError() {
+    setShowError(false);
+  }; 
+
+
+  function showPassword() {
+    if (passwordType == "password") {
+      setpasswordType("text");
+    } else setpasswordType("password");
   }
 
-  function ImageText(){
-    if (registerRole == 1) 
-        return "business"
-    else if (registerRole == 2)
-        return "driving"
-     else return "import and export"
+  function ImageText() {
+    if (registerRole == 1) return "business";
+    else if (registerRole == 2) return "driving";
+    else return "import and export";
   }
 
-  async function OnRegister(e){
+  async function OnRegister(e) {
+    const form = e.currentTarget;
     e.preventDefault();
-    if (registerUserName) {
+    e.stopPropagation();
+    setUserNameValidation(true);
+    setPasswordValidation(true);
+    setEmailValidation(true);
+    setPhoneValidation(true);
+    setNameValidation(true);
+    setImageValidation(true);
+
+    if (form.checkValidity() === false) {
+      console.log("checkvalidity FALSE");
+    }
+
+    if (form.checkValidity() === true) {
+      console.log("checkvalidity TRUE");
       const formData = new FormData();
       formData.append("userName", registerUserName);
       formData.append("password", registerPassword);
@@ -52,20 +80,49 @@ export default function Register() {
           data: formData,
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("Saved");
-        navigate("/");
+        setShowError(true);
+        setModalTitle("Saved");
+        setModalBody("your details are saved, please wait for admin approval");
+        setModalBtn(
+          <NavLink
+            className="btn btn-primary"
+            to="/"
+            onClick={handleCloseError}
+          >
+            Close
+          </NavLink>
+        );
       } catch (error) {
-        alert(error);
+        setShowError(true);
+        setModalBody(error.response.data);
       }
     } else {
-      alert("Name and price data are mandatory");
+      setShowError(true);
+      setModalBody(
+        "an error is been occurred with the data inputed, please check your details"
+      );
     }
   }
 
   return (
     <div className="registration">
+      <Modal show={showError} onHide={handleCloseError}>
+        <Modal.Header>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>{modalBtn}</Modal.Footer>
+      </Modal>
+
       <p style={{ visibility: "hidden" }}>2</p>
-      <Form onSubmit={OnRegister} className="registration-form" encType="multipart/form-data" method="post">
+
+      <Form
+        onSubmit={OnRegister}
+        className="registration-form"
+        encType="multipart/form-data"
+        method="post"
+        noValidate
+      >
         <h1 className="registration-title">Register</h1>
         <h3 className="mb-2">What is your role?</h3>
 
@@ -88,53 +145,77 @@ export default function Register() {
             required
             type="file"
             onChange={(e) => setRegisterImage(e.target.files[0])}
+            isInvalid={!imageValidation || !registerImage}
           />
         </Form.Group>
 
         <Row>
-          <Form.Group as={Col} className="mb-2" controlId="formName">
+          <Form.Group as={Col} controlId="formName">
             <Form.Label className="registration-label">Full name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Full name"
               value={registerName}
               onChange={(e) => setRegisterName(e.target.value)}
+              isInvalid={!(registerName.length > 1) && nameValidation}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid name
+            </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group as={Col} className="mb-2" controlId="formPhonenumber">
+          <Form.Group as={Col} controlId="formPhonenumber">
             <Form.Label className="registration-label">Phone number</Form.Label>
             <Form.Control
               type="tel"
               placeholder="Phone number"
               value={registerPhone}
               onChange={(e) => setRegisterPhone(e.target.value)}
+              isInvalid={!registerPhone.length && phoneValidation}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid number
+            </Form.Control.Feedback>
           </Form.Group>
         </Row>
 
-        <Form.Group className="mb-2" controlId="formEmail">
+        <Form.Group controlId="formEmail">
           <Form.Label className="registration-label">Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Email"
             value={registerEmail}
             onChange={(e) => setRegisterEmail(e.target.value)}
+            isInvalid={
+              (!registerEmail.includes("@") && emailValidation) ||
+              !registerEmail.substring(0, registerEmail.indexOf("@")) ||
+              !registerEmail.split("@")[1]
+            }
             required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid email
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-2" controlId="formUsername">
+        <Form.Group controlId="formUsername">
           <Form.Label className="registration-label">Username</Form.Label>
           <Form.Control
             type="text"
             placeholder="Username"
             value={registerUserName}
             onChange={(e) => setRegisterUserName(e.target.value)}
+            isInvalid={
+              !(registerUserName.length > 5 && registerUserName.length < 17) &&
+              userNameValidation
+            }
             required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid username between 6-16 characters
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formPassword">
@@ -144,9 +225,16 @@ export default function Register() {
             placeholder="Password"
             value={registerPassword}
             onChange={(e) => setRegisterPassword(e.target.value)}
+            isInvalid={
+              !(registerPassword.length > 7 && registerPassword.length < 25) &&
+              passwordValidation
+            }
             required
           />
-          <input type="checkbox" onClick={() => showPassword()}/> show password
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid password between 8-24 characters
+          </Form.Control.Feedback>
+          <input type="checkbox" onClick={() => showPassword()} /> show password
         </Form.Group>
         <p style={{ color: "red", fontWeight: "bold" }}>
           *Note that a admin will be examine your user application*

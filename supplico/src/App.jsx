@@ -10,10 +10,11 @@ import ProtectedRoute from "./components/registration/ProtectedRoute";
 import AuthContext from "./components/context/AuthContext";
 import Register from "./components/registration/Register";
 import Products from "./components/products/Products";
+import Orders from "./components/orders/Orders";
 import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
 import { SupplicoWebAPI_URL } from "./utils/settings";
 import axios from "axios";
-
+import Users from "./components/users/Users";
 
 function App() {
   let img = siteImg;
@@ -30,7 +31,7 @@ function App() {
       refreshToken();
     }
   }, []);
-  
+
   function setRefreshTokenInterval() {
     if (isNaN(timerID)) {
       let expiresInSeconds = getItem(Keys.expiresInSeconds);
@@ -41,7 +42,7 @@ function App() {
       console.log("starting refreshToken", refreshInterval, Date());
     }
   }
-  
+
   function refreshToken() {
     console.log("refreshToken", Date());
     axios
@@ -55,14 +56,14 @@ function App() {
         logout();
       });
   }
-  
+
   function login(loginData) {
     setLoginData(loginData.userResponse, loginData.tokensData);
     setRefreshTokenInterval();
     setRoleID(loginData.userResponse[Keys.roleID]);
     setIsLoggedIn(true);
   }
-  
+
   function logout() {
     clearTimeout(timerID);
     removeLoginData();
@@ -78,9 +79,30 @@ function App() {
             <Route path="/" element={<Home siteImg={img} />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="products" element={<ProtectedRoute>
-              <Products />
-            </ProtectedRoute>} />
+            <Route
+              path="products"
+              element={
+                <ProtectedRoute>
+                  <Products />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <ProtectedRoute>
+                  <Users />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
           <Footer />
         </BrowserRouter>
