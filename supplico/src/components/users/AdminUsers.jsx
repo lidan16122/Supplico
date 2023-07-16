@@ -6,12 +6,24 @@ import "../../styles/users.css";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
+  const [originalUsers, setOriginalUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [show, setShow] = useState();
   const [showImg, setShowImg] = useState();
+  const [filter, setFilter] = useState(false);
 
   const handleClose = () => setShow(false);
-  console.log(showImg);
+  const handleFilter = () => {
+    if (!filter) {
+      setFilter(true);
+      setOriginalUsers(users);
+      setUsers(users.filter((u) => u.isAccepted == false));
+    } else {
+      setFilter(false);
+      setUsers(originalUsers);
+    }
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -56,11 +68,6 @@ export default function AdminUsers() {
       });
   }
 
-  const handleImg = () => {
-    if (showImg == true) setShowImg(false);
-    else setShowImg(true);
-  };
-
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -74,14 +81,19 @@ export default function AdminUsers() {
           </Button>
         </Modal.Footer>
       </Modal>
-
       <img
         src={showImg ? showImg : ""}
         className="focused-img"
         onClick={() => setShowImg("")}
       />
-      <h1 className="text-center mt-5 mb-2">Users</h1>
-      <table className="table text-center mb-5">
+      <div className="text-center mt-5 mb-5 admin-title">
+        <h1>Users</h1>
+        <label>
+          <input type="checkbox" onChange={handleFilter} />
+          Show Unapproved Only
+        </label>
+      </div>
+      <table className="table text-center admin-table">
         <thead>
           <tr>
             <th>Id</th>
@@ -118,7 +130,7 @@ export default function AdminUsers() {
                   variant={u.isAccepted ? "success" : "danger"}
                   onClick={() => changeActivation(u)}
                 >
-                  {u.isAccepted ? "Yes" : "No"}
+                  {u.isAccepted ? "Accepted" : "Not Accepted"}
                 </Button>{" "}
                 *{" "}
                 <Button variant="primary" onClick={() => deleteUser(u.userId)}>

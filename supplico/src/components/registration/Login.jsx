@@ -75,7 +75,7 @@ export default function Login() {
           <Modal.Title>Welcome Back</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Welcome back {loginrUserName} wish you a great day
+          Welcome back <b>{loginrUserName}</b> wish you a great day
         </Modal.Body>
         <Modal.Footer>{Date()}</Modal.Footer>
       </Modal>

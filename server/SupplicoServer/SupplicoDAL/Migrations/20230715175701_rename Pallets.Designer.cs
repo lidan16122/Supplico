@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplicoDAL;
 
@@ -11,9 +12,11 @@ using SupplicoDAL;
 namespace SupplicoDAL.Migrations
 {
     [DbContext(typeof(SupplicoContext))]
-    partial class SupplicoContextModelSnapshot : ModelSnapshot
+    [Migration("20230715175701_rename Pallets")]
+    partial class renamePallets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace SupplicoDAL.Migrations
                     b.Property<bool>("DriverConfirmation")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("DriverId")
+                    b.Property<int?>("DrverId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Pallets")
@@ -68,7 +71,7 @@ namespace SupplicoDAL.Migrations
 
                     b.HasIndex("BusinessId");
 
-                    b.HasIndex("DriverId");
+                    b.HasIndex("DrverId");
 
                     b.HasIndex("SupplierId");
 
@@ -303,10 +306,10 @@ namespace SupplicoDAL.Migrations
                         .HasForeignKey("BusinessId")
                         .HasConstraintName("FK__Orders__Business__45F365D3");
 
-                    b.HasOne("SupplicoDAL.User", "Driver")
-                        .WithMany("OrderDrivers")
-                        .HasForeignKey("DriverId")
-                        .HasConstraintName("FK__Orders__DriverId__440B1D61");
+                    b.HasOne("SupplicoDAL.User", "Drver")
+                        .WithMany("OrderDrvers")
+                        .HasForeignKey("DrverId")
+                        .HasConstraintName("FK__Orders__DrverId__440B1D61");
 
                     b.HasOne("SupplicoDAL.User", "Supplier")
                         .WithMany("OrderSuppliers")
@@ -315,7 +318,7 @@ namespace SupplicoDAL.Migrations
 
                     b.Navigation("Business");
 
-                    b.Navigation("Driver");
+                    b.Navigation("Drver");
 
                     b.Navigation("Supplier");
                 });
@@ -361,7 +364,7 @@ namespace SupplicoDAL.Migrations
                 {
                     b.Navigation("OrderBusinesses");
 
-                    b.Navigation("OrderDrivers");
+                    b.Navigation("OrderDrvers");
 
                     b.Navigation("OrderSuppliers");
 

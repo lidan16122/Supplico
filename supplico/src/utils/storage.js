@@ -9,7 +9,8 @@ const Keys = {
     userId: "userId",
     fullName: "fullName",
     phoneNumber: "phoneNumber",
-    email: "email"
+    email: "email",
+    imageData: "imageData"
   };
   
   function setItem(name, value) {
@@ -57,6 +58,7 @@ const Keys = {
     setItem(Keys.fullName, userData[Keys.fullName]);
     setItem(Keys.phoneNumber, userData[Keys.phoneNumber]);
     setItem(Keys.email, userData[Keys.email]);
+    setItem(Keys.imageData, userData[Keys.imageData]);
   }
   
   function removeUserData() {
@@ -66,6 +68,7 @@ const Keys = {
     removeItem(Keys.fullName);
     removeItem(Keys.phoneNumber);
     removeItem(Keys.email);
+    removeItem(Keys.imageData);
   }
   
   export { setItem, getItem, removeItem,setLoginData,removeLoginData ,Keys};

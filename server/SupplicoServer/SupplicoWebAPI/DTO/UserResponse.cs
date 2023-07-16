@@ -10,6 +10,7 @@ namespace SupplicoWebAPI.DTO
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string? ImageData { get; set; } 
 
 
         public UserResponse() { }
@@ -31,6 +32,7 @@ namespace SupplicoWebAPI.DTO
             else if (RoleID == 4)
                 RoleName = "Admin";
             else RoleName= "Undefined";
+            ImageData = user.ImageData;
         }
     }
 }

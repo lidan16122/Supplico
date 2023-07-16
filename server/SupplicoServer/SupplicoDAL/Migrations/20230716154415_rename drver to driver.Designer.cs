@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplicoDAL;
 
@@ -11,9 +12,11 @@ using SupplicoDAL;
 namespace SupplicoDAL.Migrations
 {
     [DbContext(typeof(SupplicoContext))]
-    partial class SupplicoContextModelSnapshot : ModelSnapshot
+    [Migration("20230716154415_rename drver to driver")]
+    partial class renamedrvertodriver
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,3 +1,21 @@
+.admin-title{
+    color: black;
+}
+.admin-title > label{
+    font-size: 16px;
+    margin-left: 5px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: #ff851b;
+    padding: 5px;
+}
+
+.admin-title > label >input{
+    width: 15px;
+    height: 15px;
+}
+
 .table-users-img{
     height: 40px;
     width: 40px;
@@ -13,4 +31,12 @@
     position: fixed;
     cursor: pointer;
     z-index: 1;
+}
+.admin-table{
+    width: 90%;
+    margin-bottom: 200px !important;
+}
+.admin-table th, .admin-table td{
+    border: 1px solid #dddddd;
+    padding: 8px;
 }

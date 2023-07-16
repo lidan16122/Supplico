@@ -46,9 +46,9 @@ public partial class SupplicoContext : DbContext
                 .HasForeignKey(d => d.BusinessId)
                 .HasConstraintName("FK__Orders__Business__45F365D3");
 
-            entity.HasOne(d => d.Drver).WithMany(p => p.OrderDrvers)
-                .HasForeignKey(d => d.DrverId)
-                .HasConstraintName("FK__Orders__DrverId__440B1D61");
+            entity.HasOne(d => d.Driver).WithMany(p => p.OrderDrivers)
+                .HasForeignKey(d => d.DriverId)
+                .HasConstraintName("FK__Orders__DriverId__440B1D61");
 
             entity.HasOne(d => d.Supplier).WithMany(p => p.OrderSuppliers)
                 .HasForeignKey(d => d.SupplierId)

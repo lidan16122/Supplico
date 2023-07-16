@@ -24,6 +24,16 @@ namespace SupplicoWebAPI.Controllers
             _FilesManager = filesManager;
         }
 
+        [HttpGet("{userID:int}")]
+        public IActionResult GetUserProfile(int userID)
+        {
+            var user = _SupplicoContext.Users.Find(userID);
+            if (user == null)
+                return NotFound();
+            else
+                return Ok(new UserResponse(user));
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -87,7 +97,7 @@ namespace SupplicoWebAPI.Controllers
         [HttpPut()]
         public async Task<IActionResult> ChangeActivation(User user)
         {
-            var userInDb = _SupplicoContext.Users.FirstOrDefault(x => x.UserId == user.UserId);
+            var userInDb = _SupplicoContext.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId).Result;
             if (userInDb == null) return NotFound("The specific user you are looking for is not found");
             else
             {

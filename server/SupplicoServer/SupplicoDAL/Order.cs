@@ -13,13 +13,13 @@ public partial class Order
 
     public int Quantity { get; set; }
 
-    public int? Palltes { get; set; }
+    public int? Pallets { get; set; }
 
     public bool SupplierConfirmation { get; set; }
 
     public bool DriverConfirmation { get; set; }
 
-    public int? DrverId { get; set; }
+    public int? DriverId { get; set; }
 
     public int? SupplierId { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Order
 
     public virtual User? Business { get; set; }
 
-    public virtual User? Drver { get; set; }
+    public virtual User? Driver { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
