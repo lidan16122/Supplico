@@ -1,18 +1,79 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Card} from "react-bootstrap";
+import axios from "axios";
+import { SupplicoWebAPI_URL } from "../../utils/settings";
+import { Keys, getItem } from "../../utils/storage";
+import "../../styles/users.css";
 
 export default function MyProfile() {
-  return (
-    <>
-      <div className="text-center text-black">
-        <h1>
-          My Profile: <b>{localStorage.getItem("fullName")}</b>
-        </h1>
-        <h3>Here you can view your profile card</h3>
-      </div>
-      <Card>
+  const [user, setUser] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-      </Card>
-    </>
-  );
+  useEffect(() => {
+    axios
+      .get(SupplicoWebAPI_URL + "/users/" + getItem(Keys.userId))
+      .then((res) => {
+        if (res.data) {
+          setUser(res.data);
+          console.log(res.data);
+          setLoading(false);
+        } else console.log("empty response.data");
+      })
+      .catch((err) => {
+        setShow(true);
+        setErrorMessage(err.messsage);
+      });
+  }, []);
+
+  if (!loading) {
+    return (
+      <>
+        <div className="my-profile-background">
+          <div className="text-center text-black pt-5">
+            <h1>
+              The Profile Of: <b>{user.fullName}</b>
+            </h1>
+            <h3>Here you can view your profile card</h3>
+          </div>
+          <Card className="my-profile-card" border="warning">
+            <Card.Img src={user.imageData} />
+            <Card.Body>
+              <Card.Title>User Details</Card.Title>
+              <Card.Text>
+                <p>
+                  <b>Username: </b>
+                  {user.userName}
+                </p>
+                <p>
+                  <b>Name: </b>
+                  {user.fullName}
+                </p>
+                <p>
+                  <b>Email: </b>
+                  {user.email}
+                </p>
+                <p>
+                  <b>Phonenumber: </b>
+                  {user.phoneNumber}
+                </p>
+                <p>
+                  <b>Role: </b>
+                  {user.roleName}
+                </p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <p className="share-info">*Please do not share this information</p>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <CustomModal tilte="Error" body={errorMessage} defaultShow={true} />
+        <h1 className="text-center">LOADING...</h1>
+      </>
+    );
+  }
 }

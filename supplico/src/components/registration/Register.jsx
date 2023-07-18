@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink  } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Row, Modal } from "react-bootstrap";
@@ -94,7 +94,7 @@ export default function Register() {
         );
       } catch (error) {
         setShowError(true);
-        setModalBody(error.response.data);
+        setModalBody(error.messsage);
       }
     } else {
       setShowError(true);

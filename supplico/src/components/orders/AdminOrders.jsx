@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Button, Modal } from "react-bootstrap";
+import CustomModal from "../layout/CustomModal";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [show, setShow] = useState();
-
-  const handleClose = () => setShow(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getOrders();
@@ -20,31 +19,20 @@ export default function AdminOrders() {
       .then((res) => {
         if (res.data){
           setOrders(res.data);
+          setLoading(false)
           console.log(res.data)
         } 
         else console.log("empty response.data");
       })
       .catch((err) => {
-        setShow(true);
-        setErrorMessage(err.response.data);
+        setErrorMessage(err.message);
       });
   }
 
+if(!loading){
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Error</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{errorMessage}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <div className="text-center mt-5 mb-5 admin-title">
         <h1>Orders</h1>
         
@@ -86,4 +74,13 @@ export default function AdminOrders() {
       </table>
     </>
   );
+}
+else{
+  return (
+    <>
+      <CustomModal title="Error" body={errorMessage} defaultShow={true}/>
+      <h1 className="text-center">LOADING...</h1>
+    </>
+  );
+}
 }

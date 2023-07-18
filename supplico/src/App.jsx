@@ -15,6 +15,7 @@ import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
 import { SupplicoWebAPI_URL } from "./utils/settings";
 import axios from "axios";
 import Users from "./components/users/Users";
+import ShopProducts from "./components/products/ShopProducts";
 
 function App() {
   let img = siteImg;
@@ -88,6 +89,14 @@ function App() {
               }
             />
             <Route
+              path="products/:supplierid"
+              element={
+                <ProtectedRoute>
+                  <ShopProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="orders"
               element={
                 <ProtectedRoute>
@@ -97,6 +106,14 @@ function App() {
             />
             <Route
               path="users"
+              element={
+                <ProtectedRoute>
+                  <Users />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="users/:userid"
               element={
                 <ProtectedRoute>
                   <Users />

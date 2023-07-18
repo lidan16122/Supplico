@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
-import { Button, Modal } from "react-bootstrap";
+import { Button  } from "react-bootstrap";
 import "../../styles/users.css";
+import CustomModal from "../layout/CustomModal";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [show, setShow] = useState();
+  const [loading, setLoading] = useState(true)
   const [showImg, setShowImg] = useState();
   const [filter, setFilter] = useState(false);
 
-  const handleClose = () => setShow(false);
   const handleFilter = () => {
     if (!filter) {
       setFilter(true);
@@ -32,12 +32,14 @@ export default function AdminUsers() {
     axios
       .get(SupplicoWebAPI_URL + "/users")
       .then((res) => {
-        if (res.data) setUsers(res.data);
+        if (res.data){
+          setUsers(res.data);
+          setLoading(false);
+        } 
         else console.log("empty response.data");
       })
       .catch((err) => {
-        setShow(true);
-        setErrorMessage(err.response.data);
+        setErrorMessage(err.message);
       });
   }
 
@@ -52,7 +54,7 @@ export default function AdminUsers() {
       getUsers();
     } catch (err) {
       setShow(true);
-      setErrorMessage(err.response.data);
+      setErrorMessage(err.message);
     }
   }
 
@@ -64,83 +66,82 @@ export default function AdminUsers() {
       })
       .catch((err) => {
         setShow(true);
-        setErrorMessage(err.response.data);
+        setErrorMessage(err.message);
       });
   }
 
-  return (
-    <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Error</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{errorMessage}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <img
-        src={showImg ? showImg : ""}
-        className="focused-img"
-        onClick={() => setShowImg("")}
-      />
-      <div className="text-center mt-5 mb-5 admin-title">
-        <h1>Users</h1>
-        <label>
-          <input type="checkbox" onChange={handleFilter} />
-          Show Unapproved Only
-        </label>
-      </div>
-      <table className="table text-center admin-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Username</th>
-            <th>Password (Hashed)</th>
-            <th>Fullname</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Role</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((u) => (
-            <tr key={u.userId}>
-              <td>{u.userId}</td>
-              <td>{u.userName}</td>
-              <td>{u.password}</td>
-              <td>{u.fullName}</td>
-              <td>{u.email}</td>
-              <td>{u.phoneNumber}</td>
-              <td>{u.roleId}</td>
-              <td>
-                <img
-                  src={u.imageData}
-                  alt={u.imageName}
-                  className="table-users-img"
-                  onClick={(e) => setShowImg(e.target.src)}
-                />
-              </td>
-              <td>
-                <Button
-                  variant={u.isAccepted ? "success" : "danger"}
-                  onClick={() => changeActivation(u)}
-                >
-                  {u.isAccepted ? "Accepted" : "Not Accepted"}
-                </Button>{" "}
-                *{" "}
-                <Button variant="primary" onClick={() => deleteUser(u.userId)}>
-                  Delete
-                </Button>
-              </td>
+  if (!loading) {
+    return (
+      <>
+        <img
+          src={showImg ? showImg : ""}
+          className="focused-img"
+          onClick={() => setShowImg("")}
+        />
+        <div className="text-center mt-5 mb-5 admin-title">
+          <h1>Users</h1>
+          <label>
+            <input type="checkbox" onChange={handleFilter} />
+            Show Unapproved Only
+          </label>
+        </div>
+        <table className="table text-center admin-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Username</th>
+              <th>Password (Hashed)</th>
+              <th>Fullname</th>
+              <th>Email</th>
+              <th>Phone number</th>
+              <th>Role</th>
+              <th>Image</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
+          </thead>
+          <tbody>
+            {users.map((u) => (
+              <tr key={u.userId}>
+                <td>{u.userId}</td>
+                <td>{u.userName}</td>
+                <td>{u.password}</td>
+                <td>{u.fullName}</td>
+                <td>{u.email}</td>
+                <td>{u.phoneNumber}</td>
+                <td>{u.roleId}</td>
+                <td>
+                  <img
+                    src={u.imageData}
+                    alt={u.imageName}
+                    className="table-users-img"
+                    onClick={(e) => setShowImg(e.target.src)}
+                  />
+                </td>
+                <td>
+                  <Button
+                    variant={u.isAccepted ? "success" : "danger"}
+                    onClick={() => changeActivation(u)}
+                  >
+                    {u.isAccepted ? "Accepted" : "Not Accepted"}
+                  </Button>{" "}
+                  *{" "}
+                  <Button variant="primary" onClick={() => deleteUser(u.userId)}>
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    );
+  }
+  else{
+    return(
+      <>
+      <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+        <h1 className="text-center">Loading...</h1>
+      </>
+    )
+  }
 }

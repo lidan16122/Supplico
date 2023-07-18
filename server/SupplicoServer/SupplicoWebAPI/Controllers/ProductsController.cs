@@ -37,5 +37,12 @@ namespace SupplicoWebAPI.Controllers
                 return Ok(products);
             }
         }
+        [HttpGet("supplier/{userID:int}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetSupplierProducts(int userID) 
+        {
+            //if (_SupplicoContext.Users.FirstOrDefault(u => u.UserId == userID) == null) return NotFound("Supplier No Found");
+             if (_SupplicoContext.Products.Where(p => p.UserId == userID).Count() == 0) return NotFound("Supplier Has No Products");
+            else return await _SupplicoContext.Products.Where(p => p.UserId == userID).ToListAsync();
+        }
     }
 }

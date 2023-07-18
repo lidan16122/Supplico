@@ -32,11 +32,50 @@
     cursor: pointer;
     z-index: 1;
 }
-.admin-table{
+.admin-table, .shopping-table{
     width: 90%;
     margin-bottom: 200px !important;
 }
-.admin-table th, .admin-table td{
+.admin-table th, .admin-table td, .shopping-table th, .shopping-table td{
     border: 1px solid #dddddd;
     padding: 8px;
 }
+
+.my-profile-background{
+    background-image: url("../assets/profile-background.jpg");
+}
+.my-profile-card{
+    flex-direction: row !important;
+    margin: auto 15em;
+    margin-top: 5em;
+    margin-bottom: 10em;
+}
+.my-profile-card > .card-img{
+    width: 20%;
+}
+.my-profile-card > .card-body > .card-title{
+    font-size: 32px;
+    text-decoration: underline;
+}
+.my-profile-card > .card-body > .card-text{
+    font-size: 24px;
+}
+.share-info{
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 0;
+    padding-bottom: 1em;
+}
+
+.shopping-background{
+    background-image: url("../assets/shopping.jpg");
+}
+
+.shopping-table{
+    background-color: white;
+    width: 70% !important;
+    margin: auto;
+}
+

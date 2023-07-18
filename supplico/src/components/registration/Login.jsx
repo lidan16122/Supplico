@@ -5,7 +5,6 @@ import AuthContext from "../context/AuthContext";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import axios from "axios";
 import "../../styles/registration.css";
-import { getItem } from "../../utils/storage";
 
 export default function Login() {
   const [loginrUserName, setLoginUserName] = useState("");
@@ -48,7 +47,7 @@ export default function Login() {
           } else throw Error("No respones.data");
         })
         .catch((err) => {
-          setErrorMessage(err.response.data);
+          setErrorMessage(err.messsage);
         });
     } else {
       setErrorMessage("Please provide username and password");

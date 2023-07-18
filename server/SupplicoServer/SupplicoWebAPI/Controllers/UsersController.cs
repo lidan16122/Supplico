@@ -24,6 +24,13 @@ namespace SupplicoWebAPI.Controllers
             _FilesManager = filesManager;
         }
 
+        [HttpGet("suppliers")]
+        public async Task<ActionResult<IEnumerable<User>>> GetSuppliers()
+        {
+            if (_SupplicoContext.Users.Where(u => u.RoleId == 3).Count() == 0) return NotFound("No suppliers in database");
+            else return await _SupplicoContext.Users.Where(u => u.RoleId == 3).ToListAsync();
+        }
+
         [HttpGet("{userID:int}")]
         public IActionResult GetUserProfile(int userID)
         {
