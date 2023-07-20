@@ -16,6 +16,7 @@ import { SupplicoWebAPI_URL } from "./utils/settings";
 import axios from "axios";
 import Users from "./components/users/Users";
 import ShopProducts from "./components/products/ShopProducts";
+import CreateProduct from "./components/products/CreateProduct";
 
 function App() {
   let img = siteImg;
@@ -93,6 +94,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ShopProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="products/create-product"
+              element={
+                <ProtectedRoute>
+                  <CreateProduct />
                 </ProtectedRoute>
               }
             />

@@ -30,7 +30,6 @@ export default function Register() {
       Close
     </Button>
   );
-
   function handleCloseError() {
     setShowError(false);
   }; 

@@ -10,7 +10,6 @@ function BusinessProducts() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     axios
       .get(SupplicoWebAPI_URL + "/users/suppliers")
@@ -26,47 +25,50 @@ function BusinessProducts() {
       });
   }, []);
 
-  if(!loading){
-      return (
-        <>
-
-          <h1 className="text-center">Suppliers</h1>
-          <div className="container">
-            {users.map((u) => (
-              <Card style={{ width: "18rem" }} border="warning" key={u.userId}>
-                <Card.Img src={u.imageData} />
-                <Card.Body>
-                  <Card.Title>User Details</Card.Title>
-                  <Card.Text>
-                      <b>Username: </b>
-                      {u.userName}
-                    <br />
-                      <b>Name: </b>
-                      {u.fullName}
-                    <br />
-                      <b>Email: </b>
-                      {u.email}
-                    <br />
-                      <b>Phonenumber: </b>
-                      {u.phoneNumber}
-                    <br />
-                  </Card.Text>
-                  <NavLink to={`/products/${u.userId}`}>To Shop</NavLink>
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-        </>
-      );
-  }
-  else{
-    return(
-        <>
-        <CustomModal title="Error" body={errorMessage} defaultShow={true}/>
-
+  if (!loading) {
+    return (
+      <>
+        <div className="text-center text-black">
+          <h1 className="">Available Suppliers:</h1>
+          <h3 style={{color: "red"}}>*Note that you can only order from one supplier</h3>
+        </div>
+        <div className="d-flex mb-5 justify-content-center">
+          {users.map((u) => (
+            <Card style={{ width: "18rem" }} border="warning" key={u.userId}>
+              <Card.Img src={u.imageData} />
+              <Card.Body style={{ backgroundColor: "#dddddd" }}>
+                <Card.Title style={{ textDecoration: "underline" }}>
+                  Supplier Details
+                </Card.Title>
+                <Card.Text>
+                  <b>Name: </b>
+                  {u.fullName}
+                  <br />
+                  <b>Email: </b>
+                  {u.email}
+                  <br />
+                  <b>Phonenumber: </b>
+                  {u.phoneNumber}
+                  <br />
+                </Card.Text>
+                <NavLink to={`/products/${u.userId}`}>To Shop</NavLink>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {errorMessage ? (
+          <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+        ) : (
+          ""
+        )}
         <h1 className="text-center">LOADING...</h1>
       </>
-    )
+    );
   }
 }
 

@@ -9,6 +9,7 @@
     border-radius: 20px;
     background-color: #ff851b;
     padding: 5px;
+    cursor: pointer;
 }
 
 .admin-title > label >input{
@@ -77,5 +78,33 @@
     background-color: white;
     width: 70% !important;
     margin: auto;
+}
+.shopping-cart{
+    position: fixed;
+    left: 0%;
+    top: 20%;
+    color: white !important;
+    width: 6em !important;
+}
+.shopping-cart:hover, .reset-shopping-cart:hover, .cart-close:hover{
+    filter: brightness(90%);
+}
+.cart{
+    position: absolute;
+    left: 0%;
+    top: 15%;
+    color: black ;
+    background-color: white;
+    z-index: 1;
+    width: 16em;
+    border: #ff851b solid 2px;
+    text-align: center;
+    
+}
+
+.cart > ul{
+    list-style-position:inside;
+    padding-left: 0;
+
 }
 

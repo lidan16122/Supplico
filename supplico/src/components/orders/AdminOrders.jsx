@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
-import { Button, Modal } from "react-bootstrap";
 import CustomModal from "../layout/CustomModal";
 
 export default function AdminOrders() {
@@ -35,7 +34,7 @@ if(!loading){
     <>
       <div className="text-center mt-5 mb-5 admin-title">
         <h1>Orders</h1>
-        
+        <h2>Showing All Orders</h2>
       </div>
 
       <table className="table text-center admin-table">
@@ -78,7 +77,7 @@ if(!loading){
 else{
   return (
     <>
-      <CustomModal title="Error" body={errorMessage} defaultShow={true}/>
+      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
       <h1 className="text-center">LOADING...</h1>
     </>
   );

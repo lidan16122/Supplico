@@ -33,6 +33,7 @@ export default function AdminProducts() {
       <>
         <div className="text-center mt-5 mb-5 admin-title">
           <h1>Products</h1>
+          <h2>Showing All Products</h2>
         </div>
 
         <table className="table text-center admin-table">
@@ -62,7 +63,7 @@ export default function AdminProducts() {
   } else {
     return (
       <>
-        <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
         <h1 className="text-center">LOADING...</h1>
       </>
     );

@@ -4,6 +4,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Keys, getItem } from "../../utils/storage";
 import "../../styles/users.css";
+import CustomModal from "../layout/CustomModal";
 
 export default function MyProfile() {
   const [user, setUser] = useState();
@@ -71,7 +72,7 @@ export default function MyProfile() {
   } else {
     return (
       <>
-        <CustomModal tilte="Error" body={errorMessage} defaultShow={true} />
+      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
         <h1 className="text-center">LOADING...</h1>
       </>
     );

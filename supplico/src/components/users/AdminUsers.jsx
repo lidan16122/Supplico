@@ -80,6 +80,7 @@ export default function AdminUsers() {
         />
         <div className="text-center mt-5 mb-5 admin-title">
           <h1>Users</h1>
+          <h2>Showing All Users</h2>
           <label>
             <input type="checkbox" onChange={handleFilter} />
             Show Unapproved Only
@@ -139,7 +140,7 @@ export default function AdminUsers() {
   else{
     return(
       <>
-      <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
         <h1 className="text-center">Loading...</h1>
       </>
     )
