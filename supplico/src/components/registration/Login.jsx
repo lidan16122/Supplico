@@ -10,13 +10,15 @@ export default function Login() {
   const [loginrUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [passwordType, setpasswordType] = useState("password");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [modalMsg, setModalMsg] = useState("");
+  const [modalBtn, setModalBtn] = useState(<Button variant="primary" onClick={() => handleCloseError()}>Close</Button>);
+  const [modalTitle, setModalTitle] = useState("");
   let { isLoggedIn, login, logout } = useContext(AuthContext);
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
 
   let navigate = useNavigate();
-  const handleCloseError = () => setShowError(false);
+  const handleCloseError = () => setShow(false);
 
   function showPassword() {
     if (passwordType == "password") {
@@ -39,18 +41,29 @@ export default function Login() {
         .then((res) => {
           if (res.data) {
             console.log(res.data);
+            setModalTitle("Welcome Back")
+            setModalMsg(`Welcome back ${loginrUserName}, we wish you a great day`);
+            setModalBtn("")
             setShow(true);
             setTimeout(() => {
               login(res.data);
               navigate("/");
             }, 3000);
-          } else throw Error("No respones.data");
+          } else{
+            setModalTitle("Error")
+            setModalMsg("No response data");
+            setShow(true)
+          } 
         })
         .catch((err) => {
-          setErrorMessage(err.messsage);
+          setModalTitle("Error")
+          setModalMsg("Incorrect username or password, " + err.message);
+          setShow(true)
         });
     } else {
-      setErrorMessage("Please provide username and password");
+      setModalTitle("Error")
+      setModalMsg("Please provide username and password");
+      setShow(true)
     }
   }
 
@@ -68,28 +81,29 @@ export default function Login() {
   }
 
   return (
-    <div className="registration">
+    <div className="primary-form-background">
       <Modal show={show} onHide={handleCloseError}>
         <Modal.Header>
-          <Modal.Title>Welcome Back</Modal.Title>
+          <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Welcome back <b>{loginrUserName}</b> wish you a great day
+          {modalMsg}
         </Modal.Body>
-        <Modal.Footer>{Date()}</Modal.Footer>
+        <Modal.Footer>{modalBtn ? modalBtn : Date()}</Modal.Footer>
+        
       </Modal>
 
       <p style={{ visibility: "hidden" }}>2</p>
 
       <Form
-        className="registration-form pb-5 pt-5"
+        className="primary-form pb-5 pt-5"
         noValidate
         validated={validated}
         onSubmit={onLogin}
       >
         <h1 className="registration-title mb-4">Login</h1>
         <Form.Group controlId="formUsername">
-          <Form.Label className="registration-label">Username:</Form.Label>
+          <Form.Label className="primary-label">Username:</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter username"
@@ -103,7 +117,7 @@ export default function Login() {
         </Form.Group>
 
         <Form.Group className="mb-2" controlId="formPassword">
-          <Form.Label className="registration-label">Password:</Form.Label>
+          <Form.Label className="primary-label">Password:</Form.Label>
           <Form.Control
             type={passwordType}
             placeholder="Enter password"
@@ -116,15 +130,15 @@ export default function Login() {
           </Form.Control.Feedback>
           <input type="checkbox" onClick={() => showPassword()} /> show password
         </Form.Group>
-        {errorMessage ? (
-          <div className="alert alert-danger">{errorMessage}</div>
+        {modalMsg && modalMsg != `Welcome back ${loginrUserName}, we wish you a great day` ? (
+          <div className="alert alert-danger">{modalMsg}</div>
         ) : (
           ""
         )}
         <Button
           variant="primary"
           type="submut"
-          className="registration-btn mb-2"
+          className="primary-form-btn mb-2"
         >
           Login
         </Button>

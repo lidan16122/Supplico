@@ -63,8 +63,8 @@ public partial class SupplicoContext : DbContext
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("FK__OrderItem__Order__48CFD27E");
 
-            entity.HasOne(d => d.ProductNavigation).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.Product)
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK__OrderItem__Produ__49C3F6B7");
         });
 

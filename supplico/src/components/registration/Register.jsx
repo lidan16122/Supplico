@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink  } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Row, Modal } from "react-bootstrap";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
+import AuthContext from "../context/AuthContext";
+
 
 export default function Register() {
 
@@ -30,6 +32,8 @@ export default function Register() {
       Close
     </Button>
   );
+  let { isLoggedIn, logout } = useContext(AuthContext);
+
   function handleCloseError() {
     setShowError(false);
   }; 
@@ -91,9 +95,9 @@ export default function Register() {
             Close
           </NavLink>
         );
-      } catch (error) {
+      } catch (err) {
         setShowError(true);
-        setModalBody(error.messsage);
+        setModalBody(err.response.data + ", " + err.message);
       }
     } else {
       setShowError(true);
@@ -103,8 +107,21 @@ export default function Register() {
     }
   }
 
+  if (isLoggedIn) {
+    return (
+      <Button
+        variant="primary"
+        type="button"
+        onClick={logout}
+        className="mt-5 mb-5"
+      >
+        Logout
+      </Button>
+    );
+  }
+
   return (
-    <div className="registration">
+    <div className="primary-form-background">
       <Modal show={showError} onHide={handleCloseError}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
@@ -117,7 +134,7 @@ export default function Register() {
 
       <Form
         onSubmit={OnRegister}
-        className="registration-form"
+        className="primary-form"
         encType="multipart/form-data"
         method="post"
         noValidate
@@ -150,7 +167,7 @@ export default function Register() {
 
         <Row>
           <Form.Group as={Col} controlId="formName">
-            <Form.Label className="registration-label">Full name</Form.Label>
+            <Form.Label className="primary-label">Full name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Full name"
@@ -165,7 +182,7 @@ export default function Register() {
           </Form.Group>
 
           <Form.Group as={Col} controlId="formPhonenumber">
-            <Form.Label className="registration-label">Phone number</Form.Label>
+            <Form.Label className="primary-label">Phone number</Form.Label>
             <Form.Control
               type="tel"
               placeholder="Phone number"
@@ -181,7 +198,7 @@ export default function Register() {
         </Row>
 
         <Form.Group controlId="formEmail">
-          <Form.Label className="registration-label">Email</Form.Label>
+          <Form.Label className="primary-label">Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Email"
@@ -200,7 +217,7 @@ export default function Register() {
         </Form.Group>
 
         <Form.Group controlId="formUsername">
-          <Form.Label className="registration-label">Username</Form.Label>
+          <Form.Label className="primary-label">Username</Form.Label>
           <Form.Control
             type="text"
             placeholder="Username"
@@ -218,7 +235,7 @@ export default function Register() {
         </Form.Group>
 
         <Form.Group controlId="formPassword">
-          <Form.Label className="registration-label">Password</Form.Label>
+          <Form.Label className="primary-label">Password</Form.Label>
           <Form.Control
             type={passwordType}
             placeholder="Password"
@@ -241,7 +258,7 @@ export default function Register() {
         <Button
           variant="primary"
           type="submit"
-          className="registration-btn mb-2"
+          className="primary-form-btn mb-2"
         >
           Register
         </Button>

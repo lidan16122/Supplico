@@ -3,7 +3,7 @@ import { Card} from "react-bootstrap";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Keys, getItem } from "../../utils/storage";
-import "../../styles/users.css";
+import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
 
 export default function MyProfile() {
@@ -23,7 +23,7 @@ export default function MyProfile() {
       })
       .catch((err) => {
         setShow(true);
-        setErrorMessage(err.messsage);
+        setErrorMessage(err.response.data + ", " + err.message);
       });
   }, []);
 

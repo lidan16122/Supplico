@@ -16,10 +16,84 @@ namespace SupplicoWebAPI.Controllers
             _SupplicoContext = supplicoContext;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders(int userID)
         {
-            if (_SupplicoContext.Orders == null) return NotFound("No users in database");
+            if (_SupplicoContext.Orders == null) return NotFound("No orders in database");
             else return await _SupplicoContext.Orders.ToListAsync();
+        }
+        [HttpGet("{userID:int}")]
+        public ActionResult<IEnumerable<Product>> GetUserOrders(int userID)
+        {
+            object orders;
+            if (_SupplicoContext.Orders.Where(o => o.BusinessId == userID).Count() > 0)
+            {
+                orders = _SupplicoContext.Orders.Where(o => o.BusinessId == userID)
+                        .Include(o => o.Driver)
+                        .Include(o => o.Business)
+                        .Include(o => o.Supplier)
+                        .Select(o => new
+                        {
+                            TransactionId = o.TransactionId,
+                            Sum = o.Sum,
+                            Quantity = o.Quantity,
+                            Pallets = o.Pallets,
+                            SupplierConfirmation = o.SupplierConfirmation,
+                            DriverConfirmation = o.DriverConfirmation,
+                            DriverFullName = o.Driver.FullName,
+                            SupplierFullName = o.Supplier.FullName,
+                            BusinessFullName = o.Business.FullName,
+                            Created = o.Created,
+                        });
+                return Ok(orders);
+            }
+
+            else if (_SupplicoContext.Orders.Where(o => o.DriverId == userID).Count() > 0)
+            {
+                orders = _SupplicoContext.Orders.Where(o => o.DriverId == userID).Include(o => o.Driver)
+                        .Include(o => o.Business)
+                        .Include(o => o.Supplier)
+                        .Select(o => new
+                        {
+                            TransactionId = o.TransactionId,
+                            Sum = o.Sum,
+                            Quantity = o.Quantity,
+                            Pallets = o.Pallets,
+                            SupplierConfirmation = o.SupplierConfirmation,
+                            DriverConfirmation = o.DriverConfirmation,
+                            DriverFullName = o.Driver.FullName,
+                            SupplierFullName = o.Supplier.FullName,
+                            BusinessFullName = o.Business.FullName,
+                            Created = o.Created,
+                        });
+                return Ok(orders);
+            }
+
+            else if (_SupplicoContext.Orders.Where(o => o.SupplierId == userID).Count() > 0)
+            {
+                orders = _SupplicoContext.Orders.Where(o => o.SupplierId == userID).Include(o => o.Driver)
+                        .Include(o => o.Business)
+                        .Include(o => o.Supplier)
+                        .Select(o => new
+                        {
+                            TransactionId = o.TransactionId,
+                            Sum = o.Sum,
+                            Quantity = o.Quantity,
+                            Pallets = o.Pallets,
+                            SupplierConfirmation = o.SupplierConfirmation,
+                            DriverConfirmation = o.DriverConfirmation,
+                            DriverFullName = o.Driver.FullName,
+                            SupplierFullName = o.Supplier.FullName,
+                            BusinessFullName = o.Business.FullName,
+                            Created = o.Created,
+                        });
+                return Ok(orders);
+            }
+
+            else
+            {
+
+                return NotFound("User has no orders");
+            }
         }
 
         [HttpPost]

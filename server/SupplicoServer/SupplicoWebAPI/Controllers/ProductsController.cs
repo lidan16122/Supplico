@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SupplicoDAL;
+using SupplicoWebAPI.DTO;
 using SupplicoWebAPI.Utils;
 
 namespace SupplicoWebAPI.Controllers
@@ -57,6 +58,17 @@ namespace SupplicoWebAPI.Controllers
                 return Ok(products);
             }
         }
+        [HttpGet("edit/{productID:int}")]
+        public async Task<ActionResult<Product>> GetSpecificProduct(int productID)
+        {
+            if (_SupplicoContext.Products == null)
+                return NotFound("No products available");
+            var product = await _SupplicoContext.Products.FindAsync(productID);
+            if (product == null)
+                return NotFound("Didn't found any product");
+            else
+                return product;
+        }
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -66,6 +78,21 @@ namespace SupplicoWebAPI.Controllers
                 _SupplicoContext.Products.Add(product);
                 await _SupplicoContext.SaveChangesAsync();
                 return Created($"/orders/{product.Id}", product);
+            }
+        }
+
+        [HttpPut()]
+        public async Task<IActionResult> UpdateProduct(Product product)
+        {
+            var productInDb = _SupplicoContext.Products.FirstOrDefaultAsync(p => p.Id == product.Id).Result;
+            if (productInDb == null)
+                return NotFound("Product didn't found");
+            else
+            {
+                productInDb.Name = product.Name;
+                productInDb.Price = product.Price;
+                await _SupplicoContext.SaveChangesAsync();
+                return NoContent();
             }
         }
 

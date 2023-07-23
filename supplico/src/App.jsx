@@ -17,6 +17,8 @@ import axios from "axios";
 import Users from "./components/users/Users";
 import ShopProducts from "./components/products/ShopProducts";
 import CreateProduct from "./components/products/CreateProduct";
+import EditProducts from "./components/products/EditProducts";
+import OrderItems from "./components/order-items/OrderItems";
 
 function App() {
   let img = siteImg;
@@ -98,6 +100,14 @@ function App() {
               }
             />
             <Route
+              path="products/:supplierid/:productid"
+              element={
+                <ProtectedRoute>
+                  <EditProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="products/create-product"
               element={
                 <ProtectedRoute>
@@ -128,6 +138,14 @@ function App() {
                   <Users />
                 </ProtectedRoute>
               }
+            />
+            <Route 
+            path="order-items"
+            element={
+              <ProtectedRoute>
+                <OrderItems />
+              </ProtectedRoute>
+            }
             />
           </Routes>
           <Footer />

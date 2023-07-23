@@ -31,6 +31,15 @@ export default function ShopProducts() {
     console.log(shopList);
   }
 
+  function handleList() {
+    setShow(true);
+    showList();
+  }
+  function handleCart() {
+    setCart(true);
+    showList();
+  }
+
   function handleReset() {
     setCart(false);
     setList([]);
@@ -38,8 +47,6 @@ export default function ShopProducts() {
   }
 
   function showList() {
-    setCart(true);
-    setShow(true);
     let sum = 0;
     shopList.forEach((v) => (sum += v.price));
     setCurrentSum(sum);
@@ -66,8 +73,8 @@ export default function ShopProducts() {
         if (res.data) {
           setProducts(res.data);
           console.log(res.data);
+          setName(res.data[0].userFullName);
           setLoading(false);
-          setName(products[0].userFullName);
         } else console.log("empty response.data");
       })
       .catch((err) => {
@@ -78,29 +85,93 @@ export default function ShopProducts() {
   function makeOrder() {
     if (shopList.length > 0) {
       console.log("checkvalidity TRUE");
-      axios.post(SupplicoWebAPI_URL + '/orders',{
-        sum: currentSum,
-        quantity: shopList.length,
-        supplierConfirmation: false,
-        driverConfirmation: false,
-        supplierId: supplierid,
-        businessId: getItem(Keys.userId)
-      }).then((res) =>{
-        console.log(res)
-        setOrder(true);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      axios
+        .post(SupplicoWebAPI_URL + "/orders", {
+          sum: currentSum,
+          quantity: shopList.length,
+          supplierConfirmation: false,
+          driverConfirmation: false,
+          supplierId: supplierid,
+          businessId: getItem(Keys.userId),
+        })
+        .then((res) => {
+          console.log(res);
+          handleOrderItems(shopList.map((p) => p.name));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      alert("nothing in shopping cart")
+      alert("nothing in shopping cart");
     }
+  }
+
+  async function handleOrderItems(arr) {
+    // Step 1: Sort the original array of strings
+    arr.sort();
+
+    // Step 2 and 3: Create an empty array to hold the arrays with the same values
+    let result = [];
+    let currentGroup = [arr[0]];
+
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] === arr[i - 1]) {
+        // Strings have the same value, add to the current group
+        currentGroup.push(arr[i]);
+      } else {
+        // Strings have a different value, start a new group
+        result.push(currentGroup);
+        currentGroup = [arr[i]];
+      }
+    }
+
+    // Add the last group to the result array
+    result.push(currentGroup);
+    for (let i = 0; i < result.length; i++) {
+      let productId = 0;
+      let productQuantity = result[i].length;
+      for (let j = 0; j < products.length; j++) {
+        if (products[j].name == result[i][0]) {
+          productId = products[j].id;
+        }
+      }
+      console.log("productId" + productId);
+      console.log("productQuantity" + productQuantity);
+      try{
+        const response = await axios({
+          method: "post",
+          url: `${SupplicoWebAPI_URL}/orderItems`,
+          data: {
+            quantity:productQuantity,
+            product:productId
+          },
+          headers: { "Content-Type": "application/json"}
+        })
+      }
+      catch(err){
+      }
+      //axios
+      //   .post(SupplicoWebAPI_URL + "/orderItems", {
+      //     quantity: productQuantity,
+      //     product: productId,
+      //   })
+      //   .then((res) => {
+      //   })
+      //   .catch((err) => {
+
+      //   });
+    }
+    setOrder(true);
   }
 
   if (!loading && !order && roleID == 1) {
     return (
       <>
-        {cart ? <Cart setCart={setCart} listMsg={listMsg} makeOrder={makeOrder} /> : ""}
+        {cart ? (
+          <Cart setCart={setCart} listMsg={listMsg} makeOrder={makeOrder} />
+        ) : (
+          ""
+        )}
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -117,9 +188,11 @@ export default function ShopProducts() {
           </Modal.Footer>
         </Modal>
 
-          <Button className="shopping-cart" onClick={() => showList()}>Cart{">>"}</Button>
+        <Button className="shopping-cart" onClick={() => handleCart()}>
+          Cart{">>"}
+        </Button>
 
-        <div className="shopping-background">
+        <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
             <h1>
               The Shop Of: <b style={{ color: "#ff851b" }}>{name}</b>
@@ -129,14 +202,19 @@ export default function ShopProducts() {
               className="mb-1"
               style={{ border: "solid 1px black" }}
               variant="light"
-              onClick={() => showList()}
+              onClick={() => handleList()}
             >
               Shopping Cart
             </Button>
             <br />
-            <Button className="reset-shopping-cart" onClick={() => handleReset()}>RESET</Button>
+            <Button
+              className="reset-shopping-cart"
+              onClick={() => handleReset()}
+            >
+              RESET
+            </Button>
           </div>
-          <table className="table shopping-table">
+          <table className="table products-table">
             <thead>
               <tr>
                 <th>Id</th>
@@ -181,7 +259,13 @@ export default function ShopProducts() {
         ) : (
           ""
         )}
-        {roleID == 1 ? <h1 className="text-center">LOADING...</h1> : <h1 className="text-center text-black mt-5 mb-5">Unauthorized Business Route</h1>}
+        {roleID == 1 ? (
+          <h1 className="text-center">LOADING...</h1>
+        ) : (
+          <h1 className="text-center text-black mt-5 mb-5">
+            Unauthorized Business Route
+          </h1>
+        )}
       </>
     );
   }

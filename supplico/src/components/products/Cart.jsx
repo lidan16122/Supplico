@@ -1,13 +1,13 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-export default function Cart({ setCart, listMsg }) {
+export default function Cart({ setCart, listMsg, makeOrder }) {
   return (
     <>
       <div className="cart">
         <h4 style={{textDecoration: "underline"}}>Cart</h4>
         {listMsg}
-        <Button variant="success" onClick={() => setCart(false)}>
+        <Button variant="success" onClick={() => makeOrder()}>
           Make Order
         </Button>
         <br />

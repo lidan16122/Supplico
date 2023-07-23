@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Button  } from "react-bootstrap";
-import "../../styles/users.css";
+import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
 
 export default function AdminUsers() {
@@ -53,8 +53,7 @@ export default function AdminUsers() {
       });
       getUsers();
     } catch (err) {
-      setShow(true);
-      setErrorMessage(err.message);
+      setErrorMessage(err.response.data + ", " + err.message);
     }
   }
 
@@ -65,8 +64,7 @@ export default function AdminUsers() {
         getUsers();
       })
       .catch((err) => {
-        setShow(true);
-        setErrorMessage(err.message);
+        setErrorMessage(err.response.data + ", " + err.message);
       });
   }
 

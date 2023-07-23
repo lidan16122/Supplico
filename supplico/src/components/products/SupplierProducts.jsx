@@ -12,6 +12,10 @@ export default function SupplierProducts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    getProducts();
+  }, []);
+
+  function getProducts(){
     axios
       .get(SupplicoWebAPI_URL + "/products/" + getItem(Keys.userId))
       .then((res) => {
@@ -24,21 +28,35 @@ export default function SupplierProducts() {
       .catch((err) => {
         setErrorMessage(err.message);
       });
-  }, []);
+  }
 
+  function deleteProduct(id){
+    axios.delete(SupplicoWebAPI_URL + "/products/" + id)
+    .then((res) =>{
+      getProducts();
+    })
+    .catch((err) =>{
+      setErrorMessage(err.response.data + ", " + err.message);
+    });
+  }
 
   if (!loading) {
     return (
       <>
-        <div className="shopping-background">
+        <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
             <h1>
-              The Shop Of: <b style={{ color: "#ff851b" }}>{getItem(Keys.fullName)}</b>
+              The Shop Of:{" "}
+              <b style={{ color: "#ff851b" }}>{getItem(Keys.fullName)}</b>
             </h1>
             <h3>Here are the shop products:</h3>
-            <NavLink to="/products/create-product">Create new product</NavLink>
+            <Button className="create-product">
+              <NavLink to="/products/create-product" className="link-none">
+                Create new product
+              </NavLink>
+            </Button>
           </div>
-          <table className="table shopping-table">
+          <table className="table products-table">
             <thead>
               <tr>
                 <th>Id</th>
@@ -54,11 +72,16 @@ export default function SupplierProducts() {
                   <td>{p.name}</td>
                   <td>{p.price}</td>
                   <td>
-                    <Button variant="success" >
-                      Edit
+                    <Button variant="success" style={{ marginRight: "10px" }}>
+                      <NavLink
+                        to={`/products/${getItem(Keys.userId)}/${p.id}`}
+                        className="link-none"
+                      >
+                        Edit
+                      </NavLink>
                     </Button>
-                    |
-                    <Button variant="danger">
+                    <b>|</b>
+                    <Button variant="danger" style={{ marginLeft: "10px" }} onClick={() => deleteProduct(p.id)}>
                       Delete
                     </Button>
                   </td>
@@ -70,8 +93,7 @@ export default function SupplierProducts() {
         </div>
       </>
     );
-  }
-  else {
+  } else {
     return (
       <>
         {errorMessage ? (

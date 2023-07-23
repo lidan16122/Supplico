@@ -8,7 +8,6 @@ import "../../styles/home.css";
 const Home = (props) => {
   let navigate = useNavigate();
   return (
-    
       <main>
       <div className="main-article">
         <video src={homeVideo} autoPlay muted loop id="homeVideo"></video>

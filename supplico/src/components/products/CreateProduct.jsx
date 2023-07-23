@@ -57,7 +57,7 @@ export default function CreateProduct() {
           })
           .catch((err) => {
             setShow(true);
-            setModalBody(err.message);
+            setModalBody(err.response.data + ", " + err.message);
           });
       } else {
         setShow(true);
@@ -68,7 +68,7 @@ export default function CreateProduct() {
   }
 
   return (
-    <div className="registration">
+    <div className="primary-form-background">
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>{modalTitle}</Modal.Title>
@@ -81,7 +81,7 @@ export default function CreateProduct() {
 
       <Form
         method="post"
-        className="registration-form"
+        className="primary-form"
         onSubmit={onCreateProduct}
         encType="application/json"
         noValidate
@@ -90,7 +90,7 @@ export default function CreateProduct() {
         <h1>Create Product</h1>
       </div>
         <Form.Group controlId="formProductName">
-          <Form.Label className="registration-label">Product Name</Form.Label>
+          <Form.Label className="primary-label">Product Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Name"
@@ -105,7 +105,7 @@ export default function CreateProduct() {
         </Form.Group>
 
         <Form.Group controlId="formPrice">
-          <Form.Label className="registration-label">Price</Form.Label>
+          <Form.Label className="primary-label">Price</Form.Label>
           <Form.Control
             type="number"
             placeholder="Price"
@@ -121,7 +121,7 @@ export default function CreateProduct() {
         <Button
           variant="primary"
           type="submit"
-          className="registration-btn mb-2 mt-4"
+          className="primary-form-btn mb-2 mt-4"
           style={{width:"10em"}}
         >
           Create Product
