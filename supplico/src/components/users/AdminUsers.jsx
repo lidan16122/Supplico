@@ -4,6 +4,7 @@ import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Button  } from "react-bootstrap";
 import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
+import { Keys, getItem } from "../../utils/storage";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -29,8 +30,13 @@ export default function AdminUsers() {
   }, []);
 
   function getUsers() {
+    let options = {
+      headers: {
+        Authorization: `Bearer ${getItem(Keys.accessToken)}`,
+      },
+    };
     axios
-      .get(SupplicoWebAPI_URL + "/users")
+      .get(SupplicoWebAPI_URL + "/users",options)
       .then((res) => {
         if (res.data){
           setUsers(res.data);

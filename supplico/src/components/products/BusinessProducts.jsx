@@ -21,46 +21,49 @@ function BusinessProducts() {
         } else console.log("empty response.data");
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message + ", " + err.response.data);
       });
   }, []);
 
   if (!loading) {
     return (
       <>
-        <div className="text-center text-black">
-          <h1 className="">Available Suppliers:</h1>
-          <h3 style={{ color: "red" }}>
-            *Note that you can only order from one supplier at a time
-          </h3>
-        </div>
-        <div className="d-flex mb-5 justify-content-center">
-          {users.map((u) => (
-            <Card style={{ width: "18rem" }} border="dark" key={u.userId}>
-              <Card.Img src={u.imageData} />
-              <Card.Body style={{ backgroundColor: "#dddddd" }}>
-                <Card.Title style={{ textDecoration: "underline" }}>
-                  Supplier Details
-                </Card.Title>
-                <Card.Text>
-                  <b>Name: </b>
-                  {u.fullName}
-                  <br />
-                  <b>Email: </b>
-                  {u.email}
-                  <br />
-                  <b>Phonenumber: </b>
-                  {u.phoneNumber}
-                  <br />
-                </Card.Text>
-                <Button varient="primary" className="to-shop">
-                  <NavLink to={`/products/${u.userId}`} className="link-none">
-                    To Shop
-                  </NavLink>
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+        <div className="suppliers-background">
+          <div className="text-center text-black pt-5 pb-5">
+            <h1 style={{fontSize: "50px"}}>Available Suppliers: {users.length}</h1>
+            <h3 style={{ color: "red" }}>
+              *Note that you can only order from one supplier at a time
+            </h3>
+          </div>
+          <div className="d-flex mb-5 justify-content-around">
+            {users.map((u) => (
+              <Card style={{ width: "22rem" }} border="dark" key={u.userId}>
+                <Card.Img src={u.imageData} style={{height: "12em"}} />
+                <Card.Body style={{ backgroundColor: "#dddddd" }}>
+                  <Card.Title style={{ textDecoration: "underline", fontSize:"28px" }}>
+                    Supplier Details
+                  </Card.Title>
+                  <Card.Text style={{fontSize:"20px"}}>
+                    <b>Name: </b>
+                    {u.fullName}
+                    <br />
+                    <b>Email: </b>
+                    {u.email}
+                    <br />
+                    <b>Phonenumber: </b>
+                    {u.phoneNumber}
+                    <br />
+                  </Card.Text>
+                  <Button varient="primary" className="to-shop">
+                    <NavLink to={`/products/${u.userId}`} className="link-none">
+                      To Shop
+                    </NavLink>
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+          <p className="share-info">*Please do not share this information</p>
         </div>
       </>
     );

@@ -19,6 +19,7 @@ import ShopProducts from "./components/products/ShopProducts";
 import CreateProduct from "./components/products/CreateProduct";
 import EditProducts from "./components/products/EditProducts";
 import OrderItems from "./components/order-items/OrderItems";
+import DisplayOrder from "./components/orders/DisplayOrder";
 
 function App() {
   let img = siteImg;
@@ -116,14 +117,6 @@ function App() {
               }
             />
             <Route
-              path="orders"
-              element={
-                <ProtectedRoute>
-                  <Orders />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="users"
               element={
                 <ProtectedRoute>
@@ -139,13 +132,29 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route 
-            path="order-items"
-            element={
-              <ProtectedRoute>
-                <OrderItems />
-              </ProtectedRoute>
-            }
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="orders/:orderid"
+              element={
+                <ProtectedRoute>
+                  <DisplayOrder />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="order-items"
+              element={
+                <ProtectedRoute>
+                  <OrderItems />
+                </ProtectedRoute>
+              }
             />
           </Routes>
           <Footer />

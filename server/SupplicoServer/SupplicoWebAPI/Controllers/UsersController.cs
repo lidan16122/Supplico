@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace SupplicoWebAPI.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetSuppliers()
         {
             if (_SupplicoContext.Users.Where(u => u.RoleId == 3).Count() == 0) return NotFound("No suppliers in database");
-            else return await _SupplicoContext.Users.Where(u => u.RoleId == 3).ToListAsync();
+            else return await _SupplicoContext.Users.Where(u => u.RoleId == 3).Where(u=> u.IsAccepted == true).ToListAsync();
         }
 
         [HttpGet("{userID:int}")]
@@ -42,6 +43,7 @@ namespace SupplicoWebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             if (_SupplicoContext.Users == null) return NotFound("No users in database");

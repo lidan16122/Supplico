@@ -33,18 +33,18 @@
     cursor: pointer;
     z-index: 1;
 }
-.admin-table, .products-table{
-    width: 90%;
+.admin-table, .products-table, .orders-table, .order-items-table{
+    width: 70% !important;
+    margin: auto;
     margin-bottom: 200px !important;
+    background-color: white;
 }
-.admin-table th, .admin-table td, .products-table th, .products-table td{
+.admin-table th, .admin-table td, .products-table th, .products-table td, .orders-table td, .orders-table th, .order-items-table th, .order-items-table td{
     border: 1px solid #dddddd;
     padding: 8px;
 }
 
-.my-profile-background{
-    background-image: url("../assets/profile-background.jpg");
-}
+
 .my-profile-card{
     flex-direction: row !important;
     margin: auto 15em;
@@ -70,16 +70,15 @@
     padding-bottom: 1em;
 }
 
-.products-background{
-    background-image: url("../assets/shopping.jpg");
+.products-background, .orders-background, .suppliers-background, .order-items-background{
     background-position: center;
     background-size: cover;
 }
 
-.products-table{
-    background-color: white;
-    width: 70% !important;
-    margin: auto;
+
+
+.products-table *, .orders-table *, .order-items-table *{
+    color: black;
 }
 .shopping-cart{
     position: fixed;
@@ -116,4 +115,25 @@
 }
 .link-none:hover{
     color: inherit;
+}
+.my-order-tr{
+    cursor: pointer;
+}
+.my-order-tr:hover{
+    background-color: #ff851b;
+}
+.orders-background{
+    background-image: url("../assets/orders-background.jpg");
+}
+.suppliers-background{
+    background-image: url("../assets/suppliers-background.jpg");
+}
+.order-items-background{
+    background-image: url("../assets/59274.jpg");
+}
+.products-background{
+    background-image: url("../assets/shopping.jpg");
+}
+.my-profile-background{
+    background-image: url("../assets/profile-background.jpg");
 }

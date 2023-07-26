@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SupplicoDAL;
@@ -20,7 +21,8 @@ namespace SupplicoWebAPI.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetProducts()
+        [Authorize]
+        public IActionResult GetProducts()
         {
             if (_SupplicoContext.Products == null) return NotFound("No products in database");
             else
@@ -39,9 +41,9 @@ namespace SupplicoWebAPI.Controllers
             }
         }
         [HttpGet("{userID:int}")]
-        public ActionResult<IEnumerable<Product>> GetSupplierProducts(int userID)
+        public IActionResult GetSupplierProducts(int userID)
         {
-            if (_SupplicoContext.Products.Where(p => p.UserId == userID).Count() == 0) return NotFound("Supplier Has No Products");
+            if (_SupplicoContext.Products.Where(p => p.UserId == userID).Count() == 0) return NotFound("Supplier has no products");
             else
             {
                 var products = _SupplicoContext.Products

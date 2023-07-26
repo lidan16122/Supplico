@@ -17,16 +17,16 @@ export default function Header(props) {
           <Navigation
             links={[
               { route: "/", text: image },
-              { route: "/products", text: "Products" },
-              { route: "/orders", text: "Orders" },
               {
                 route:
                   roleID == 4 ? "/users" : `/users/${getItem(Keys.userId)}`,
-                text: "Users",
+                text: roleID == 4 ? "Users" : "My Profile",
               },
+              { route: "/products", text: roleID == 3 ? "My Shop" : "Products" },
+              { route: "/orders", text: roleID == 4 ? "Orders" : "My Orders" },
               {
                 route:"/order-items" ,
-                text:"Order Items",
+                text:"Items Ordered",
               },
               { route: "#", text: logoutBtn },
             ]}

@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import CustomModal from "../layout/CustomModal";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import axios from "axios";
+import { Keys, getItem } from "../../utils/storage";
 
 export default function AdminOrderItems() {
     const [orderItems, setOrderItems] = useState([]);
@@ -13,8 +14,13 @@ export default function AdminOrderItems() {
     }, []);
   
     function getOrderItems() {
+      let options = {
+        headers: {
+          Authorization: `Bearer ${getItem(Keys.accessToken)}`,
+        },
+      };
       axios
-        .get(SupplicoWebAPI_URL + "/orderItems")
+        .get(SupplicoWebAPI_URL + "/orderItems",options)
         .then((res) => {
           if (res.data){
             setOrderItems(res.data);

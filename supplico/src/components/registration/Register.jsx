@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { NavLink  } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Row, Modal } from "react-bootstrap";
@@ -7,9 +7,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import AuthContext from "../context/AuthContext";
 
-
 export default function Register() {
-
   const [registerRole, setRegisterRole] = useState(1);
   const [registerImage, setRegisterImage] = useState("");
   const [registerName, setRegisterName] = useState("");
@@ -36,8 +34,7 @@ export default function Register() {
 
   function handleCloseError() {
     setShowError(false);
-  }; 
-
+  }
 
   function showPassword() {
     if (passwordType == "password") {
@@ -66,7 +63,13 @@ export default function Register() {
       console.log("checkvalidity FALSE");
     }
 
-    if (form.checkValidity() === true) {
+    if (
+      form.checkValidity() === true &&
+      registerUserName.length > 5 &&
+      registerUserName.length < 17 &&
+      registerPassword.length > 7 &&
+      registerPassword.length < 25
+    ) {
       console.log("checkvalidity TRUE");
       const formData = new FormData();
       formData.append("userName", registerUserName);
@@ -167,10 +170,12 @@ export default function Register() {
 
         <Row>
           <Form.Group as={Col} controlId="formName">
-            <Form.Label className="primary-label">Full name</Form.Label>
+            <Form.Label className="primary-label">
+              {registerRole == 2 ? "Full Name" : "Business Name"}
+            </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Full name"
+              placeholder={registerRole == 2 ? "Full Name" : "Business Name"}
               value={registerName}
               onChange={(e) => setRegisterName(e.target.value)}
               isInvalid={!(registerName.length > 1) && nameValidation}
@@ -242,7 +247,7 @@ export default function Register() {
             value={registerPassword}
             onChange={(e) => setRegisterPassword(e.target.value)}
             isInvalid={
-              !(registerPassword.length > 7 && registerPassword.length < 25) &&
+              !(registerPassword.length > 7) || !(registerPassword.length < 25) &&
               passwordValidation
             }
             required

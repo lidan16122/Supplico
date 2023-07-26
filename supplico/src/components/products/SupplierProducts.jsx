@@ -15,7 +15,7 @@ export default function SupplierProducts() {
     getProducts();
   }, []);
 
-  function getProducts(){
+  function getProducts() {
     axios
       .get(SupplicoWebAPI_URL + "/products/" + getItem(Keys.userId))
       .then((res) => {
@@ -26,18 +26,25 @@ export default function SupplierProducts() {
         } else console.log("empty response.data");
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message + ", " + err.response.data);
+        if ((err.response.data = "Supplier has no products")) {
+          setLoading(false);
+        }
       });
   }
 
-  function deleteProduct(id){
-    axios.delete(SupplicoWebAPI_URL + "/products/" + id)
-    .then((res) =>{
-      getProducts();
-    })
-    .catch((err) =>{
-      setErrorMessage(err.response.data + ", " + err.message);
-    });
+  function deleteProduct(id) {
+    axios
+      .delete(SupplicoWebAPI_URL + "/products/" + id)
+      .then((res) => {
+        getProducts();
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data + ", " + err.message);
+        if (err.message == "Supplier Has No Products") {
+          setLoading(false);
+        }
+      });
   }
 
   if (!loading) {
@@ -45,9 +52,9 @@ export default function SupplierProducts() {
       <>
         <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
-            <h1>
-              The Shop Of:{" "}
-              <b style={{ color: "#ff851b" }}>{getItem(Keys.fullName)}</b>
+            <h1 style={{fontSize:"50px"}}>
+              The Shop Of:
+              <b style={{ color: "#ff851b" }}> {getItem(Keys.fullName)}</b>
             </h1>
             <h3>Here are the shop products:</h3>
             <Button className="create-product">
@@ -66,27 +73,40 @@ export default function SupplierProducts() {
               </tr>
             </thead>
             <tbody>
-              {products.map((p) => (
-                <tr key={p.id}>
-                  <td>{p.id}</td>
-                  <td>{p.name}</td>
-                  <td>{p.price}</td>
-                  <td>
-                    <Button variant="success" style={{ marginRight: "10px" }}>
-                      <NavLink
-                        to={`/products/${getItem(Keys.userId)}/${p.id}`}
-                        className="link-none"
+              {products ? (
+                products.map((p) => (
+                  <tr key={p.id}>
+                    <td>{p.id}</td>
+                    <td>{p.name}</td>
+                    <td>{p.price}</td>
+                    <td>
+                      <Button variant="success" style={{ marginRight: "10px" }}>
+                        <NavLink
+                          to={`/products/${getItem(Keys.userId)}/${p.id}`}
+                          className="link-none"
+                        >
+                          Edit
+                        </NavLink>
+                      </Button>
+                      <b>|</b>
+                      <Button
+                        variant="danger"
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => deleteProduct(p.id)}
                       >
-                        Edit
-                      </NavLink>
-                    </Button>
-                    <b>|</b>
-                    <Button variant="danger" style={{ marginLeft: "10px" }} onClick={() => deleteProduct(p.id)}>
-                      Delete
-                    </Button>
-                  </td>
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
           <p className="share-info">*Please do not share this information</p>

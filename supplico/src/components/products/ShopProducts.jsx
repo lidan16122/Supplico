@@ -78,7 +78,7 @@ export default function ShopProducts() {
         } else console.log("empty response.data");
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message + ", " + err.response.data);
       });
   }, []);
 
@@ -107,25 +107,20 @@ export default function ShopProducts() {
   }
 
   async function handleOrderItems(arr) {
-    // Step 1: Sort the original array of strings
     arr.sort();
 
-    // Step 2 and 3: Create an empty array to hold the arrays with the same values
     let result = [];
     let currentGroup = [arr[0]];
 
     for (let i = 1; i < arr.length; i++) {
       if (arr[i] === arr[i - 1]) {
-        // Strings have the same value, add to the current group
         currentGroup.push(arr[i]);
       } else {
-        // Strings have a different value, start a new group
         result.push(currentGroup);
         currentGroup = [arr[i]];
       }
     }
 
-    // Add the last group to the result array
     result.push(currentGroup);
     for (let i = 0; i < result.length; i++) {
       let productId = 0;
@@ -137,19 +132,17 @@ export default function ShopProducts() {
       }
       console.log("productId" + productId);
       console.log("productQuantity" + productQuantity);
-      try{
+      try {
         const response = await axios({
           method: "post",
           url: `${SupplicoWebAPI_URL}/orderItems`,
           data: {
-            quantity:productQuantity,
-            product:productId
+            quantity: productQuantity,
+            product: productId,
           },
-          headers: { "Content-Type": "application/json"}
-        })
-      }
-      catch(err){
-      }
+          headers: { "Content-Type": "application/json" },
+        });
+      } catch (err) {}
       //axios
       //   .post(SupplicoWebAPI_URL + "/orderItems", {
       //     quantity: productQuantity,
@@ -164,10 +157,10 @@ export default function ShopProducts() {
     setOrder(true);
   }
 
-  if (!loading && !order && roleID == 1) {
+  if (!loading && !order && (roleID == 1 || roleID == 2)) {
     return (
       <>
-        {cart ? (
+        {cart && roleID == 1 ? (
           <Cart setCart={setCart} listMsg={listMsg} makeOrder={makeOrder} />
         ) : (
           ""
@@ -188,31 +181,41 @@ export default function ShopProducts() {
           </Modal.Footer>
         </Modal>
 
-        <Button className="shopping-cart" onClick={() => handleCart()}>
-          Cart{">>"}
-        </Button>
+        {roleID == 1 ? (
+          <Button className="shopping-cart" onClick={() => handleCart()}>
+            Cart{">>"}
+          </Button>
+        ) : (
+          ""
+        )}
 
         <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
-            <h1>
+            <h1 style={{fontSize:"50px"}}>
               The Shop Of: <b style={{ color: "#ff851b" }}>{name}</b>
             </h1>
             <h3>Here are the shop products:</h3>
-            <Button
-              className="mb-1"
-              style={{ border: "solid 1px black" }}
-              variant="light"
-              onClick={() => handleList()}
-            >
-              Shopping Cart
-            </Button>
-            <br />
-            <Button
-              className="reset-shopping-cart"
-              onClick={() => handleReset()}
-            >
-              RESET
-            </Button>
+            {roleID == 1 ? (
+              <>
+                <Button
+                  className="mb-1"
+                  style={{ border: "solid 1px black" }}
+                  variant="light"
+                  onClick={() => handleList()}
+                >
+                  Shopping Cart
+                </Button>
+                <br />
+                <Button
+                  className="reset-shopping-cart"
+                  onClick={() => handleReset()}
+                >
+                  RESET
+                </Button>
+              </>
+            ) : (
+              ""
+            )}
           </div>
           <table className="table products-table">
             <thead>
@@ -230,9 +233,9 @@ export default function ShopProducts() {
                   <td>{p.name}</td>
                   <td>{p.price}</td>
                   <td>
-                    <Button variant="dark" onClick={() => handleClick(p)}>
+                    {roleID == 1 ? <Button variant="dark" onClick={() => handleClick(p)}>
                       Add to cart
-                    </Button>
+                    </Button> : "Not availabe as DRIVER"}
                   </td>
                 </tr>
               ))}
