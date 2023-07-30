@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Keys, getItem } from "../../utils/storage";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../layout/CustomModal";
+import AuthContext from "../context/AuthContext";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   let navigate = useNavigate();
+  let { roleID } = useContext(AuthContext);
 
   useEffect(() => {
     getOrders();
@@ -44,11 +46,12 @@ export default function MyOrders() {
       <>
         <div className="orders-background">
           <div className="text-center text-white pt-5 mb-5">
-            <h1 style={{fontSize:"50px"}}>
+            <h1 className="components-title">
               Orders Of:
               <b style={{ color: "#ff851b" }}> {getItem(Keys.fullName)}</b>
             </h1>
-            <h3>Here are all of your orders:</h3>
+            <h3 className="mb-4">Here are all of your orders:</h3>
+            {roleID == 2 ? <Button variant="outline-light"  onClick={() => navigate("/orders/jobs")} className="driver-jobs">Available Jobs</Button> : ""}
           </div>
           <table className="table orders-table">
             <thead>
@@ -82,7 +85,7 @@ export default function MyOrders() {
                     <td>{o.driverFullName}</td>
                     <td>{o.supplierFullName}</td>
                     <td>{o.businessFullName}</td>
-                    <td>{o.created}</td>
+                    <td>{o.created?.slice(0,10) || ""}</td>
                   </tr>
                 ))
               ) : (

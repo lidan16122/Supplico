@@ -257,8 +257,8 @@ export default function Register() {
           </Form.Control.Feedback>
           <input type="checkbox" onClick={() => showPassword()} /> show password
         </Form.Group>
-        <p style={{ color: "red", fontWeight: "bold" }}>
-          *Note that a admin will be examine your user application*
+        <p className="red-note">
+          <b>*Note that a admin will be examine your user application*</b>
         </p>
         <Button
           variant="primary"

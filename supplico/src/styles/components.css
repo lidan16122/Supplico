@@ -44,7 +44,6 @@
     padding: 8px;
 }
 
-
 .my-profile-card{
     flex-direction: row !important;
     margin: auto 15em;
@@ -70,12 +69,10 @@
     padding-bottom: 1em;
 }
 
-.products-background, .orders-background, .suppliers-background, .order-items-background{
+.products-background, .orders-background, .suppliers-background, .order-items-background, .drivers-background{
     background-position: center;
     background-size: cover;
 }
-
-
 
 .products-table *, .orders-table *, .order-items-table *{
     color: black;
@@ -125,15 +122,40 @@
 .orders-background{
     background-image: url("../assets/orders-background.jpg");
 }
-.suppliers-background{
+.suppliers-background, .drivers-background{
     background-image: url("../assets/suppliers-background.jpg");
 }
 .order-items-background{
-    background-image: url("../assets/59274.jpg");
+    background-image: url("../assets/order-items-background.jpg");
 }
 .products-background{
     background-image: url("../assets/shopping.jpg");
 }
 .my-profile-background{
     background-image: url("../assets/profile-background.jpg");
+}
+.driver-jobs{
+    width: 12em;
+    font-size: 20px !important;
+}
+.components-title{
+    font-size: 50px;
+}
+.suppliers-card, .drivers-card{
+    width: 22rem !important;
+    padding: 0 !important;
+    margin-bottom: 100px !important;
+}
+.suppliers-card .card-img{
+    height: 12em;
+}
+.suppliers-card .card-body{
+    background-color: #dddddd;
+}
+.suppliers-card .card-body .card-title, .drivers-card .card-body .card-title{
+    text-decoration: underline;
+    font-size: 28px;
+}
+.suppliers-card .card-body .card-text, .drivers-card .card-body .card-text{
+    font-size: 20px;
 }

@@ -52,7 +52,7 @@ export default function SupplierProducts() {
       <>
         <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
-            <h1 style={{fontSize:"50px"}}>
+            <h1 className="components-title">
               The Shop Of:
               <b style={{ color: "#ff851b" }}> {getItem(Keys.fullName)}</b>
             </h1>

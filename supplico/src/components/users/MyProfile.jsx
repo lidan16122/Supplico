@@ -32,7 +32,7 @@ export default function MyProfile() {
       <>
         <div className="my-profile-background">
           <div className="text-center text-black pt-5">
-            <h1 style={{fontSize:"50px"}}>
+            <h1 className="components-title">
               The Profile Of: <b style={{color:"#ff851b"}}>{user.fullName}</b>
             </h1>
             <h3>Here you can view your profile card</h3>

@@ -54,7 +54,44 @@ namespace SupplicoWebAPI.Controllers
 
             else return NotFound("User has no orders");
         }
+        [HttpGet("drivers")]
+        public IActionResult OrdersDriverSearch()
+        {
+            if (_SupplicoContext.Orders == null) return NotFound("No orders in database");
+            else if (_SupplicoContext.Orders.Where(o => o.DriverId == null).Count() < 0) return NotFound("No jobs availabe right now");
+            else
+            {
 
+                var orders = _SupplicoContext.Orders
+                    .Where(o => o.DriverId == null && o.SupplierConfirmation == true).Include(o => o.Business).Include(o => o.Supplier)
+                    .Include(o => o.Driver)
+                    .Include(o => o.Business)
+                    .Include(o => o.Supplier)
+                    .Select(o => new
+                    {
+                        OrderId = o.OrderId,
+                        Sum = o.Sum,
+                        Quantity = o.Quantity,
+                        Pallets = o.Pallets,
+                        SupplierFullName = o.Supplier.FullName,
+                        BusinessFullName = o.Business.FullName,
+                        Created = o.Created,
+                    })
+                    .ToList();
+                return Ok(orders);
+            }
+        }
+        /*[HttpGet("display-orderl/{orderID:int}")]
+        [Authorize]
+        public IActionResult DisplayOrder (int orderID) 
+        {
+            if (_SupplicoContext.Orders.FirstOrDefault(o => o.OrderId == orderID) == null) return NotFound("Order not found");
+            else
+            {
+                var order = _SupplicoContext.Orders.Where(o => o.OrderId == orderID)
+                    .Join()
+            }
+        }*/
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {

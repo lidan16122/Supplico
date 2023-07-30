@@ -191,7 +191,7 @@ export default function ShopProducts() {
 
         <div className="products-background">
           <div className="text-center text-black pt-5 mb-5">
-            <h1 style={{fontSize:"50px"}}>
+            <h1 className="components-title">
               The Shop Of: <b style={{ color: "#ff851b" }}>{name}</b>
             </h1>
             <h3>Here are the shop products:</h3>

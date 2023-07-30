@@ -38,6 +38,7 @@ namespace SupplicoWebAPI.Controllers
             }
         }
         [HttpGet("{userID:int}")]
+        [Authorize]
         public ActionResult<IEnumerable<OrderItem>> GetUserOrderItems(int userID)
         {
 

@@ -89,16 +89,19 @@ const Home = (props) => {
       <div className="what-article pt-5">
         <h3 className="what-article-title mb-5">What Is Supplico?</h3>
         <ul>
-          <li>We are a delivery company for small or big businesses.</li>
+          <li>We are a delivery company, we use a unique way to connect the shipment to the supplier, the
+            business and the driver.</li>
           <li>
-            We use a unique way to connect the shipment to the supplier, the
-            business and the driver.
+            There are 3 roles Businesses, Drivers, Suppliers.
+          </li>
+          <li>
+            Businesses can browse in any suppliers products and make order instantly, Suppliers can publish their products very easily<br /> and Drivers can search for open deliveries and just take it, simple as that.
           </li>
           <li>
             We are good for the environment, we don't use any paper and
             everything is digital.
           </li>
-          <li>It's easy to use, just order what you like.</li>
+          <li>Very easy to use.</li>
           <li>Every shipment has a receipt that is stored in our server.</li>
           <li>
             Every business, supplier or driver has to be confirmed by the system

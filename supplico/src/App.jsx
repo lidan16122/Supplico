@@ -20,6 +20,7 @@ import CreateProduct from "./components/products/CreateProduct";
 import EditProducts from "./components/products/EditProducts";
 import OrderItems from "./components/order-items/OrderItems";
 import DisplayOrder from "./components/orders/DisplayOrder";
+import DriverOrders from "./components/orders/DriverOrders";
 
 function App() {
   let img = siteImg;
@@ -137,6 +138,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Orders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="orders/jobs"
+              element={
+                <ProtectedRoute>
+                  <DriverOrders />
                 </ProtectedRoute>
               }
             />
