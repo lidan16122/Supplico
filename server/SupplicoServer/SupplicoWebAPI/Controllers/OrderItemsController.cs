@@ -41,7 +41,9 @@ namespace SupplicoWebAPI.Controllers
         [Authorize]
         public ActionResult<IEnumerable<OrderItem>> GetUserOrderItems(int userID)
         {
-
+            if (_SupplicoContext.OrderItems.Where(o => o.Order.SupplierId == userID || o.Order.BusinessId == userID || o.Order.DriverId == userID).Count() < 0) return NotFound("Order items not found");
+            else
+            {
             var orderItems = _SupplicoContext.OrderItems
                     .Where(o => o.Order.SupplierId == userID || o.Order.BusinessId == userID || o.Order.DriverId == userID)
                     .Include(o => o.Product)
@@ -53,11 +55,27 @@ namespace SupplicoWebAPI.Controllers
                         Transaction = o.Order.TransactionId,
                         ProductName = o.Product.Name
                     }).ToList();
-            if (orderItems.Count > 0)
-            {
                 return Ok(orderItems);
             }
-            else return NotFound("User has no items ordered");
+        }
+        [HttpGet("display-order/{orderID:int}")]
+        [Authorize]
+        public IActionResult DisplayOrderItems(int orderID)
+        {
+            if (_SupplicoContext.OrderItems.FirstOrDefault(o => o.OrderId == orderID) == null) return NotFound("Order items not found");
+            else
+            {
+                var orderItems = _SupplicoContext.OrderItems
+                    .Where(o => o.OrderId == orderID)
+                    .Include(o => o.Product)
+                    .Select(o => new
+                    {
+                        Id = o.Id,
+                        Quantity = o.Quantity,
+                        ProductName = o.Product.Name
+                    });
+                    return Ok(orderItems);
+            }
 
         }
         [HttpPost]

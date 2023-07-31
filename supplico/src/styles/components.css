@@ -159,3 +159,15 @@
 .suppliers-card .card-body .card-text, .drivers-card .card-body .card-text{
     font-size: 20px;
 }
+.display-order p{
+    font-size: 20px;
+}
+.display-order-summary{
+    text-align: center;
+    font-size: 24px !important;
+    text-decoration:underline;
+}
+.display-order-table th, .display-order-table td{
+    border: 1px solid #dddddd;
+    padding: 8px;
+}

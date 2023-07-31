@@ -130,28 +130,27 @@ export default function ShopProducts() {
           productId = products[j].id;
         }
       }
-      console.log("productId" + productId);
-      console.log("productQuantity" + productQuantity);
+      console.log("productId " + productId + " " + typeof(productId));
+      console.log("productQuantity" + productQuantity+ " " + typeof(productQuantity));
       try {
         const response = await axios({
           method: "post",
           url: `${SupplicoWebAPI_URL}/orderItems`,
           data: {
             quantity: productQuantity,
-            product: productId,
+            productId: productId,
           },
           headers: { "Content-Type": "application/json" },
         });
       } catch (err) {}
-      //axios
+      // axios
       //   .post(SupplicoWebAPI_URL + "/orderItems", {
       //     quantity: productQuantity,
-      //     product: productId,
+      //     productId: productId,
       //   })
       //   .then((res) => {
       //   })
       //   .catch((err) => {
-
       //   });
     }
     setOrder(true);

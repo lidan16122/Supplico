@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
-import { Keys, getItem } from "../../utils/storage";
 import { NavLink, useParams } from "react-router-dom";
 import CustomModal from "../layout/CustomModal";
 
