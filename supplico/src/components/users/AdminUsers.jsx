@@ -5,6 +5,7 @@ import { Button  } from "react-bootstrap";
 import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
+import Loading from "../layout/Loading";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -145,7 +146,7 @@ export default function AdminUsers() {
     return(
       <>
       {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
-        <h1 className="text-center">Loading...</h1>
+        <Loading />
       </>
     )
   }

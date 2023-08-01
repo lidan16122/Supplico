@@ -7,6 +7,8 @@ import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
 import AuthContext from "../context/AuthContext";
 import Cart from "./Cart";
+import siteImg from "../../assets/logo.png";
+import Loading from "../layout/Loading";
 
 export default function ShopProducts() {
   const [products, setProducts] = useState();
@@ -130,8 +132,10 @@ export default function ShopProducts() {
           productId = products[j].id;
         }
       }
-      console.log("productId " + productId + " " + typeof(productId));
-      console.log("productQuantity" + productQuantity+ " " + typeof(productQuantity));
+      console.log("productId " + productId + " " + typeof productId);
+      console.log(
+        "productQuantity" + productQuantity + " " + typeof productQuantity
+      );
       try {
         const response = await axios({
           method: "post",
@@ -232,9 +236,13 @@ export default function ShopProducts() {
                   <td>{p.name}</td>
                   <td>{p.price}</td>
                   <td>
-                    {roleID == 1 ? <Button variant="dark" onClick={() => handleClick(p)}>
-                      Add to cart
-                    </Button> : "Not availabe as DRIVER"}
+                    {roleID == 1 ? (
+                      <Button variant="dark" onClick={() => handleClick(p)}>
+                        Add to cart
+                      </Button>
+                    ) : (
+                      "Not availabe as DRIVER"
+                    )}
                   </td>
                 </tr>
               ))}
@@ -246,11 +254,19 @@ export default function ShopProducts() {
     );
   } else if (order && !loading && roleID == 1) {
     return (
-      <div className="text-black text-center">
+      <div className="text-black text-center pt-5 mb-5">
         <h1>Transaction Completed</h1>
         <h3>please wait for supplier confirmation and driver confirmation</h3>
-        <h3>you can view your orders in "My Orders" tab</h3>
-        <NavLink to="/">Redirct to home</NavLink>
+        <h3 className="pb-3">you can view your orders in "My Orders" tab</h3>
+        <NavLink to="/" className="link-none order-complete-link">
+          Redirct to home
+        </NavLink>
+        <br />
+        <img
+          src={siteImg}
+          alt="site image"
+          className="order-complete-img mt-5 mb-5"
+        />
       </div>
     );
   } else {
@@ -262,7 +278,7 @@ export default function ShopProducts() {
           ""
         )}
         {roleID == 1 ? (
-          <h1 className="text-center">LOADING...</h1>
+          <Loading />
         ) : (
           <h1 className="text-center text-black mt-5 mb-5">
             Unauthorized Business Route

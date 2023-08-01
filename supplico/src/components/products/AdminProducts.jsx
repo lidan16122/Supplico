@@ -3,6 +3,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
+import Loading from "../layout/Loading";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -70,7 +71,7 @@ export default function AdminProducts() {
     return (
       <>
       {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

@@ -84,7 +84,7 @@
     color: white !important;
     width: 6em !important;
 }
-.shopping-cart:hover, .reset-shopping-cart:hover, .cart-close:hover, .create-product:hover, .to-shop:hover{
+.shopping-cart:hover, .reset-shopping-cart:hover, .create-product:hover, .to-shop:hover{
     filter: brightness(90%);
 }
 .cart{
@@ -92,10 +92,10 @@
     left: 0%;
     top: 15%;
     color: black ;
-    background-color: white;
+    background-color: #ff851b;
     z-index: 1;
     width: 16em;
-    border: #ff851b solid 2px;
+    border: black solid 2px;
     text-align: center;
     
 }
@@ -170,4 +170,19 @@
 .display-order-table th, .display-order-table td{
     border: 1px solid #dddddd;
     padding: 8px;
+}
+.order-complete-link{
+    font-size: 24px;
+    border: black 1px solid;
+    background-color: #ff851b;
+    border-radius: 20px;
+    padding: 4px;
+}
+.order-complete-link:hover{
+    background-color: black;
+    color: white;
+    border: white 1px solid;
+}
+.order-complete-img{
+    width: 30vw;
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import CustomModal from "../layout/CustomModal";
 import AuthContext from "../context/AuthContext";
+import Loading from "../layout/Loading";
 
 function BusinessProducts() {
   const [users, setUsers] = useState();
@@ -80,7 +81,7 @@ function BusinessProducts() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

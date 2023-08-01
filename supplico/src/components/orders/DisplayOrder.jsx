@@ -7,6 +7,7 @@ import CustomModal from "../layout/CustomModal";
 import AuthContext from "../context/AuthContext";
 import { Button, Modal } from "react-bootstrap";
 import UpdatePallets from "./UpdatePallets";
+import Loading from "../layout/Loading";
 
 export default function DisplayOrder() {
   const [order, setOrder] = useState();
@@ -110,6 +111,37 @@ console.log(updatePallets)
       });
   }
 
+  async function businessConfirm(){
+    await axios
+      .put(SupplicoWebAPI_URL + "/orders/business", {
+        orderId: order[0].orderId,
+        businessId: getItem(Keys.userId),
+      })
+      .then((res) => {
+        console.log(res);
+        setShow(true);
+        setModalTitle("Confirmed");
+        setModalBody(
+          "Shipment delivery completed!"
+        );
+        getOrder();
+      })
+      .catch((err) => {
+        setShow(true);
+        setModalBody(err.response.data + ", " + err.message);
+      });
+  }
+  function checkOrderStatus(){
+    if (!order[0].supplierConfirmation) {
+      return "waiting for supplier shipment confirmation"
+    }
+    else if(!order[0].driverConfirmation && order[0].supplierConfirmation){
+      return "waiting for a driver to accept this delivery"
+    }
+    else if(!order[0].businessConfirmation && order[0].driverConfirmation && order[0].supplierConfirmation) return "delivery is in progress"
+    else return "shipment delivered, order completed!"
+  }
+
   if (!loading) {
     return (
       <>
@@ -137,6 +169,7 @@ console.log(updatePallets)
             from <b>{order[0].supplierFullName}</b> and should be delivered by{" "}
             <b>{order[0].driverFullName ?? "NONE"}</b>
           </p>
+          <h3 className="text-center">Status: {checkOrderStatus()}</h3>
           <h3
             className="text-center pt-4 pb-2"
             style={{ textDecoration: "underline" }}
@@ -173,6 +206,18 @@ console.log(updatePallets)
               Business phone number: <b>{order[0].businessPhoneNumber}</b>
               <br />
               Business email: <b>{order[0].businessEmail}</b>
+              <br />
+              <b>{order[0].businessConfirmation
+                ? "Business shipment has arrived it's destination"
+                : "*Waiting shipment arrival to it's destination"}</b>
+              <br />
+              {roleID == 1 && !order[0].businessConfirmation && order[0].driverConfirmation && order[0].supplierConfirmation ? (
+                <Button variant="dark" onClick={businessConfirm}>
+                  Confirm
+                </Button>
+              ) : (
+                ""
+              )}
             </p>
             <p className="col-4">
               Driver name: <b>{order[0].driverFullName ?? "NONE"}</b>
@@ -185,7 +230,7 @@ console.log(updatePallets)
                 ? "This shipment has a driver"
                 : "*Searching for a suitable driver"}</b>
               <br />
-              {roleID == 2 && order[0].driverConfirmation == false ? (
+              {roleID == 2 && !order[0].driverConfirmation && order[0].supplierConfirmation ? (
                 <Button variant="dark" onClick={driverConfirm}>
                   Confirm
                 </Button>
@@ -204,7 +249,7 @@ console.log(updatePallets)
                 ? "The supplier has confirmed this shipment"
                 : "*Watiting for supplier confirmation"}</b>
               <br />
-              {roleID == 3 && order[0].supplierConfirmation == false ? (
+              {roleID == 3 && !order[0].supplierConfirmation ? (
                 <Button variant="dark" onClick={supplierConfirm}>
                   Confirm
                 </Button>
@@ -229,7 +274,7 @@ console.log(updatePallets)
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

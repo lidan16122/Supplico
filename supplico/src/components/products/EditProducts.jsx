@@ -4,6 +4,7 @@ import { Form, Button, Modal } from "react-bootstrap";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { NavLink, useParams } from "react-router-dom";
 import CustomModal from "../layout/CustomModal";
+import Loading from "../layout/Loading";
 
 export default function EditProducts() {
   const [productName, setProductName] = useState("");
@@ -166,7 +167,7 @@ export default function EditProducts() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

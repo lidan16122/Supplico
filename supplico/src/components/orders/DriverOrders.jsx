@@ -5,6 +5,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import CustomModal from "../layout/CustomModal";
 import AuthContext from "../context/AuthContext";
+import Loading from "../layout/Loading";
 
 export default function DriverOrders() {
   const [orders, setOrders] = useState();
@@ -86,7 +87,7 @@ export default function DriverOrders() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

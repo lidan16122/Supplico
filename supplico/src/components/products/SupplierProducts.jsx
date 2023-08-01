@@ -5,6 +5,7 @@ import { SupplicoWebAPI_URL } from "../../utils/settings";
 import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
 import { NavLink } from "react-router-dom";
+import Loading from "../layout/Loading";
 
 export default function SupplierProducts() {
   const [products, setProducts] = useState();
@@ -121,7 +122,7 @@ export default function SupplierProducts() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

@@ -41,8 +41,9 @@ export default function Header(props) {
           <Navigation
             links={[
               { route: "/", text: image },
-              { route: "/car-info", text: "Car Information" },
-              { route: "/car-comparison", text: "Car Comparison" },
+              { route: "/about-us", text: "About Us" },
+              { route: "/privacy-policy", text: "Privacy Policy" },
+              { route: "/credits", text: "Credits" },
               { route: "/login", text: "Login" },
             ]}
           />

@@ -7,11 +7,11 @@ export default function Cart({ setCart, listMsg, makeOrder }) {
       <div className="cart">
         <h4 style={{textDecoration: "underline"}}>Cart</h4>
         {listMsg}
-        <Button variant="success" onClick={() => makeOrder()}>
+        <Button variant="success" className="mb-1" onClick={() => makeOrder()}>
           Make Order
         </Button>
         <br />
-        <Button variant="primary" onClick={() => setCart(false)} className="cart-close">
+        <Button variant="light" onClick={() => setCart(false)}>
           Close
         </Button>
       </div>

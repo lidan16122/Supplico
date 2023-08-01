@@ -18,6 +18,8 @@ public partial class Order
     public bool SupplierConfirmation { get; set; }
 
     public bool DriverConfirmation { get; set; }
+    public bool BusinessConfirmation { get; set; }
+
 
     public int? DriverId { get; set; }
 

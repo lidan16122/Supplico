@@ -12,9 +12,7 @@ export default function CustomModal({ title, body, btn, defaultShow }) {
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        {btn ? (
-          btn
-        ) : (
+        {btn ?? (
           <Button variant="primary" onClick={handleClose}>
             Close
           </Button>

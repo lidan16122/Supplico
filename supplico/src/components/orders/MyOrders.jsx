@@ -6,6 +6,7 @@ import { Keys, getItem } from "../../utils/storage";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../layout/CustomModal";
 import AuthContext from "../context/AuthContext";
+import Loading from "../layout/Loading";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState();
@@ -62,6 +63,7 @@ export default function MyOrders() {
                 <th>Pallets</th>
                 <th>Supplier</th>
                 <th>Driver</th>
+                <th>Business</th>
                 <th>Driver Name</th>
                 <th>Supplier Name</th>
                 <th>Business Name</th>
@@ -82,6 +84,7 @@ export default function MyOrders() {
                     <td>{o.pallets}</td>
                     <td>{o.supplierConfirmation ? "Yes" : "No"}</td>
                     <td>{o.driverConfirmation ? "Yes" : "No"}</td>
+                    <td>{o.businessConfirmation ? "Yes" : "No"}</td>
                     <td>{o.driverFullName}</td>
                     <td>{o.supplierFullName}</td>
                     <td>{o.businessFullName}</td>
@@ -118,7 +121,7 @@ export default function MyOrders() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

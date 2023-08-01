@@ -21,6 +21,9 @@ import EditProducts from "./components/products/EditProducts";
 import OrderItems from "./components/order-items/OrderItems";
 import DisplayOrder from "./components/orders/DisplayOrder";
 import DriverOrders from "./components/orders/DriverOrders";
+import AboutUs from "./components/additional/AboutUs";
+import PrivacyPolicy from "./components/additional/PrivacyPolicy";
+import Credits from "./components/additional/Credits";
 
 function App() {
   let img = siteImg;
@@ -85,6 +88,9 @@ function App() {
             <Route path="/" element={<Home siteImg={img} />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="credits" element={<Credits />} />
             <Route
               path="products"
               element={

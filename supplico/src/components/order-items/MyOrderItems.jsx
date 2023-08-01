@@ -6,6 +6,7 @@ import { Keys, getItem } from "../../utils/storage";
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import Loading from "../layout/Loading";
 
 export default function MyOrderItems() {
   const [orderItems, setOrderItems] = useState([]);
@@ -90,7 +91,7 @@ export default function MyOrderItems() {
         ) : (
           ""
         )}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

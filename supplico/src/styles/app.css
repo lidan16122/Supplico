@@ -128,3 +128,33 @@
   .red-note{
     color: red;
   }
+  .parent{
+    height: 600px;
+    width: 300px;
+  }
+  .loading{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .additional-background{
+    background-image: url("../assets/shopping.jpg");
+    background-size: cover;
+  }
+  .additional{
+    padding: 200px;
+    text-align: center;
+  }
+  .additional img{
+    width: 40em;
+  }
+.additional p{
+  font-size: 22px;
+  text-align: start;
+}
+.additional-title{
+  text-align: center;
+  font-size: 48px;
+  text-decoration: underline;
+}

@@ -3,6 +3,7 @@ import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
 import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
+import Loading from "../layout/Loading";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -51,11 +52,12 @@ if(!loading){
             <th>Sum</th>
             <th>Quantity</th>
             <th>Pallets</th>
-            <th>Supplier</th>
-            <th>Driver</th>
-            <th>Driver Id</th>
             <th>Supplier Id</th>
+            <th>Supplier</th>
+            <th>Driver Id</th>
+            <th>Driver</th>
             <th>Business Id</th>
+            <th>Business</th>
             <th>Created</th>
           </tr>
         </thead>
@@ -67,11 +69,12 @@ if(!loading){
               <td>{o.sum}</td>
               <td>{o.quantity}</td>
               <td>{o.pallets}</td>
-              <td>{o.supplierConfirmation ? "Yes" : "No"}</td>
-              <td>{o.driverConfirmation ? "Yes" : "No"}</td>
-              <td>{o.driverId}</td>
               <td>{o.supplierId}</td>
+              <td>{o.supplierConfirmation ? "Yes" : "No"}</td>
+              <td>{o.driverId}</td>
+              <td>{o.driverConfirmation ? "Yes" : "No"}</td>
               <td>{o.businessId}</td>
+              <td>{o.businessConfirmation ? "Yes" : "No"}</td>
               <td>{o.created}</td>
             </tr>
           ))}
@@ -84,7 +87,7 @@ else{
   return (
     <>
       {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
-      <h1 className="text-center">LOADING...</h1>
+      <Loading />
     </>
   );
 }

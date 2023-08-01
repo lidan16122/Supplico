@@ -45,6 +45,7 @@ namespace SupplicoWebAPI.Controllers
                     Pallets = o.Pallets,
                     SupplierConfirmation = o.SupplierConfirmation,
                     DriverConfirmation = o.DriverConfirmation,
+                    BusinessConfirmation = o.BusinessConfirmation,
                     DriverFullName = o.Driver.FullName,
                     SupplierFullName = o.Supplier.FullName,
                     BusinessFullName = o.Business.FullName,
@@ -100,6 +101,7 @@ namespace SupplicoWebAPI.Controllers
                         Pallets = o.Pallets,
                         SupplierConfirmation = o.SupplierConfirmation,
                         DriverConfirmation = o.DriverConfirmation,
+                        BusinessConfirmation = o.BusinessConfirmation,
                         DriverFullName = o.Driver.FullName,
                         DriverPhoneNumber = o.Driver.PhoneNumber,
                         DriverEmail = o.Driver.Email,
@@ -154,6 +156,19 @@ namespace SupplicoWebAPI.Controllers
             {
                 orderInDb.DriverId = order.DriverId;
                 orderInDb.DriverConfirmation = true;
+                await _SupplicoContext.SaveChangesAsync();
+                return NoContent();
+            }
+        }
+        [HttpPut("business")]
+        public async Task<IActionResult> BusinessConfirm(Order order)
+        {
+            var orderInDb = _SupplicoContext.Orders.FirstOrDefaultAsync(o => o.OrderId == order.OrderId).Result;
+            if (orderInDb == null) return NotFound("The specific order you are looking for is not found");
+            else
+            {
+                orderInDb.BusinessId = order.BusinessId;
+                orderInDb.BusinessConfirmation = true;
                 await _SupplicoContext.SaveChangesAsync();
                 return NoContent();
             }

@@ -14,9 +14,9 @@ const Home = (props) => {
         <div className="main-title text-center">
           <img src={props.siteImg} alt="Site Image" id="titleImg" />
           <h2 className="mt-4">
-            "Get fast on time with no trouble supply to your business"
+            "Fast on time deliveries with no trouble"
           </h2>
-          <h2 className="mb-4">"Environmental friendly"</h2>
+          <h2 className="mb-4">"Environmentally friendly, everything is digital"</h2>
           <Button
             className="main-article-button"
             onClick={() => navigate("register")}

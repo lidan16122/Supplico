@@ -5,6 +5,7 @@ import { SupplicoWebAPI_URL } from "../../utils/settings";
 import { Keys, getItem } from "../../utils/storage";
 import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
+import Loading from "../layout/Loading";
 
 export default function MyProfile() {
   const [user, setUser] = useState();
@@ -73,7 +74,7 @@ export default function MyProfile() {
     return (
       <>
       {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
-        <h1 className="text-center">LOADING...</h1>
+        <Loading />
       </>
     );
   }

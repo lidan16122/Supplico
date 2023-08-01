@@ -30,6 +30,9 @@ namespace SupplicoDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
+                    b.Property<bool>("BusinessConfirmation")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("BusinessId")
                         .HasColumnType("int");
 
