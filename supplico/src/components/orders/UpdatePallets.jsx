@@ -13,12 +13,11 @@ export default function UpdatePallets({updatePallets , setUpdatePallets, orderid
                 pallets: pallets,
             })
             .then((res) => {
-                console.log(res);
                 setUpdatePallets(false);
                 getOrder();
             })
             .catch((err) => {
-                console.log(err);
+                alert(err.message + ", " + err.response.data);
             })
         }
     }

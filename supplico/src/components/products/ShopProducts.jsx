@@ -12,6 +12,7 @@ import Loading from "../layout/Loading";
 
 export default function ShopProducts() {
   const [products, setProducts] = useState();
+  const [originalProducts, setOriginalProducts] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
@@ -24,13 +25,14 @@ export default function ShopProducts() {
   const { supplierid } = useParams();
   let { roleID } = useContext(AuthContext);
   const [cart, setCart] = useState(false);
+  const [search, setSearch] = useState("");
 
   const handleClose = () => setShow(false);
+
   function handleClick(value) {
     setCart(false);
     list.push(value);
     setShopList(list);
-    console.log(shopList);
   }
 
   function handleList() {
@@ -74,10 +76,10 @@ export default function ShopProducts() {
       .then((res) => {
         if (res.data) {
           setProducts(res.data);
-          console.log(res.data);
+          setOriginalProducts(res.data);
           setName(res.data[0].userFullName);
           setLoading(false);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
@@ -86,22 +88,18 @@ export default function ShopProducts() {
 
   function makeOrder() {
     if (shopList.length > 0) {
-      console.log("checkvalidity TRUE");
       axios
         .post(SupplicoWebAPI_URL + "/orders", {
           sum: currentSum,
           quantity: shopList.length,
-          supplierConfirmation: false,
-          driverConfirmation: false,
           supplierId: supplierid,
           businessId: getItem(Keys.userId),
         })
         .then((res) => {
-          console.log(res);
           handleOrderItems(shopList.map((p) => p.name));
         })
         .catch((err) => {
-          console.log(err);
+          setErrorMessage(err.message + ", " + err.response.data);
         });
     } else {
       alert("nothing in shopping cart");
@@ -132,10 +130,6 @@ export default function ShopProducts() {
           productId = products[j].id;
         }
       }
-      console.log("productId " + productId + " " + typeof productId);
-      console.log(
-        "productQuantity" + productQuantity + " " + typeof productQuantity
-      );
       try {
         const response = await axios({
           method: "post",
@@ -147,17 +141,20 @@ export default function ShopProducts() {
           headers: { "Content-Type": "application/json" },
         });
       } catch (err) {}
-      // axios
-      //   .post(SupplicoWebAPI_URL + "/orderItems", {
-      //     quantity: productQuantity,
-      //     productId: productId,
-      //   })
-      //   .then((res) => {
-      //   })
-      //   .catch((err) => {
-      //   });
     }
     setOrder(true);
+  }
+
+  function handleSearch() {
+    if (!search) {
+      setProducts(originalProducts);
+    } else {
+      setProducts(
+        originalProducts.filter((p) =>
+          p.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
   }
 
   if (!loading && !order && (roleID == 1 || roleID == 2)) {
@@ -201,7 +198,7 @@ export default function ShopProducts() {
             {roleID == 1 ? (
               <>
                 <Button
-                  className="mb-1"
+                  className="mb-2"
                   style={{ border: "solid 1px black" }}
                   variant="light"
                   onClick={() => handleList()}
@@ -210,7 +207,7 @@ export default function ShopProducts() {
                 </Button>
                 <br />
                 <Button
-                  className="reset-shopping-cart"
+                  className="reset-shopping-cart mb-2"
                   onClick={() => handleReset()}
                 >
                   RESET
@@ -219,6 +216,15 @@ export default function ShopProducts() {
             ) : (
               ""
             )}
+            <br />
+            <input
+              type="text"
+              name="search bar"
+              placeholder="search name"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>{" "}
           </div>
           <table className="table products-table">
             <thead>

@@ -24,6 +24,7 @@ import DriverOrders from "./components/orders/DriverOrders";
 import AboutUs from "./components/additional/AboutUs";
 import PrivacyPolicy from "./components/additional/PrivacyPolicy";
 import Credits from "./components/additional/Credits";
+import Error from "./components/layout/Error";
 
 function App() {
   let img = siteImg;
@@ -32,9 +33,6 @@ function App() {
   let timerID = useRef();
 
   useEffect(() => {
-    console.log("App useEffect", Date());
-    console.log("settings.js SupplicoWebAPI_URL", SupplicoWebAPI_URL);
-    //create a loop that refresh the tokens only if there is refreshToken
     if (getItem(Keys.refreshToken) && isNaN(timerID)) {
       setRefreshTokenInterval();
       refreshToken();
@@ -48,12 +46,10 @@ function App() {
         ? Number(expiresInSeconds) / 2
         : 30;
       timerID = setInterval(refreshToken, refreshInterval * 1000);
-      console.log("starting refreshToken", refreshInterval, Date());
     }
   }
 
   function refreshToken() {
-    console.log("refreshToken", Date());
     axios
       .post(SupplicoWebAPI_URL + "/users/refreshToken", {
         refreshToken: getItem(Keys.refreshToken),
@@ -171,6 +167,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<Error />}/>
           </Routes>
           <Footer />
         </BrowserRouter>

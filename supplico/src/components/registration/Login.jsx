@@ -30,7 +30,6 @@ export default function Login() {
     const form = e.currentTarget;
     e.preventDefault();
     e.stopPropagation();
-    console.log(form.checkValidity());
     setValidated(true);
     if (form.checkValidity() === true) {
       axios
@@ -40,7 +39,6 @@ export default function Login() {
         })
         .then((res) => {
           if (res.data) {
-            console.log(res.data);
             setModalTitle("Welcome Back")
             setModalMsg(`Welcome back ${loginrUserName}, we wish you a great day`);
             setModalBtn("")

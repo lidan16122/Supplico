@@ -7,7 +7,7 @@ export default function AboutUs() {
       <div className="additional-background">
         <div className="container color-black pt-5 additional">
           <h1 className="additional-title">About Us</h1>
-          <p className="pt-4">
+          <p className="pt-4 pb-5">
             We are Supplico a delivery company that works as a "middle man"
             between transactions.
             <br />

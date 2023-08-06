@@ -20,12 +20,11 @@ export default function DisplayOrder() {
   const [modalTitle, setModalTitle] = useState("Error");
   const [modalBody, setModalBody] = useState("");
   const [updatePallets, setUpdatePallets] = useState(false);
-console.log(updatePallets)
+  
   function handleClose() {
     setShow(false);
   }
 
-  console.log(orderid);
 
   useEffect(() => {
     getOrder();
@@ -43,9 +42,8 @@ console.log(updatePallets)
         if (res.data) {
           setOrder(res.data);
           getOrderItems();
-          console.log(res.data);
           setLoading(fale);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
@@ -63,9 +61,8 @@ console.log(updatePallets)
       .then((res) => {
         if (res.data) {
           setOrderItems(res.data);
-          console.log(res.data);
           setLoading(false);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
@@ -74,11 +71,10 @@ console.log(updatePallets)
 
   async function supplierConfirm() {
     await axios
-      .put(SupplicoWebAPI_URL + "/orders/supplier", {
+      .put(SupplicoWebAPI_URL + "/orders/confirmation", {
         orderId: order[0].orderId,
       })
       .then((res) => {
-        console.log(res);
         setShow(true);
         setModalTitle("Confirmed");
         setModalBody("Shipment confirmed, now searching for a driver! please update pallets count");
@@ -92,12 +88,11 @@ console.log(updatePallets)
 
   async function driverConfirm() {
     await axios
-      .put(SupplicoWebAPI_URL + "/orders/driver", {
+      .put(SupplicoWebAPI_URL + "/orders/confirmation", {
         orderId: order[0].orderId,
         driverId: getItem(Keys.userId),
       })
       .then((res) => {
-        console.log(res);
         setShow(true);
         setModalTitle("Confirmed");
         setModalBody(
@@ -113,12 +108,11 @@ console.log(updatePallets)
 
   async function businessConfirm(){
     await axios
-      .put(SupplicoWebAPI_URL + "/orders/business", {
+      .put(SupplicoWebAPI_URL + "/orders/confirmation", {
         orderId: order[0].orderId,
         businessId: getItem(Keys.userId),
       })
       .then((res) => {
-        console.log(res);
         setShow(true);
         setModalTitle("Confirmed");
         setModalBody(

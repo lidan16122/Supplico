@@ -1,18 +1,24 @@
+.components-title{
+    font-size: 50px;
+}
 .admin-title{
     color: black;
 }
-.admin-title > label{
+.admin-title label, .components label{
     font-size: 16px;
     margin-left: 5px;
     font-weight: bold;
     border: 1px solid black;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #ff851b;
     padding: 5px;
     cursor: pointer;
 }
 
-.admin-title > label >input{
+.admin-title label:hover, .components label:hover{
+    filter: brightness(90%);
+}
+.admin-title label input, .components label input{
     width: 15px;
     height: 15px;
 }
@@ -22,7 +28,6 @@
     width: 40px;
     cursor: pointer;
 }
-
 .focused-img{
     display: block;
     width: 25%;
@@ -43,7 +48,9 @@
     border: 1px solid #dddddd;
     padding: 8px;
 }
-
+.my-profile-background{
+    background-image: url("../assets/profile-background.jpg");
+}
 .my-profile-card{
     flex-direction: row !important;
     margin: auto 15em;
@@ -59,14 +66,6 @@
 }
 .my-profile-card > .card-body > .card-text{
     font-size: 24px;
-}
-.share-info{
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 0;
-    padding-bottom: 1em;
 }
 
 .products-background, .orders-background, .suppliers-background, .order-items-background, .drivers-background{
@@ -99,52 +98,26 @@
     text-align: center;
     
 }
-
 .cart > ul{
     list-style-position:inside;
     padding-left: 0;
 
 }
-
-.link-none{
-    text-decoration: none;
-    color: inherit;
-}
-.link-none:hover{
-    color: inherit;
-}
-.my-order-tr{
-    cursor: pointer;
-}
-.my-order-tr:hover{
-    background-color: #ff851b;
-}
-.orders-background{
-    background-image: url("../assets/orders-background.jpg");
-}
-.suppliers-background, .drivers-background{
-    background-image: url("../assets/suppliers-background.jpg");
-}
-.order-items-background{
-    background-image: url("../assets/order-items-background.jpg");
-}
 .products-background{
     background-image: url("../assets/shopping.jpg");
 }
-.my-profile-background{
-    background-image: url("../assets/profile-background.jpg");
+.suppliers-background, .drivers-background{
+    background-image: url("../assets/suppliers-background.jpg");
 }
 .driver-jobs{
     width: 12em;
     font-size: 20px !important;
 }
-.components-title{
-    font-size: 50px;
-}
 .suppliers-card, .drivers-card{
     width: 22rem !important;
     padding: 0 !important;
     margin-bottom: 100px !important;
+    transition: 0.15s all linear;
 }
 .suppliers-card .card-img{
     height: 12em;
@@ -158,6 +131,23 @@
 }
 .suppliers-card .card-body .card-text, .drivers-card .card-body .card-text{
     font-size: 20px;
+}
+.suppliers-card:hover, .drivers-card:hover{
+    transform: scale(1.05);
+    z-index: 0; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.my-order-tr{
+    cursor: pointer;
+}
+.my-order-tr:hover{
+    background-color: #ff851b;
+}
+.orders-background{
+    background-image: url("../assets/orders-background.jpg");
+}
+.order-items-background{
+    background-image: url("../assets/order-items-background.jpg");
 }
 .display-order p{
     font-size: 20px;

@@ -58,11 +58,6 @@ export default function Register() {
     setPhoneValidation(true);
     setNameValidation(true);
     setImageValidation(true);
-
-    if (form.checkValidity() === false) {
-      console.log("checkvalidity FALSE");
-    }
-
     if (
       form.checkValidity() === true &&
       registerUserName.length > 5 &&
@@ -70,7 +65,6 @@ export default function Register() {
       registerPassword.length > 7 &&
       registerPassword.length < 25
     ) {
-      console.log("checkvalidity TRUE");
       const formData = new FormData();
       formData.append("userName", registerUserName);
       formData.append("password", registerPassword);

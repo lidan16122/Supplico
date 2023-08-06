@@ -18,9 +18,8 @@ export default function MyProfile() {
       .then((res) => {
         if (res.data) {
           setUser(res.data);
-          console.log(res.data);
           setLoading(false);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setShow(true);

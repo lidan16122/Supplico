@@ -21,7 +21,6 @@ function BusinessProducts() {
       .then((res) => {
         if (res.data) {
           setUsers(res.data);
-          console.log(res.data);
           setLoading(false);
         } else setErrorMessage("empty response.data");
       })

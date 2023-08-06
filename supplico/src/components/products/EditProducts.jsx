@@ -31,7 +31,6 @@ export default function EditProducts() {
     axios
       .get(SupplicoWebAPI_URL + "/products/edit/" + productid)
       .then((res) => {
-        console.log(res.data);
         setProduct(res.data);
         setLoading(false);
         setProductName(res.data.name)
@@ -47,18 +46,11 @@ export default function EditProducts() {
     e.preventDefault();
     setNameValidation(true);
     setPriceValidation(true);
-    console.log(nameValidation);
-    console.log(priceValidation);
-    if (form.checkValidity() === false) {
-      console.log("checkvalidity FALSE");
-    }
-
     if (
       form.checkValidity() === true &&
       productName.length > 2 &&
       productPrice > 0
     ) {
-      console.log("checkvalidity TRUE");
       await axios
         .put(SupplicoWebAPI_URL + "/products", {
           name: productName,
@@ -66,7 +58,6 @@ export default function EditProducts() {
           id: product.id
         })
         .then((res) => {
-          console.log(res);
           setShow(true);
           setModalBody(
             "Product successfully updated!"

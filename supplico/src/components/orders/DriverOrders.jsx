@@ -21,7 +21,6 @@ export default function DriverOrders() {
       .then((res) => {
         if (res.data) {
           setOrders(res.data);
-          console.log(res.data);
           setLoading(false);
         } else setErrorMessage("empty response.data");
       })

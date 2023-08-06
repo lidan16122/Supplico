@@ -9,8 +9,10 @@ import Loading from "../layout/Loading";
 
 export default function SupplierProducts() {
   const [products, setProducts] = useState();
+  const [originalProducts, setOriginalProducts] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getProducts();
@@ -22,9 +24,9 @@ export default function SupplierProducts() {
       .then((res) => {
         if (res.data) {
           setProducts(res.data);
-          console.log(res.data);
+          setOriginalProducts(res.data);
           setLoading(false);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
@@ -48,6 +50,18 @@ export default function SupplierProducts() {
       });
   }
 
+  function handleSearch() {
+    if (!search) {
+      setProducts(originalProducts);
+    } else {
+      setProducts(
+        originalProducts.filter((p) =>
+          p.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }
+
   if (!loading) {
     return (
       <>
@@ -58,11 +72,20 @@ export default function SupplierProducts() {
               <b style={{ color: "#ff851b" }}> {getItem(Keys.fullName)}</b>
             </h1>
             <h3>Here are the shop products:</h3>
-            <Button className="create-product">
+            <Button className="create-product mb-2">
               <NavLink to="/products/create-product" className="link-none">
                 Create new product
               </NavLink>
             </Button>
+            <br />
+            <input
+              type="text"
+              name="search bar"
+              placeholder="search name"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>{" "}
           </div>
           <table className="table products-table">
             <thead>

@@ -12,6 +12,7 @@ export default function MyOrderItems() {
   const [orderItems, setOrderItems] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   let { roleID } = useContext(AuthContext);
   let navigate = useNavigate();
 
@@ -31,13 +32,30 @@ export default function MyOrderItems() {
         if (res.data) {
           setOrderItems(res.data);
           setLoading(false);
-          console.log(res.data);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
         if (err.response.data == "User has no items ordered") setLoading(false);
       });
+  }
+
+  function itemsOrderText(){
+    if (roleID == 1) return "Showing All Items You Have Been Ordered";
+    else if (roleID == 2) return "Showing Items That You Have Been Delivered"
+    else return "Showing Items From Orders That Have Been Ordered From You"
+  }
+
+  function handleSearch() {
+    if (!search) {
+      setOrderItems(originalOrderItems);
+    } else {
+      setOrderItems(
+        originalOrderItems.filter((o) =>
+          o.transaction.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
   }
 
   if (!loading) {
@@ -46,8 +64,19 @@ export default function MyOrderItems() {
       <div className="order-items-background">
         <div className="text-center text-black pt-5 mb-5">
           <h1 className="components-title">Items Ordered</h1>
-          <h3 className="mb-4">Showing All Items You Have Been Ordered</h3>
-          {roleID == 2 ? <Button variant="dark"  onClick={() => navigate("/orders/jobs")} className="driver-jobs">Available Jobs</Button> : ""}
+          <h3 className="mb-4">{itemsOrderText()}</h3>
+          {roleID == 2 ? <Button variant="dark"  onClick={() => navigate("/orders/jobs")} className="driver-jobs mb-2">Available Jobs</Button>  : ""}
+          <br />
+          <input
+            type="text"
+            name="search bar"
+            placeholder="search transaction"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={handleSearch}>
+            Search
+          </button>{" "}
 
         </div>
 

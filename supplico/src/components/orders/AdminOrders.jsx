@@ -7,8 +7,58 @@ import Loading from "../layout/Loading";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
+  const [originalOrders, setOriginalOrders] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState(false);
+  const [search, setSearch] = useState("");
+
+
+  const handleFilter = () => {
+    if (!filter) {
+      setFilter(true);
+      setOrders(originalOrders.filter((o) => o.businessConfirmation && o.driverConfirmation && o.supplierConfirmation));
+    } else {
+      setFilter(false);
+      if (!search) {
+        setOrders(originalOrders);
+      }
+      else{
+        setOrders(
+          originalOrders.filter((o) =>
+            o.transactionId.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
+    }
+  };
+
+  function handleSearch() {
+    if (!search) {
+      if(!filter){
+        setOrders(originalOrders);
+      }
+      else{
+        setOrders(originalOrders.filter((o) => o.businessConfirmation && o.driverConfirmation && o.supplierConfirmation));
+      }
+    }
+    else{
+      if (filter) {
+        setOrders(
+          originalOrders.filter((o) =>
+            o.transactionId.toLowerCase().includes(search.toLowerCase()) && o.businessConfirmation && o.driverConfirmation && o.supplierConfirmation
+          )
+        );
+      }
+      else{
+        setOrders(
+          originalOrders.filter((o) =>
+            o.transactionId.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
+    }
+  };
 
   useEffect(() => {
     getOrders();
@@ -25,13 +75,13 @@ export default function AdminOrders() {
       .then((res) => {
         if (res.data){
           setOrders(res.data);
+          setOriginalOrders(res.data);
           setLoading(false)
-          console.log(res.data)
         } 
-        else console.log("empty response.data");
+        else alert("empty response.data");
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message + ", " + err.response.data);
       });
   }
 
@@ -42,6 +92,19 @@ if(!loading){
       <div className="text-center mt-5 mb-5 admin-title">
         <h1>Orders</h1>
         <h2>Showing All Orders</h2>
+        <label className="mb-2">
+            <input type="checkbox" onChange={handleFilter} />
+            Only Completed Orders
+          </label>
+          <br />
+          <input
+            type="text"
+            name="search bar"
+            placeholder="search transaction"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
       </div>
 
       <table className="table text-center admin-table">

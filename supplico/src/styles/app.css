@@ -64,8 +64,6 @@
     border-radius: 100%;
     border: solid 1px white;
   }
-
-  
   .icons:hover,
   .additional-links:hover {
     color: white;
@@ -75,8 +73,6 @@
   .facebook {
     background: #3B5998;
   }
-  
-  
   .instagram {
     background: #f09433;
     background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -84,15 +80,12 @@
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
   }
-  
   .whatsapp {
     background-color: #25d365e8;
   }
-  
   .email {
     background-color: rgb(255, 43, 43);
   }
-  
   .additional-links {
     cursor: pointer;
     font-size: 24px;
@@ -105,28 +98,34 @@
     border-radius: 50px;
     border: solid 1px white;
   }
-  
   .copyrights {
     background-color: rgb(63, 63, 63);
     text-align: start;
     color: white;
     padding-left: 0.5em;
   }
-
   :root{
     --primary-color: #ff851b;
   }
-
   .btn-primary{
     background-color: #ff851b !important;
     border-color: white !important;
   }
-
+  .btn-success a{
+    color: white;
+  }
   .form-control{
     border: 1px solid black !important;
   }
   .red-note{
     color: red;
+  }
+  .link-none{
+    text-decoration: none;
+    color: inherit;
+  }
+  .link-none:hover{
+    color: inherit;
   }
   .parent{
     height: 600px;
@@ -139,7 +138,7 @@
     transform: translate(-50%,-50%);
   }
   .additional-background{
-    background-image: url("../assets/shopping.jpg");
+    background-image: url("../assets/profile-background.jpg");
     background-size: cover;
   }
   .additional{
@@ -157,4 +156,34 @@
   text-align: center;
   font-size: 48px;
   text-decoration: underline;
+}
+.additional ol{
+  text-align: start;
+  font-size: 20px;
+  list-style: none;
+}
+.additional ol li{
+  padding-bottom: 1em;
+}
+.share-info{
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 0;
+  padding-bottom: 1em;
+}
+.error-page-background{
+  background-color: #bebebee8;
+  padding-bottom: 200px;
+}
+.error-page{
+  text-align: center;
+  color: black;
+}
+.error-page h1{
+  font-size: 50px;
+}
+.error-page img{
+  width: 40em;
 }

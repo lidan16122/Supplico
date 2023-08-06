@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
-import { Button  } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../../styles/components.css";
 import CustomModal from "../layout/CustomModal";
 import { Keys, getItem } from "../../utils/storage";
@@ -11,20 +11,60 @@ export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [showImg, setShowImg] = useState();
   const [filter, setFilter] = useState(false);
+  const [search, setSearch] = useState("");
 
   const handleFilter = () => {
     if (!filter) {
       setFilter(true);
-      setOriginalUsers(users);
-      setUsers(users.filter((u) => u.isAccepted == false));
+      setUsers(
+        originalUsers.filter(
+          (u) =>
+            u.isAccepted == false &&
+            u.fullName.toLowerCase().includes(search.toLowerCase())
+        )
+      );
     } else {
       setFilter(false);
-      setUsers(originalUsers);
+      if (!search) {
+        setUsers(originalUsers);
+      } else {
+        setUsers(
+          originalUsers.filter((u) =>
+            u.fullName.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
     }
   };
+
+  function handleSearch() {
+    if (!search) {
+      if (!filter) {
+        setUsers(originalUsers);
+      } else {
+        setUsers(originalUsers.filter((u) => u.isAccepted == false));
+      }
+    } else {
+      if (filter) {
+        setUsers(
+          originalUsers.filter(
+            (u) =>
+              u.fullName.toLowerCase().includes(search.toLowerCase()) &&
+              u.isAccepted == false
+          )
+        );
+      } else {
+        setUsers(
+          originalUsers.filter((u) =>
+            u.fullName.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
+    }
+  }
 
   useEffect(() => {
     getUsers();
@@ -37,13 +77,13 @@ export default function AdminUsers() {
       },
     };
     axios
-      .get(SupplicoWebAPI_URL + "/users",options)
+      .get(SupplicoWebAPI_URL + "/users", options)
       .then((res) => {
-        if (res.data){
+        if (res.data) {
           setUsers(res.data);
+          setOriginalUsers(res.data);
           setLoading(false);
-        } 
-        else console.log("empty response.data");
+        } else console.log("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message);
@@ -86,11 +126,21 @@ export default function AdminUsers() {
         <div className="text-center mt-5 mb-5 admin-title">
           <h1>Users</h1>
           <h2>Showing All Users</h2>
-          <label>
-            <input type="checkbox" onChange={handleFilter} />
+          <label className="mb-2">
+            <input type="checkbox" name="filter" onChange={handleFilter} />
             Show Unapproved Only
           </label>
+          <br />
+          <input
+            type="text"
+            name="search bar"
+            placeholder="search name"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button> <br />
         </div>
+
         <table className="table text-center admin-table">
           <thead>
             <tr>
@@ -123,7 +173,7 @@ export default function AdminUsers() {
                     onClick={(e) => setShowImg(e.target.src)}
                   />
                 </td>
-                <td>
+                <td style={{ fontSize: "16px" }}>
                   <Button
                     variant={u.isAccepted ? "success" : "danger"}
                     onClick={() => changeActivation(u)}
@@ -131,7 +181,10 @@ export default function AdminUsers() {
                     {u.isAccepted ? "Accepted" : "Not Accepted"}
                   </Button>{" "}
                   *{" "}
-                  <Button variant="primary" onClick={() => deleteUser(u.userId)}>
+                  <Button
+                    variant="primary"
+                    onClick={() => deleteUser(u.userId)}
+                  >
                     Delete
                   </Button>
                 </td>
@@ -141,13 +194,16 @@ export default function AdminUsers() {
         </table>
       </>
     );
-  }
-  else{
-    return(
+  } else {
+    return (
       <>
-      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
+        {errorMessage ? (
+          <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+        ) : (
+          ""
+        )}
         <Loading />
       </>
-    )
+    );
   }
 }

@@ -4,7 +4,7 @@ import siteImg from "../../assets/logo.png";
 export default function PrivacyPolicy() {
   return (
     <>
-      <div className="additional-background">
+      <div>
         <div className="container color-black pt-5 additional">
           <h1 className="additional-title">Privacy Policy</h1>
           <p>Privacy Policy for Supplico</p>
@@ -15,13 +15,14 @@ export default function PrivacyPolicy() {
             collect, use, share, and protect your personal information when you
             use our delivery services or visit our website.
           </p>
-          <ol style={{textAlign: "start"}}>
+          <ol className="pb-5">
             <li>
-              Information We Collect
+              1. Information We Collect
               <ol>
                 <li>
-                  Personal Information:<br/> We may collect personal information that
-                  you provide directly to us, including but not limited to:
+                  1.1 Personal Information:
+                  <br /> We may collect personal information that you provide
+                  directly to us, including but not limited to:
                   <ul>
                     <li>Name, address, email address, and phone number</li>
                     <li>Payment information</li>
@@ -30,7 +31,8 @@ export default function PrivacyPolicy() {
                   </ul>
                 </li>
                 <li>
-                  Usage Data:<br/> We may collect information about your use of our
+                  1.2 Usage Data:
+                  <br /> We may collect information about your use of our
                   website and services, such as IP address, device information,
                   browser type, and pages visited. This information helps us
                   understand how you interact with our services and improve our
@@ -39,97 +41,102 @@ export default function PrivacyPolicy() {
               </ol>
             </li>
             <li>
-              How We Use Your Information
+              2. How We Use Your Information
               <ol>
                 <li>
-                  Providing Services:<br/> We use the information we collect to
-                  process and fulfill your delivery orders, respond to your
-                  inquiries, and provide customer support.
+                  2.1 Providing Services:
+                  <br /> We use the information we collect to process and
+                  fulfill your delivery orders, respond to your inquiries, and
+                  provide customer support.
                 </li>
                 <li>
-                  2.2 Improving Services:<br/> Your feedback and usage data help us
-                  analyze and improve our services, tailor our offerings to your
+                  2.2 Improving Services:
+                  <br /> Your feedback and usage data help us analyze and
+                  improve our services, tailor our offerings to your
                   preferences, and enhance our website's performance.
                 </li>
                 <li>
-                  2.3 Communication:<br/> We may use your contact information to send
-                  you updates about your delivery status, promotional offers,
-                  newsletters, and other relevant information. You can opt-out
-                  of marketing communications at any time.
+                  2.3 Communication:
+                  <br /> We may use your contact information to send you updates
+                  about your delivery status, promotional offers, newsletters,
+                  and other relevant information. You can opt-out of marketing
+                  communications at any time.
                 </li>
                 <li>
-                  2.4 Legal Compliance:<br/> We may process your information to
-                  comply with legal obligations, resolve disputes, and enforce
-                  our terms and conditions.
+                  2.4 Legal Compliance:
+                  <br /> We may process your information to comply with legal
+                  obligations, resolve disputes, and enforce our terms and
+                  conditions.
                 </li>
               </ol>
             </li>
             <li>
-              How We Share Your Information
+              3. How We Share Your Information
               <ol>
                 <li>
-                  Third-Party Service Providers:<br/> We may share your personal
-                  information with trusted third-party service providers who
-                  assist us in delivering our services, processing payments, or
-                  managing our website. These service providers are required to
-                  protect your data and are not allowed to use it for their own
-                  purposes.
+                  3.1 Third-Party Service Providers:
+                  <br /> We may share your personal information with trusted
+                  third-party service providers who assist us in delivering our
+                  services, processing payments, or managing our website. These
+                  service providers are required to protect your data and are
+                  not allowed to use it for their own purposes.
                 </li>
                 <li>
-                  Business Transfers:<br/> In the event of a merger, acquisition, or
-                  sale of our company or assets, your information may be
-                  transferred to the new entity subject to this Privacy Policy.
+                  3.2 Business Transfers:
+                  <br /> In the event of a merger, acquisition, or sale of our
+                  company or assets, your information may be transferred to the
+                  new entity subject to this Privacy Policy.
                 </li>
                 <li>
-                  Legal Requirements:<br/> We may disclose your information if
-                  required by law or in response to a valid legal request.
+                  3.3 Legal Requirements:
+                  <br /> We may disclose your information if required by law or
+                  in response to a valid legal request.
                 </li>
               </ol>
             </li>
             <li>
-              Data Security We take data security seriously and employ
+              4. Data Security We take data security seriously and employ
               industry-standard measures to safeguard your personal information
               from unauthorized access, loss, misuse, or alteration. However, no
               data transmission over the internet or electronic storage is
               completely secure, and we cannot guarantee absolute security.
             </li>
             <li>
-              Your Choices
+              5. Your Choices
               <ol>
                 <li>
-                  Access and Update:<br/> You can access and update your personal
-                  information by logging into your account or contacting our
-                  customer support.
+                  5.1 Access and Update:
+                  <br /> You can access and update your personal information by
+                  logging into your account or contacting our customer support.
                 </li>
                 <li>
-                  Marketing Preferences:<br/> You can manage your marketing
-                  communication preferences by following the instructions in the
-                  emails you receive from us or by contacting us directly.
+                  5.2 Marketing Preferences:
+                  <br /> You can manage your marketing communication preferences
+                  by following the instructions in the emails you receive from
+                  us or by contacting us directly.
                 </li>
               </ol>
             </li>
             <li>
-              Children's Privacy Our services are not intended for children
+              6. Children's Privacy Our services are not intended for children
               under the age of 18. We do not knowingly collect personal
               information from children under 18. If you believe we have
               inadvertently collected such information, please contact us
               immediately.
             </li>
             <li>
-              Changes to this Privacy Policy We may update this Privacy Policy
-              from time to time to reflect changes in our practices or for other
-              operational, legal, or regulatory reasons. We will notify you of
-              any material changes through our website or other communication
-              channels.
+              7. Changes to this Privacy Policy We may update this Privacy
+              Policy from time to time to reflect changes in our practices or
+              for other operational, legal, or regulatory reasons. We will
+              notify you of any material changes through our website or other
+              communication channels.
             </li>
             <li>
               Contact Us If you have any questions or concerns about this
-              Privacy Policy or our data practices, please contact us at: [Your
-              Delivery Company Name] Address: [Your Address] Email: [Your Email]
-              Phone: [Your Phone Number] By using our delivery services or
-              accessing our website, you agree to the terms outlined in this
-              Privacy Policy. Thank you for trusting [Your Delivery Company
-              Name] with your deliveries.
+              Privacy Policy or our data practices, please contact us by using
+              our delivery services or accessing our website, you agree to the
+              terms outlined in this Privacy Policy. Thank you for trusting
+              Supplico with your deliveries.
             </li>
           </ol>
           <img src={siteImg} alt="site image" />

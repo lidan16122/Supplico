@@ -135,40 +135,26 @@ namespace SupplicoWebAPI.Controllers
                     return Created($"/orders/{order.OrderId}", order);
             }
         }
-        [HttpPut("supplier")]
-        public async Task<IActionResult> SupplierConfirm(Order order)
+        [HttpPut("confirmation")]
+        public async Task<IActionResult> UpdateConfirmation(Order order)
         {
             var orderInDb = _SupplicoContext.Orders.FirstOrDefaultAsync(o => o.OrderId == order.OrderId).Result;
             if (orderInDb == null) return NotFound("The specific order you are looking for is not found");
             else
             {
-                orderInDb.SupplierConfirmation = true;
-                await _SupplicoContext.SaveChangesAsync();
-                return NoContent();
-            }
-        }
-        [HttpPut("driver")]
-        public async Task<IActionResult> DriverConfirm(Order order)
-        {
-            var orderInDb = _SupplicoContext.Orders.FirstOrDefaultAsync(o => o.OrderId == order.OrderId).Result;
-            if (orderInDb == null) return NotFound("The specific order you are looking for is not found");
-            else
-            {
-                orderInDb.DriverId = order.DriverId;
-                orderInDb.DriverConfirmation = true;
-                await _SupplicoContext.SaveChangesAsync();
-                return NoContent();
-            }
-        }
-        [HttpPut("business")]
-        public async Task<IActionResult> BusinessConfirm(Order order)
-        {
-            var orderInDb = _SupplicoContext.Orders.FirstOrDefaultAsync(o => o.OrderId == order.OrderId).Result;
-            if (orderInDb == null) return NotFound("The specific order you are looking for is not found");
-            else
-            {
-                orderInDb.BusinessId = order.BusinessId;
+                if (order.BusinessId != null)
+                {
                 orderInDb.BusinessConfirmation = true;
+                }
+                else if (order.DriverId != null)
+                {
+                    orderInDb.DriverId = order.DriverId;
+                    orderInDb.DriverConfirmation = true;
+                }
+                else
+                {
+                    orderInDb.SupplierConfirmation = true;
+                }
                 await _SupplicoContext.SaveChangesAsync();
                 return NoContent();
             }

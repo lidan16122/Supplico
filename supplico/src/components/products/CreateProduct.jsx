@@ -18,24 +18,17 @@ export default function CreateProduct() {
       Close
     </Button>
   );
-  console.log(nameValidation)
 
   function handleClose() {
     setShow(false);
   }
+
   async function onCreateProduct(e) {
     const form = e.currentTarget;
     e.preventDefault();
     setNameValidation(true);
     setPriceValidation(true);
-    console.log(nameValidation)
-    console.log(priceValidation)
-    if (form.checkValidity() === false) {
-      console.log("checkvalidity FALSE");
-    }
-
     if (form.checkValidity() === true && productName.length > 2 && productPrice > 0) {
-      console.log("checkvalidity TRUE");
         await axios
           .post(SupplicoWebAPI_URL + "/products", {
             name: productName,
@@ -43,7 +36,6 @@ export default function CreateProduct() {
             userId: getItem(Keys.userId),
           })
           .then((res) => {
-            console.log(res);
             setShow(true);
             setModalBody(
               "Product added successfully now other users can see it!"

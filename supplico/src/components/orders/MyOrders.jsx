@@ -10,10 +10,73 @@ import Loading from "../layout/Loading";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState();
+  const [originalOrders, setOriginalOrders] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState(false);
+  const [search, setSearch] = useState("");
   let navigate = useNavigate();
   let { roleID } = useContext(AuthContext);
+
+  const handleFilter = () => {
+    if (!filter) {
+      setFilter(true);
+      setOrders(
+        originalOrders.filter(
+          (o) =>
+            o.businessConfirmation &&
+            o.driverConfirmation &&
+            o.supplierConfirmation
+        )
+      );
+    } else {
+      setFilter(false);
+      if (!search) {
+        setOrders(originalOrders);
+      } else {
+        setOrders(
+          originalOrders.filter((o) =>
+            o.transactionId.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
+    }
+  };
+
+  function handleSearch() {
+    if (!search) {
+      if (!filter) {
+        setOrders(originalOrders);
+      } else {
+        setOrders(
+          originalOrders.filter(
+            (o) =>
+              o.businessConfirmation &&
+              o.driverConfirmation &&
+              o.supplierConfirmation
+          )
+        );
+      }
+    } else {
+      if (filter) {
+        setOrders(
+          originalOrders.filter(
+            (o) =>
+              o.transactionId.toLowerCase().includes(search.toLowerCase()) &&
+              o.businessConfirmation &&
+              o.driverConfirmation &&
+              o.supplierConfirmation
+          )
+        );
+      } else {
+        setOrders(
+          originalOrders.filter((o) =>
+            o.transactionId.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
+    }
+  }
 
   useEffect(() => {
     getOrders();
@@ -30,9 +93,9 @@ export default function MyOrders() {
       .then((res) => {
         if (res.data) {
           setOrders(res.data);
-          console.log(res.data);
+          setOriginalOrders(res.data);
           setLoading(false);
-        } else console.log("empty response.data");
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message + ", " + err.response.data);
@@ -46,13 +109,38 @@ export default function MyOrders() {
     return (
       <>
         <div className="orders-background">
-          <div className="text-center text-white pt-5 mb-5">
+          <div className="text-center text-white pt-5 mb-5 components">
             <h1 className="components-title">
               Orders Of:
               <b style={{ color: "#ff851b" }}> {getItem(Keys.fullName)}</b>
             </h1>
             <h3 className="mb-4">Here are all of your orders:</h3>
-            {roleID == 2 ? <Button variant="outline-light"  onClick={() => navigate("/orders/jobs")} className="driver-jobs">Available Jobs</Button> : ""}
+            <label className="mb-2">
+              <input type="checkbox" onChange={handleFilter} />
+              Show Completed Orders
+            </label>
+            <br />
+            {roleID == 2 ? (
+              <Button
+              variant="dark"
+              onClick={() => navigate("/orders/jobs")}
+              className="driver-jobs mb-2"
+              >
+                Available Jobs
+              </Button>
+            ) : (
+              ""
+              )}
+              <br />
+              <input
+                className={roleID == 2 ? "mb-2" : ""}
+                type="text"
+                name="search bar"
+                placeholder="search transaction"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button onClick={handleSearch}>Search</button>
           </div>
           <table className="table orders-table">
             <thead>
@@ -61,13 +149,13 @@ export default function MyOrders() {
                 <th>Sum</th>
                 <th>Quantity</th>
                 <th>Pallets</th>
-                <th>Supplier</th>
                 <th>Driver</th>
-                <th>Business</th>
+                <th>Supplier</th>
+                <th>Business Name</th>
                 <th>Driver Name</th>
                 <th>Supplier Name</th>
-                <th>Business Name</th>
                 <th>Created</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -82,13 +170,13 @@ export default function MyOrders() {
                     <td>{o.sum}</td>
                     <td>{o.quantity}</td>
                     <td>{o.pallets}</td>
-                    <td>{o.supplierConfirmation ? "Yes" : "No"}</td>
-                    <td>{o.driverConfirmation ? "Yes" : "No"}</td>
-                    <td>{o.businessConfirmation ? "Yes" : "No"}</td>
+                    <td>{o.driverConfirmation ? "Accepted" : "Searching"}</td>
+                    <td>{o.supplierConfirmation ? "Accepted" : "Waiting"}</td>
+                    <td>{o.businessFullName}</td>
                     <td>{o.driverFullName}</td>
                     <td>{o.supplierFullName}</td>
-                    <td>{o.businessFullName}</td>
-                    <td>{o.created?.slice(0,10) || ""}</td>
+                    <td>{o.created?.slice(0, 10) || ""}</td>
+                    <td>{o.businessConfirmation ? "Completed" : "Waiting"}</td>
                   </tr>
                 ))
               ) : (

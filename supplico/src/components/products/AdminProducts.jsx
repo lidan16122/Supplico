@@ -7,9 +7,10 @@ import Loading from "../layout/Loading";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
+  const [originalProducts, setOriginalProducts] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(true)
-
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getProducts();
@@ -22,17 +23,29 @@ export default function AdminProducts() {
       },
     };
     axios
-      .get(SupplicoWebAPI_URL + "/products",options)
+      .get(SupplicoWebAPI_URL + "/products", options)
       .then((res) => {
         if (res.data) {
           setProducts(res.data);
-          setLoading(false)
-          console.log(res.data);
-        } else console.log("empty response.data");
+          setOriginalProducts(res.data);
+          setLoading(false);
+        } else alert("empty response.data");
       })
       .catch((err) => {
         setErrorMessage(err.message);
       });
+  }
+
+  function handleSearch() {
+    if (!search) {
+      setProducts(originalProducts);
+    } else {
+      setProducts(
+        originalProducts.filter((p) =>
+          p.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
   }
 
   if (!loading) {
@@ -41,6 +54,17 @@ export default function AdminProducts() {
         <div className="text-center mt-5 mb-5 admin-title">
           <h1>Products</h1>
           <h2>Showing All Products</h2>
+          <br />
+          <input
+            type="text"
+            name="search bar"
+            placeholder="search name"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={handleSearch}>
+            Search
+          </button>{" "}
         </div>
 
         <table className="table text-center admin-table">
@@ -70,7 +94,11 @@ export default function AdminProducts() {
   } else {
     return (
       <>
-      {errorMessage ? <CustomModal title="Error" body={errorMessage} defaultShow={true}  /> : ""}
+        {errorMessage ? (
+          <CustomModal title="Error" body={errorMessage} defaultShow={true} />
+        ) : (
+          ""
+        )}
         <Loading />
       </>
     );

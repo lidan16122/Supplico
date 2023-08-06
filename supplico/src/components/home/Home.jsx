@@ -8,15 +8,15 @@ import "../../styles/home.css";
 const Home = (props) => {
   let navigate = useNavigate();
   return (
-      <main>
+    <main>
       <div className="main-article">
         <video src={homeVideo} autoPlay muted loop id="homeVideo"></video>
         <div className="main-title text-center">
           <img src={props.siteImg} alt="Site Image" id="titleImg" />
-          <h2 className="mt-4">
-            "Fast on time deliveries with no trouble"
+          <h2 className="mt-4">"Fast on time deliveries with no trouble"</h2>
+          <h2 className="mb-4">
+            "Environmentally friendly, everything is digital"
           </h2>
-          <h2 className="mb-4">"Environmentally friendly, everything is digital"</h2>
           <Button
             className="main-article-button"
             onClick={() => navigate("register")}
@@ -89,13 +89,16 @@ const Home = (props) => {
       <div className="what-article pt-5">
         <h3 className="what-article-title mb-5">What Is Supplico?</h3>
         <ul>
-          <li>We are a delivery company, we use a unique way to connect the shipment to the supplier, the
-            business and the driver.</li>
           <li>
-            There are 3 roles Businesses, Drivers, Suppliers.
+            We are a delivery company, we use a unique way to connect the
+            shipment to the supplier, the business and the driver.
           </li>
+          <li>There are 3 roles Businesses, Drivers, Suppliers.</li>
           <li>
-            Businesses can browse in any suppliers products and make order instantly, Suppliers can publish their products very easily<br /> and Drivers can search for open deliveries and just take it, simple as that.
+            Businesses can browse in any suppliers products and make order
+            instantly, Suppliers can publish their products very easily
+            <br /> and Drivers can search for open deliveries and just take it,
+            simple as that.
           </li>
           <li>
             We are good for the environment, we don't use any paper and
@@ -118,12 +121,25 @@ const Home = (props) => {
 
       <div className="join-article">
         <h3 className="join-article-title">So what are you waiting for?</h3>
-        <p className="join-article-p">Start order, delivery and supply shipments!<br /> and enjoy perfect shipments!</p>
-        <Button className="join-article-button" onClick={() => navigate("register")}>Register Now!</Button>
+        <p className="join-article-p">
+          Start order, delivery and supply shipments!
+          <br /> and enjoy perfect shipments!
+        </p>
+        <Button
+          className="join-article-button"
+          onClick={() => navigate("register")}
+        >
+          Register Now!
+        </Button>
         <br />
-        <img src={props.siteImg} alt="Site Image" id="titleImg" style={{width:"30%"}}/>
+        <img
+          src={props.siteImg}
+          alt="site image"
+          id="titleImg"
+          style={{ width: "30%" }}
+        />
       </div>
-      </main>
+    </main>
   );
 };
 

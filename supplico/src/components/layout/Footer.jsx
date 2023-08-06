@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//some contact information, about us page and copyrights.
 const Footer = () => {
   let navigate = useNavigate();
   return (
