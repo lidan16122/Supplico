@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SupplicoDAL;
@@ -19,10 +18,7 @@ namespace SupplicoWebAPI
             string key = builder.Configuration.GetSection("Jwt:Key").Value;
             string issuer = builder.Configuration.GetSection("Jwt:Issuer").Value;
             string audience = builder.Configuration.GetSection("Jwt:Audience").Value;
-            string usersFilesFolder = builder.Configuration.GetSection("UsersFilesFolder").Value;
 
-
-            builder.Services.AddSingleton<FilesManager>(new FilesManager(usersFilesFolder));
             builder.Services.AddDbContext<SupplicoContext>(cfg => cfg.UseSqlServer(supplicoCS));
             builder.Services.AddControllers();
 
@@ -33,10 +29,6 @@ namespace SupplicoWebAPI
                     pol.AllowAnyHeader();
                     pol.AllowAnyMethod();
                     pol.AllowAnyOrigin();
-                    //option to allow specific methods
-                    //pol.WithMethods("POST", "PUT", "DELETE", "GET");
-                    //option to allow only specific IP
-                    //pol.WithOrigins("https://localhost:44474/");
                 });
             });
 

@@ -16,13 +16,10 @@ namespace SupplicoWebAPI.Controllers
     {
         TokensManager _TokensManager;
         SupplicoContext _SupplicoContext;
-        FilesManager _FilesManager;
-
-        public UsersController(TokensManager tokensManager, SupplicoContext supplicoContext, FilesManager filesManager)
+        public UsersController(TokensManager tokensManager, SupplicoContext supplicoContext)
         {
             _TokensManager = tokensManager;
             _SupplicoContext = supplicoContext;
-            _FilesManager = filesManager;
         }
 
         [HttpGet("suppliers")]
@@ -154,14 +151,12 @@ namespace SupplicoWebAPI.Controllers
 
         async Task SetImage(UserWithImage uwi)
         {
-
+            FilesManager fm = FilesManager.GetIntance();
             using (var memoryStream = new MemoryStream())
             {
                 await uwi.Image.CopyToAsync(memoryStream);
-                //pwi.ImageData = memoryStream.ToArray();
-                uwi.ImageData = _FilesManager.GetImageString(uwi.Image.FileName, memoryStream.ToArray());
+                uwi.ImageData = fm.GetImageString(uwi.Image.FileName, memoryStream.ToArray());
             }
-            //_FilesManager.SaveFile(pwi.Image);//saving in file system
             uwi.ImageName = uwi.Image.FileName;
 
         }
@@ -169,7 +164,6 @@ namespace SupplicoWebAPI.Controllers
         TokensData GetNewTokensAndSave2DB(User user)
         {
             TokensData td = _TokensManager.GetInitializedTokens(user);
-            //SaveCookiesToResponse(td);
             SaveRefreshToken2DB(user, td);
             return td;
         }

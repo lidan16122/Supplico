@@ -1,56 +1,31 @@
-﻿using SupplicoWebAPI.DTO;
-
-namespace SupplicoWebAPI.Utils
+﻿namespace SupplicoWebAPI.Utils
 {
     public class FilesManager
     {
-        public string Path { get; private set; }
+        static object locker = new object();
+        static FilesManager intance = null;
 
-        public FilesManager(string path)
-        {
-            Path = path;
-        }
+        private FilesManager() { }
 
-        public void SaveFile(IFormFile file)
+        public static FilesManager GetIntance()
         {
-            var fullPath = Path + "\\" + file.FileName;
-            using (var stream = new FileStream(fullPath, FileMode.Create))
+            if (intance == null)
             {
-                file.CopyTo(stream);
-            }
-        }
+                lock (locker)
+                {
+                    if (intance == null)
+                    {
+                        intance = new FilesManager();
+                    }
 
-        public void DeleteFile(string fileName)
-        {
-            var fullPath = Path + "\\" + fileName;
-            if (System.IO.File.Exists(fullPath))
-                System.IO.File.Delete(fullPath);
-            else
-                throw new Exception("File not found.");
-        }
-
-        public HttpFile GetHttpFile(string fileName)
-        {
-            var fullPath = Path + "\\" + fileName;
-            if (System.IO.File.Exists(fullPath))
-            {
-                var fileContent = System.IO.File.ReadAllBytes(fullPath);
-                return new HttpFile(fileContent, fileName);
+                }
             }
-            else
-            {
-                throw new Exception("File not found.");
-            }
-        }
-
-        public bool Exists(string fileName)
-        {
-            return (System.IO.File.Exists(Path + "\\" + fileName));
+            return intance;
         }
 
         public string GetImageString(string fileName, byte[] fileBytes)
         {
-            string mimeType = MimeMapping.MimeUtility.GetMimeMapping(fileName);            //Convert byte array to base64string
+            string mimeType = MimeMapping.MimeUtility.GetMimeMapping(fileName);            
             string fileData_Base64 = Convert.ToBase64String(fileBytes);
             return $"data:{mimeType};base64,{fileData_Base64}";
         }

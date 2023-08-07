@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SupplicoDAL;
+﻿namespace SupplicoDAL;
 
 public partial class Product
 {

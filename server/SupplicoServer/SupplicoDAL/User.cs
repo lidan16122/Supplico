@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-
-namespace SupplicoDAL;
+﻿namespace SupplicoDAL;
 
 public partial class User
 {
