@@ -19,7 +19,7 @@ main{
     height: 38vw;
     position: relative;
 }
-#titleImg{
+.title-img{
     width: 60%;
 }
 .main-article-button{
@@ -64,6 +64,7 @@ main{
     height: 35vw;
     color: white;
     background-color: rgb(61, 61, 61);
+    padding-top: 3rem;
 }
 .what-article-title{
     text-align: center;
@@ -76,11 +77,14 @@ main{
     border-radius: 10px;
     border: 1px solid white;
     padding: 5px 0;
+    margin-bottom: 3rem;
 
 }
 .what-article > ul{
     font-size: 24px;
     margin-left: 1em;
+    margin-right: 1em;
+    padding-right: 32px;
 }
 .what-article >ul > li{
     padding-top: 0.25em;
@@ -152,5 +156,310 @@ main{
     }
     100%{
         opacity: 1;
+    }
+}
+@media only screen and (max-width: 1720px){
+    .how-article{
+        height: 60vw;
+    }
+    .join-article{
+        height: 45vw;
+    }
+}
+@media only screen and (max-width: 1700px){
+    .what-article{
+        height: 40vw;
+    }
+}
+@media only screen and (max-width: 1650px){
+    .how-article-title{
+        margin-left: 35%;
+        margin-right: 35%;
+    }
+    .join-article-title{
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+}
+@media only screen and (max-width: 1530px){
+    .what-article{
+        height: 50vw;
+    }
+    .what-article-title{
+        font-size: 30px;
+    }
+    .how-article{
+        height: 70vw;
+    }
+    .how-article svg{
+        width: 1000px;
+    }
+    .how-article-title, .workflow{
+        font-size: 30px;
+    }
+    .join-article-title{
+        font-size: 30px;
+    }
+    .join-article-p{
+        font-size: 26px;
+    }
+    .join-article-button{
+        font-size: 26px !important;
+    }
+}
+@media only screen and (max-width: 1280px){
+    .why-article{
+        height: 40vw;
+    }
+    .what-article-title{
+        margin-left: 35%;
+        margin-right: 35%;
+    }
+    .what-article ul{
+        font-size: 20px;
+    }
+    .how-article{
+        height: 80vw;
+    }
+    .join-article{
+        height: 55vw;
+    }
+}
+
+@media only screen and (max-width: 1140px){
+    .main-article{
+        height: 50vw;
+    }
+    .main-article h2{
+        font-size: 30px;
+    }
+    .main-article-button{
+        width: 8em;
+        font-size: 18px !important;
+    }
+    .why-article{
+        height: 45vw;
+    }
+    .why-article-title{
+        font-size: 30px;
+    }
+    .why-article-p{
+        font-size: 20px;
+    }
+}
+@media only screen and (max-width: 1100px){
+    .main-article h2{
+        font-size: 26px;
+    }
+    #titleImg{
+        width: 80%;
+    }
+    .why-article-title{
+        margin-left:35%;
+        margin-right:35%;
+    }
+    .what-article{
+        height: 60vw;
+    }
+    .what-article-title{
+        margin-bottom: 1em;
+    }
+    .how-article svg{
+        width: 800px;
+    }
+}
+@media only screen and (max-width: 995px){
+    .why-article{
+        height: 60vw;
+    }
+    .join-article-title{
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+@media only screen and (max-width: 960px){
+    .main-article h2{
+        font-size: 24px;
+    }
+    #titleImg{
+        width: 80%;
+    }
+    .what-article{
+        height: 70vw;
+    }
+    .what-article ul{
+        font-size: 16px;
+    }
+    .what-article-title{
+       font-size: 24px;
+    }
+    .how-article{
+        height: 100vw;
+    }
+    .how-article-title,.workflow{
+        font-size: 24px;
+    }
+    .join-article-title{
+        font-size: 24px;
+    }
+    .join-article-p{
+        font-size: 20px;
+    }
+    .join-article-button{
+        font-size: 20px !important;
+    }
+}
+@media only screen and (max-width: 810px){
+    .why-article{
+        height: 80vw;
+    }
+    .how-article{
+        height: 70vw;
+    }
+    .how-article svg{
+        height: 300px;
+        width: 600px;
+    }
+    .how-article-title{
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    .join-article{
+        padding-top: 5em;
+    }
+}
+@media only screen and (max-width: 700px){
+    .main-article h2{
+        font-size: 16px;
+    }
+    #titleImg{
+        width: 70%;
+    }
+    .main-article-button{
+        font-size: 12px !important;
+        height: 3em;
+    }
+    .why-article-title{
+        font-size: 26px;
+    }
+    .what-article{
+        height: 80vw;
+        padding-top: 1.5rem;
+    }
+    .what-article-title{
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    .how-article{
+        height: 80vw;
+    }
+    .how-article svg{
+        width: 500px;
+
+    }
+    .how-article-title,.workflow{
+        font-size: 26px;
+    }
+    .join-article{
+        height: 65vw;
+    }
+    .join-article-title{
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+}
+@media only screen and (max-width: 586px){
+    .why-article{
+        height: 110vw;
+    }
+    .why-article svg:not(:nth-child(3)){
+        display: none;
+    }
+    .why-article-title{
+        font-size: 18px;
+        margin-left:30%;
+        margin-right:30%;
+    }
+    .why-article-p{
+        font-size: 16px;
+    }
+    .what-article{
+        height: 100vw;
+    }
+    .what-article ul{
+        font-size: 16px;
+    }
+    .what-article-title{
+        font-size: 18px;
+    }
+    .how-article{
+        height: 90vw;
+    }
+    .how-article svg{
+        width: 400px;
+
+    }
+    .how-article-title,.workflow{
+        font-size: 18px;
+    }
+    .join-article-title{
+        font-size: 18px;
+    }
+    .join-article-p{
+        font-size: 16px;
+    }
+    .join-article-button{
+        font-size: 12px !important;
+        height: auto;
+    }
+
+}
+@media only screen and (max-width: 500px){
+    .main-article h2{
+        font-size: 12px;
+        margin-top: 0 !important;
+        margin-bottom: 1em !important;
+    }
+    #titleImg{
+        width: 60%;
+    }
+    .main-article-button{
+        font-size: 8px !important;
+        height: 4em;
+        width: 10em;
+    }
+    .why-article-title{
+        margin-top: 1em;
+    }
+    .what-article{
+        height: 120vw;
+    }
+    .what-article ul{
+        font-size: 12px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .what-article-title{
+        margin-right: 25%;
+        margin-left: 25%;
+    }
+    .how-article{
+        height: 120vw;
+    }
+    .how-article svg{
+        width: 350px;
+
+    }
+    .how-article-title{
+        margin-right: 25%;
+        margin-left: 25%;
+    }
+    .join-article{
+        height: 80vw;
+    }
+    .join-article-title{
+        margin-left: 15%;
+        margin-right: 15%;
     }
 }

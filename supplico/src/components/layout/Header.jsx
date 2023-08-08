@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Navigation from "./Navigation";
 import { Keys, getItem } from "../../utils/storage";
 import { useNavigate } from "react-router-dom";
+import HamburgerNav from "./HamburgerNav";
 
 export default function Header(props) {
   let { isLoggedIn, roleID, logout } = useContext(AuthContext);
@@ -10,7 +11,9 @@ export default function Header(props) {
   let image = <img src={siteImg} alt="Site Image" id="siteImg" />;
   let logoutBtn = <span onClick={onLogout}>Logout</span>;
   let navigate = useNavigate();
-  function onLogout(){
+  const [hamNav, setHamNav] = useState(undefined);
+
+  function onLogout() {
     navigate("/");
     logout();
   }
@@ -18,6 +21,8 @@ export default function Header(props) {
   if (isLoggedIn) {
     return (
       <>
+        {hamNav ? <HamburgerNav setHamNav={setHamNav} /> : ""}
+
         <header>
           <Navigation
             links={[
@@ -39,12 +44,18 @@ export default function Header(props) {
               { route: "#", text: logoutBtn },
             ]}
           />
+          <div
+            className="hamburger fa fa-bars"
+            onClick={() => setHamNav("active")}
+          ></div>
         </header>
       </>
     );
   } else {
     return (
       <>
+        {hamNav ? <HamburgerNav setHamNav={setHamNav} /> : ""}
+        
         <header>
           <Navigation
             links={[
@@ -55,6 +66,10 @@ export default function Header(props) {
               { route: "/login", text: "Login" },
             ]}
           />
+          <div
+            className="hamburger fa fa-bars"
+            onClick={() => setHamNav("active")}
+          ></div>
         </header>
       </>
     );

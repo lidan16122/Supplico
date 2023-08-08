@@ -1,7 +1,7 @@
 .primary-form-background{
     background-image: url("../assets/registration.jpg");
     background-position: center;
-    height: 90vh;
+    height: 42vw;
 }
 .primary-form{
     margin: 2em 30%;
@@ -49,4 +49,68 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
     -moz-appearance: textfield;
+  }
+
+  @media only screen and (max-width: 1846px) {
+    .primary-form-background{
+        height: 50vw;
+    }
+    .primary-form{
+        margin: 2em 20%;
+
+    }
+  }
+  @media only screen and (max-width: 1610px) {
+    .primary-form-background{
+        height: 60vw;
+    }
+  }
+  @media only screen and (max-width: 1265px) {
+    .primary-form-background{
+        height: 70vw;
+    }
+    .primary-form{
+        margin: 2em 10%;
+
+    }
+  }
+  @media only screen and (max-width: 1105px) {
+    .primary-form-background{
+        height: 80vw;
+    }
+  }
+  @media only screen and (max-width: 1105px) {
+    .primary-form-background{
+        height: 90vw;
+    }
+  }
+  @media only screen and (max-width: 835px) {
+    .primary-form-background{
+        height: 100vw;
+    }
+  }
+  @media only screen and (max-width: 835px) {
+    .primary-form-background{
+        height: 120vw;
+    }
+  }
+  @media only screen and (max-width: 630px) {
+    .primary-form-background{
+        height: 140vw;
+    }
+  }
+  @media only screen and (max-width: 560px) {
+    .primary-form-background{
+        height: 170vw;
+    }
+  }
+  @media only screen and (max-width: 490px) {
+    .primary-form-background{
+        height: 200vw;
+    }
+  }
+  @media only screen and (max-width: 390px) {
+    .primary-form-background{
+        height: 240vw;
+    }
   }

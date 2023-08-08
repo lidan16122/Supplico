@@ -141,57 +141,59 @@ export default function AdminUsers() {
           <button onClick={handleSearch}>Search</button> <br />
         </div>
 
-        <table className="table text-center admin-table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Username</th>
-              <th>Password (Hashed)</th>
-              <th>Fullname</th>
-              <th>Email</th>
-              <th>Phone number</th>
-              <th>Role</th>
-              <th>Image</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.userId}>
-                <td>{u.userId}</td>
-                <td>{u.userName}</td>
-                <td>{u.password}</td>
-                <td>{u.fullName}</td>
-                <td>{u.email}</td>
-                <td>{u.phoneNumber}</td>
-                <td>{u.roleId}</td>
-                <td>
-                  <img
-                    src={u.imageData}
-                    alt={u.imageName}
-                    className="table-users-img"
-                    onClick={(e) => setShowImg(e.target.src)}
-                  />
-                </td>
-                <td style={{ fontSize: "16px" }}>
-                  <Button
-                    variant={u.isAccepted ? "success" : "danger"}
-                    onClick={() => changeActivation(u)}
-                  >
-                    {u.isAccepted ? "Accepted" : "Not Accepted"}
-                  </Button>{" "}
-                  *{" "}
-                  <Button
-                    variant="primary"
-                    onClick={() => deleteUser(u.userId)}
-                  >
-                    Delete
-                  </Button>
-                </td>
+        <div style={{ overflowX: "auto" }}>
+          <table className="table text-center admin-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Password (Hashed)</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Role</th>
+                <th>Image</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u.userId}>
+                  <td>{u.userId}</td>
+                  <td>{u.userName}</td>
+                  <td>{u.password}</td>
+                  <td>{u.fullName}</td>
+                  <td>{u.email}</td>
+                  <td>{u.phoneNumber}</td>
+                  <td>{u.roleId}</td>
+                  <td>
+                    <img
+                      src={u.imageData}
+                      alt={u.imageName}
+                      className="table-users-img"
+                      onClick={(e) => setShowImg(e.target.src)}
+                    />
+                  </td>
+                  <td style={{ fontSize: "16px" }}>
+                    <Button
+                      variant={u.isAccepted ? "success" : "danger"}
+                      onClick={() => changeActivation(u)}
+                    >
+                      {u.isAccepted ? "Accepted" : "Not Accepted"}
+                    </Button>{" "}
+                    *{" "}
+                    <Button
+                      variant="primary"
+                      onClick={() => deleteUser(u.userId)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </>
     );
   } else {

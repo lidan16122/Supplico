@@ -62,33 +62,33 @@ export default function AdminProducts() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={handleSearch}>
-            Search
-          </button>{" "}
+          <button onClick={handleSearch}>Search</button>{" "}
         </div>
 
-        <table className="table text-center admin-table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Products Name</th>
-              <th>Product Price</th>
-              <th>User Created Id</th>
-              <th>User Fullname</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((p) => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>{p.name}</td>
-                <td>{p.price}</td>
-                <td>{p.userId}</td>
-                <td>{p.userFullName}</td>
+        <div style={{ overflowX: "auto" }}>
+          <table className="table text-center admin-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Products Name</th>
+                <th>Product Price</th>
+                <th>User Created Id</th>
+                <th>User Fullname</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.id}</td>
+                  <td>{p.name}</td>
+                  <td>{p.price}</td>
+                  <td>{p.userId}</td>
+                  <td>{p.userFullName}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </>
     );
   } else {

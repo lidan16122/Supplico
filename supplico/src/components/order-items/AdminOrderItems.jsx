@@ -12,7 +12,6 @@ export default function AdminOrderItems() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
-
   useEffect(() => {
     getOrderItems();
   }, []);
@@ -63,35 +62,35 @@ export default function AdminOrderItems() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={handleSearch}>
-            Search
-          </button>{" "}
+          <button onClick={handleSearch}>Search</button>{" "}
         </div>
 
-        <table className="table text-center admin-table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Product Id</th>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Order Id</th>
-              <th>Transaction Id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderItems.map((o) => (
-              <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.productId}</td>
-                <td>{o.productName}</td>
-                <td>{o.quantity}</td>
-                <td>{o.orderId}</td>
-                <td>{o.transaction}</td>
+        <div style={{ overflowX: "auto" }}>
+          <table className="table text-center admin-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Order Id</th>
+                <th>Transaction Id</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orderItems.map((o) => (
+                <tr key={o.id}>
+                  <td>{o.id}</td>
+                  <td>{o.productId}</td>
+                  <td>{o.productName}</td>
+                  <td>{o.quantity}</td>
+                  <td>{o.orderId}</td>
+                  <td>{o.transaction}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </>
     );
   } else {

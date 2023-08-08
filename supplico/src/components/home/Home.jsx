@@ -8,11 +8,11 @@ import "../../styles/home.css";
 const Home = (props) => {
   let navigate = useNavigate();
   return (
-    <main>
+    <main style={{width:"auto"}}>
       <div className="main-article">
         <video src={homeVideo} autoPlay muted loop id="homeVideo"></video>
         <div className="main-title text-center">
-          <img src={props.siteImg} alt="Site Image" id="titleImg" />
+          <img src={props.siteImg} alt="Site Image" className="title-img" />
           <h2 className="mt-4">"Fast on time deliveries with no trouble"</h2>
           <h2 className="mb-4">
             "Environmentally friendly, everything is digital"
@@ -86,8 +86,8 @@ const Home = (props) => {
         </div>
       </div>
 
-      <div className="what-article pt-5">
-        <h3 className="what-article-title mb-5">What Is Supplico?</h3>
+      <div className="what-article">
+        <h3 className="what-article-title">What Is Supplico?</h3>
         <ul>
           <li>
             We are a delivery company, we use a unique way to connect the
@@ -135,7 +135,7 @@ const Home = (props) => {
         <img
           src={props.siteImg}
           alt="site image"
-          id="titleImg"
+          className="title-img"
           style={{ width: "30%" }}
         />
       </div>

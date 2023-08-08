@@ -1,5 +1,6 @@
 import React from "react";
 import siteImg from "../../assets/logo.png";
+import "../../styles/home.css";
 
 export default function AboutUs() {
   return (
