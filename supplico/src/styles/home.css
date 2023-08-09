@@ -1,5 +1,7 @@
+
 main{
     animation: fadeIn ease 2s;
+    overflow: hidden;
 }
 #homeVideo{
     max-width: 100%;
@@ -251,7 +253,7 @@ main{
     .main-article h2{
         font-size: 26px;
     }
-    #titleImg{
+    .title-img{
         width: 80%;
     }
     .why-article-title{
@@ -281,7 +283,7 @@ main{
     .main-article h2{
         font-size: 24px;
     }
-    #titleImg{
+    .title-img{
         width: 80%;
     }
     .what-article{
@@ -332,12 +334,12 @@ main{
     .main-article h2{
         font-size: 16px;
     }
-    #titleImg{
+    .title-img{
         width: 70%;
     }
     .main-article-button{
         font-size: 12px !important;
-        height: 3em;
+        height: auto;
     }
     .why-article-title{
         font-size: 26px;
@@ -416,17 +418,23 @@ main{
 
 }
 @media only screen and (max-width: 500px){
-    .main-article h2{
-        font-size: 12px;
-        margin-top: 0 !important;
-        margin-bottom: 1em !important;
+    .main-title{
+        position: absolute;
+        top: 45%;
+        left: 0;
+        transform: translate(0, -50%);
+        color: white;
     }
-    #titleImg{
-        width: 60%;
+    .main-article h2{
+        font-size: 16px;
+        margin-top: 0 !important;
+        margin-bottom: 0.5em !important;
+    }
+    .title-img{
+        width: 50%;
     }
     .main-article-button{
-        font-size: 8px !important;
-        height: 4em;
+        font-size: 10px !important;
         width: 10em;
     }
     .why-article-title{

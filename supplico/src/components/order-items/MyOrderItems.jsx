@@ -40,10 +40,10 @@ export default function MyOrderItems() {
       });
   }
 
-  function itemsOrderText(){
+  function itemsOrderText() {
     if (roleID == 1) return "Showing All Items You Have Been Ordered";
-    else if (roleID == 2) return "Showing Items That You Have Been Delivered"
-    else return "Showing Items From Orders That Have Been Ordered From You"
+    else if (roleID == 2) return "Showing Items That You Have Been Delivered";
+    else return "Showing Items From Orders That Have Been Ordered From You";
   }
 
   function handleSearch() {
@@ -61,55 +61,64 @@ export default function MyOrderItems() {
   if (!loading) {
     return (
       <>
-      <div className="order-items-background">
-        <div className="text-center text-black pt-5 mb-5">
-          <h1 className="components-title">Items Ordered</h1>
-          <h3 className="mb-4">{itemsOrderText()}</h3>
-          {roleID == 2 ? <Button variant="dark"  onClick={() => navigate("/orders/jobs")} className="driver-jobs mb-2">Available Jobs</Button>  : ""}
-          <br />
-          <input
-            type="text"
-            name="search bar"
-            placeholder="search transaction"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button onClick={handleSearch}>
-            Search
-          </button>{" "}
-
-        </div>
-
-        <table className="table order-items-table">
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Transaction Id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderItems ? (
-              orderItems.map((o) => (
-                <tr key={o.id}>
-                  <td>{o.productName}</td>
-                  <td>{o.quantity}</td>
-                  <td>{o.transaction}</td>
-                </tr>
-              ))
+        <div className="order-items-background">
+          <div className="text-center text-black pt-5 mb-5">
+            <h1 className="components-title">Items Ordered</h1>
+            <h3 className="mb-4">{itemsOrderText()}</h3>
+            {roleID == 2 ? (
+              <Button
+                variant="dark"
+                onClick={() => navigate("/orders/jobs")}
+                className="driver-jobs mb-2"
+              >
+                Available Jobs
+              </Button>
             ) : (
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+              ""
             )}
-          </tbody>
-        </table>
-        <p className="share-info text-black">
+            <br />
+            <input
+              type="text"
+              name="search bar"
+              placeholder="search transaction"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>{" "}
+          </div>
+
+          <div style={{ overflowX: "auto" }}>
+            <table className="table order-items-table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Transaction Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderItems ? (
+                  orderItems.map((o) => (
+                    <tr key={o.id}>
+                      <td>{o.productName}</td>
+                      <td>{o.quantity}</td>
+                      <td>{o.transaction}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <p className="share-info text-black">
             *Please do not share this information
           </p>
-      </div>
+        </div>
       </>
     );
   } else {

@@ -33,14 +33,14 @@ const Footer = () => {
           <div className="row justify-content-center">
             <h3
               className="additional-links mt-4 col-lg-3"
-              onClick={() => navigate("about")}
+              onClick={() => navigate("about-us")}
             >
               About Us
             </h3>
 
             <h3
               className="additional-links mt-4 col-lg-3"
-              onClick={() => navigate("policy")}
+              onClick={() => navigate("privacy-policy")}
             >
               Privacy Policy
             </h3>

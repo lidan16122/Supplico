@@ -103,8 +103,12 @@ export default function SupplierProducts() {
                     <td>{p.id}</td>
                     <td>{p.name}</td>
                     <td>{p.price}</td>
-                    <td>
-                      <Button variant="success" style={{ marginRight: "10px" }}>
+                    <td className="products-btns">
+                      <Button
+                        id="edit-products-btn"
+                        variant="success"
+                        style={{ marginRight: "10px" }}
+                      >
                         <NavLink
                           to={`/products/${getItem(Keys.userId)}/${p.id}`}
                           className="link-none"
@@ -112,8 +116,9 @@ export default function SupplierProducts() {
                           Edit
                         </NavLink>
                       </Button>
-                      <b>|</b>
+                      <b id="buttons-space">|</b>
                       <Button
+                        id="delete-products-btn"
                         variant="danger"
                         style={{ marginLeft: "10px" }}
                         onClick={() => deleteProduct(p.id)}

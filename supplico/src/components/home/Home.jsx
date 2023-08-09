@@ -8,7 +8,7 @@ import "../../styles/home.css";
 const Home = (props) => {
   let navigate = useNavigate();
   return (
-    <main style={{width:"auto"}}>
+    <main>
       <div className="main-article">
         <video src={homeVideo} autoPlay muted loop id="homeVideo"></video>
         <div className="main-title text-center">
@@ -136,7 +136,6 @@ const Home = (props) => {
           src={props.siteImg}
           alt="site image"
           className="title-img"
-          style={{ width: "30%" }}
         />
       </div>
     </main>

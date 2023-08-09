@@ -122,79 +122,83 @@ export default function MyOrders() {
             <br />
             {roleID == 2 ? (
               <Button
-              variant="dark"
-              onClick={() => navigate("/orders/jobs")}
-              className="driver-jobs mb-2"
+                variant="dark"
+                onClick={() => navigate("/orders/jobs")}
+                className="driver-jobs mb-2"
               >
                 Available Jobs
               </Button>
             ) : (
               ""
-              )}
-              <br />
-              <input
-                className={roleID == 2 ? "mb-2" : ""}
-                type="text"
-                name="search bar"
-                placeholder="search transaction"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <button onClick={handleSearch}>Search</button>
+            )}
+            <br />
+            <input
+              className={roleID == 2 ? "mb-2" : ""}
+              type="text"
+              name="search bar"
+              placeholder="search transaction"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>
           </div>
-          <table className="table orders-table">
-            <thead>
-              <tr>
-                <th>Transaction Id</th>
-                <th>Sum</th>
-                <th>Quantity</th>
-                <th>Pallets</th>
-                <th>Driver</th>
-                <th>Supplier</th>
-                <th>Business Name</th>
-                <th>Driver Name</th>
-                <th>Supplier Name</th>
-                <th>Created</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders ? (
-                orders.map((o) => (
-                  <tr
-                    key={o.orderId}
-                    className="my-order-tr"
-                    onClick={() => navigate(`/orders/${o.orderId}`)}
-                  >
-                    <td>{o.transactionId}</td>
-                    <td>{o.sum}</td>
-                    <td>{o.quantity}</td>
-                    <td>{o.pallets}</td>
-                    <td>{o.driverConfirmation ? "Accepted" : "Searching"}</td>
-                    <td>{o.supplierConfirmation ? "Accepted" : "Waiting"}</td>
-                    <td>{o.businessFullName}</td>
-                    <td>{o.driverFullName}</td>
-                    <td>{o.supplierFullName}</td>
-                    <td>{o.created?.slice(0, 10) || ""}</td>
-                    <td>{o.businessConfirmation ? "Completed" : "Waiting"}</td>
-                  </tr>
-                ))
-              ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table className="table orders-table">
+              <thead>
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <th>Transaction Id</th>
+                  <th>Sum</th>
+                  <th>Quantity</th>
+                  <th>Pallets</th>
+                  <th>Driver</th>
+                  <th>Supplier</th>
+                  <th>Business Name</th>
+                  <th>Driver Name</th>
+                  <th>Supplier Name</th>
+                  <th>Created</th>
+                  <th>Status</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders ? (
+                  orders.map((o) => (
+                    <tr
+                      key={o.orderId}
+                      className="my-order-tr"
+                      onClick={() => navigate(`/orders/${o.orderId}`)}
+                    >
+                      <td>{o.transactionId}</td>
+                      <td>{o.sum}</td>
+                      <td>{o.quantity}</td>
+                      <td>{o.pallets}</td>
+                      <td>{o.driverConfirmation ? "Accepted" : "Searching"}</td>
+                      <td>{o.supplierConfirmation ? "Accepted" : "Waiting"}</td>
+                      <td>{o.businessFullName}</td>
+                      <td>{o.driverFullName}</td>
+                      <td>{o.supplierFullName}</td>
+                      <td>{o.created?.slice(0, 10) || ""}</td>
+                      <td>
+                        {o.businessConfirmation ? "Completed" : "Waiting"}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
           <p className="share-info text-white">
             *Please do not share this information
           </p>

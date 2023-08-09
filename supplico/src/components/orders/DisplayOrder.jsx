@@ -20,11 +20,10 @@ export default function DisplayOrder() {
   const [modalTitle, setModalTitle] = useState("Error");
   const [modalBody, setModalBody] = useState("");
   const [updatePallets, setUpdatePallets] = useState(false);
-  
+
   function handleClose() {
     setShow(false);
   }
-
 
   useEffect(() => {
     getOrder();
@@ -77,7 +76,9 @@ export default function DisplayOrder() {
       .then((res) => {
         setShow(true);
         setModalTitle("Confirmed");
-        setModalBody("Shipment confirmed, now searching for a driver! please update pallets count");
+        setModalBody(
+          "Shipment confirmed, now searching for a driver! please update pallets count"
+        );
         getOrder();
       })
       .catch((err) => {
@@ -106,7 +107,7 @@ export default function DisplayOrder() {
       });
   }
 
-  async function businessConfirm(){
+  async function businessConfirm() {
     await axios
       .put(SupplicoWebAPI_URL + "/orders/confirmation", {
         orderId: order[0].orderId,
@@ -115,9 +116,7 @@ export default function DisplayOrder() {
       .then((res) => {
         setShow(true);
         setModalTitle("Confirmed");
-        setModalBody(
-          "Shipment delivery completed!"
-        );
+        setModalBody("Shipment delivery completed!");
         getOrder();
       })
       .catch((err) => {
@@ -125,21 +124,33 @@ export default function DisplayOrder() {
         setModalBody(err.response.data + ", " + err.message);
       });
   }
-  function checkOrderStatus(){
+  function checkOrderStatus() {
     if (!order[0].supplierConfirmation) {
-      return "waiting for supplier shipment confirmation"
-    }
-    else if(!order[0].driverConfirmation && order[0].supplierConfirmation){
-      return "waiting for a driver to accept this delivery"
-    }
-    else if(!order[0].businessConfirmation && order[0].driverConfirmation && order[0].supplierConfirmation) return "delivery is in progress"
-    else return "shipment delivered, order completed!"
+      return "waiting for supplier shipment confirmation";
+    } else if (!order[0].driverConfirmation && order[0].supplierConfirmation) {
+      return "waiting for a driver to accept this delivery";
+    } else if (
+      !order[0].businessConfirmation &&
+      order[0].driverConfirmation &&
+      order[0].supplierConfirmation
+    )
+      return "delivery is in progress";
+    else return "shipment delivered, order completed!";
   }
 
   if (!loading) {
     return (
       <>
-      {updatePallets ? <UpdatePallets updatePallets={updatePallets} setUpdatePallets={setUpdatePallets} orderid={orderid} getOrder={getOrder}/> : ""}
+        {updatePallets ? (
+          <UpdatePallets
+            updatePallets={updatePallets}
+            setUpdatePallets={setUpdatePallets}
+            orderid={orderid}
+            getOrder={getOrder}
+          />
+        ) : (
+          ""
+        )}
         <Modal show={show} onHide={handleClose}>
           <Modal.Header>
             <Modal.Title>{modalTitle}</Modal.Title>
@@ -151,113 +162,131 @@ export default function DisplayOrder() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <div className="text-center text-black pt-5 mb-3">
-          <h1 className="component-title">
-            An Official Supplico Shipment Form
-          </h1>
-          <h3>Transaction Id: {order[0].transactionId}</h3>
-        </div>
-        <div className="container text-black display-order">
-          <p className="display-order-summary">
-            Requested shipment delivery by: <b>{order[0].businessFullName}</b>{" "}
-            from <b>{order[0].supplierFullName}</b> and should be delivered by{" "}
-            <b>{order[0].driverFullName ?? "NONE"}</b>
-          </p>
-          <h3 className="text-center">Status: {checkOrderStatus()}</h3>
-          <h3
-            className="text-center pt-4 pb-2"
-            style={{ textDecoration: "underline" }}
-          >
-            Items In Shipment
-          </h3>
-          <table className="table display-order-table">
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderItems.map((o) => (
-                <tr key={o.id}>
-                  <td>{o.productName}</td>
-                  <td>{o.quantity}</td>
+          <div className="container-fluid text-center text-black pt-5 mb-3">
+            <h1 className="component-title">
+              An Official Supplico Shipment Form
+            </h1>
+            <h3>Transaction Id: {order[0].transactionId}</h3>
+          </div>
+          <div className="container-fluid text-black display-order">
+            <p className="display-order-summary">
+              Requested shipment delivery by: <b>{order[0].businessFullName}</b>{" "}
+              from <b>{order[0].supplierFullName}</b> and should be delivered by{" "}
+              <b>{order[0].driverFullName ?? "NONE"}</b>
+            </p>
+            <h3 className="text-center"><b>Status:</b> {checkOrderStatus()}</h3>
+            <h3
+              className="text-center pt-4 pb-2"
+              style={{ textDecoration: "underline" }}
+            >
+              Items In Shipment
+            </h3>
+            <table className="table display-order-table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <h4 className="text-center">
-            Shipment total sum: <b>{order[0].sum}</b>, total quantity of:{" "}
-            <b>{order[0].quantity}</b> products
-          </h4>
-          <h4 className="text-center pb-5">
-            Total shipment pallets: <b>{order[0].pallets ?? 0}</b>
-          </h4>
-          <div className="row">
-            <p className="col-4">
-              Business name: <b>{order[0].businessFullName}</b>
-              <br />
-              Business phone number: <b>{order[0].businessPhoneNumber}</b>
-              <br />
-              Business email: <b>{order[0].businessEmail}</b>
-              <br />
-              <b>{order[0].businessConfirmation
-                ? "Business shipment has arrived it's destination"
-                : "*Waiting shipment arrival to it's destination"}</b>
-              <br />
-              {roleID == 1 && !order[0].businessConfirmation && order[0].driverConfirmation && order[0].supplierConfirmation ? (
-                <Button variant="dark" onClick={businessConfirm}>
-                  Confirm
-                </Button>
-              ) : (
-                ""
-              )}
-            </p>
-            <p className="col-4">
-              Driver name: <b>{order[0].driverFullName ?? "NONE"}</b>
-              <br />
-              Driver phone number: <b>{order[0].driverPhoneNumber ?? "NONE"}</b>
-              <br />
-              Driver email: <b>{order[0].driverEmail ?? "NONE"}</b>
-              <br />
-              <b>{order[0].driverConfirmation
-                ? "This shipment has a driver"
-                : "*Searching for a suitable driver"}</b>
-              <br />
-              {roleID == 2 && !order[0].driverConfirmation && order[0].supplierConfirmation ? (
-                <Button variant="dark" onClick={driverConfirm}>
-                  Confirm
-                </Button>
-              ) : (
-                ""
-              )}
-            </p>
-            <p className="col-4">
-              Supplier name: <b>{order[0].supplierFullName}</b>
-              <br />
-              Supplier phone number: <b>{order[0].supplierPhoneNumber}</b>
-              <br />
-              Supplier email: <b>{order[0].supplierEmail}</b>
-              <br />
-              <b>{order[0].supplierConfirmation
-                ? "The supplier has confirmed this shipment"
-                : "*Watiting for supplier confirmation"}</b>
-              <br />
-              {roleID == 3 && !order[0].supplierConfirmation ? (
-                <Button variant="dark" onClick={supplierConfirm}>
-                  Confirm
-                </Button>
-              ) : (
-                ""
-              )}
-              <br />
-              {roleID == 3 && order[0].supplierConfirmation == true ? <Button variant="dark" onClick={() => setUpdatePallets(true)}>Update pallets count</Button> : ""}
+              </thead>
+              <tbody>
+                {orderItems.map((o) => (
+                  <tr key={o.id}>
+                    <td>{o.productName}</td>
+                    <td>{o.quantity}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <h4 className="text-center">
+              Shipment total sum: <b>{order[0].sum}</b>, total quantity of:{" "}
+              <b>{order[0].quantity}</b> products
+            </h4>
+            <h4 className="text-center pb-5">
+              Total shipment pallets: <b>{order[0].pallets ?? 0}</b>
+            </h4>
+            <div className="row justify-content-between">
+              <p className="col-lg-4 pb-4">
+                Business name: <b>{order[0].businessFullName}</b>
+                <br />
+                Business phone number: <b>{order[0].businessPhoneNumber}</b>
+                <br />
+                Business email: <b>{order[0].businessEmail}</b>
+                <br />
+                <b>
+                  {order[0].businessConfirmation
+                    ? "Business shipment has arrived it's destination"
+                    : "*Waiting shipment arrival to it's destination"}
+                </b>
+                <br />
+                {roleID == 1 &&
+                !order[0].businessConfirmation &&
+                order[0].driverConfirmation &&
+                order[0].supplierConfirmation ? (
+                  <Button variant="dark" onClick={businessConfirm}>
+                    Confirm
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </p>
+              <p className="col-lg-4 pb-4">
+                Driver name: <b>{order[0].driverFullName ?? "NONE"}</b>
+                <br />
+                Driver phone number:{" "}
+                <b>{order[0].driverPhoneNumber ?? "NONE"}</b>
+                <br />
+                Driver email: <b>{order[0].driverEmail ?? "NONE"}</b>
+                <br />
+                <b>
+                  {order[0].driverConfirmation
+                    ? "This shipment has a driver"
+                    : "*Searching for a suitable driver"}
+                </b>
+                <br />
+                {roleID == 2 &&
+                !order[0].driverConfirmation &&
+                order[0].supplierConfirmation ? (
+                  <Button variant="dark" onClick={driverConfirm}>
+                    Confirm
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </p>
+              <p className="col-lg-4 pb-4">
+                Supplier name: <b>{order[0].supplierFullName}</b>
+                <br />
+                Supplier phone number: <b>{order[0].supplierPhoneNumber}</b>
+                <br />
+                Supplier email: <b>{order[0].supplierEmail}</b>
+                <br />
+                <b>
+                  {order[0].supplierConfirmation
+                    ? "The supplier has confirmed this shipment"
+                    : "*Watiting for supplier confirmation"}
+                </b>
+                <br />
+                {roleID == 3 && !order[0].supplierConfirmation ? (
+                  <Button variant="dark" onClick={supplierConfirm}>
+                    Confirm
+                  </Button>
+                ) : (
+                  ""
+                )}
+                <br />
+                {roleID == 3 && order[0].supplierConfirmation == true ? (
+                  <Button variant="dark" onClick={() => setUpdatePallets(true)}>
+                    Update pallets count
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </p>
+            </div>
+            <p className="pt-5">
+              Date: <b>{order[0].created.slice(0, 10)}</b>
             </p>
           </div>
-          <p className="pt-5">
-            Date: <b>{order[0].created.slice(0, 10)}</b>
-          </p>
-        </div>
       </>
     );
   } else {

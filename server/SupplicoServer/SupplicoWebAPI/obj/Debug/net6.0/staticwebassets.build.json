@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "+kK4YtBzRkWKGozU88/uIE8kXONwAlsO6L6dQBaPIlM=",
+  "Source": "SupplicoWebAPI",
+  "BasePath": "_content/SupplicoWebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

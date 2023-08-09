@@ -1,0 +1,14 @@
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\bin\Debug\net6.0\SupplicoDAL.deps.json
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\bin\Debug\net6.0\SupplicoDAL.runtimeconfig.json
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\bin\Debug\net6.0\SupplicoDAL.dll
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\bin\Debug\net6.0\SupplicoDAL.pdb
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.csproj.AssemblyReference.cache
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.AssemblyInfoInputs.cache
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.AssemblyInfo.cs
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.csproj.CoreCompileInputs.cache
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.dll
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\refint\SupplicoDAL.dll
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.pdb
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\SupplicoDAL.genruntimeconfig.cache
+C:\Users\Lidan\Desktop\Supplico\server\SupplicoServer\SupplicoDAL\obj\Debug\net6.0\ref\SupplicoDAL.dll

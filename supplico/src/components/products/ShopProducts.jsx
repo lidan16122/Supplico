@@ -165,21 +165,22 @@ export default function ShopProducts() {
         ) : (
           ""
         )}
-
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Shopping Cart</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>{listMsg}</Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" onClick={makeOrder}>
-              Make Order
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <div style={{ overflowY: "auto" }}>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Shopping Cart</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{listMsg}</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={makeOrder}>
+                Make Order
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
 
         {roleID == 1 ? (
           <Button className="shopping-cart" onClick={() => handleCart()}>
