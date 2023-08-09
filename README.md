@@ -29,6 +29,6 @@ username: supplier <br />
 pass: 1111 <br /> 
 
 username: admin <br />
-pass: 1111 <br />
+pass: 1111 <br /><br />
 
 ![Supplico image](https://github.com/lidan16122/Supplico/assets/108627871/24e439a6-f743-4948-b3fe-5d0fb0e577c2)
