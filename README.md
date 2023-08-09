@@ -12,7 +12,7 @@ There is an order display with all the required information, status, who confirm
 The business can browse products from available suppliers. <br />
 The supplier can create, edit, and delete any products. <br />
 The driver has a page for finding an open delivery. <br />
-The admin can view any information available and accept users to the system. <br />
+The admin can view any information available and accept users to the system. <br /><br />
 
 available users: <br />
 username: business (not accepted by system) <br />
