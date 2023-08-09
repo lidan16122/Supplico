@@ -5,7 +5,7 @@ The application has 3 roles: Business, Driver, Supplier. each one with his own p
 To use Supplico you must sign up and be accepted by an admin. <br />
  - Business: can choose any products from any supplier and make an order with just one click. note that businesses can order from one supplier at once.
  - Driver: can search for available deliveries to deliver them.
- - Supplier: can publish his shop and his products to sell for businesses. <br />
+ - Supplier: can publish his shop and his products to sell for businesses.
 Everything is digital and stored in a database. <br />
 There is an order display with all the required information, status, who confirmed, sum, pallets, and transaction id. <br />
 The business can browse products from available suppliers. <br />
