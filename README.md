@@ -12,7 +12,8 @@ There is an order display with all the required information, status, who confirm
 The business can browse products from available suppliers. <br />
 The supplier can create, edit, and delete any products. <br />
 The driver has a page for finding an open delivery. <br />
-The admin can view any information available and accept users to the system. <br /><br />
+The admin can view any information available and accept users to the system. <br />
+Every user can view their profile with the main information, view their orders, and items they have been ordered/provided/delivered depends on the role (except admin)<br /><br />
 
 available users: <br />
 username: business (not confirmed by system) <br />
