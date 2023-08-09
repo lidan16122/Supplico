@@ -14,7 +14,7 @@ The supplier can customize their shop and create, edit, and delete any products.
 The driver has a page for finding an open delivery. <br />
 The admin can view any information available and accept users to the system. <br />
 Every new user have to provide image, name, phone, email, username, password on registration. <br />
-Every user can view their profile with the main information, view their orders, and items they have been ordered/provided/delivered depends on the role (except admin)<br /><br />
+Every user can view their profile with the main information, view their orders, and items they have been ordered/provided/delivered depends on the role (except admin).<br /><br />
 
 available users: <br />
 username: business (not confirmed by system) <br />
