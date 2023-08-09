@@ -1,5 +1,5 @@
 # Supplico
-## A delivery application for businesses with a unique way.
+### A delivery application for businesses with a unique way.
 Supplico makes it easier for small businesses or companies to make an order of goods without any trouble, for the supplier to publish their products easily, and for a driver to search for available deliveries to take them. <br />
 **The application has 3 roles: Business, Driver, Supplier. each one with his own purpose to use this application.** <br />
  - Business: can choose any products from any supplier and make an order with just one click. note that businesses can order from one supplier at once.
