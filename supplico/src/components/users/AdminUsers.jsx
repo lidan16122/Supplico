@@ -141,7 +141,7 @@ export default function AdminUsers() {
           <button onClick={handleSearch}>Search</button> <br />
         </div>
 
-        <div style={{ overflowX: "auto" }}>
+        <div>
           <table className="table text-center admin-table">
             <thead>
               <tr>

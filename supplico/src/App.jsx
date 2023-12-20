@@ -41,11 +41,7 @@ function App() {
 
   function setRefreshTokenInterval() {
     if (isNaN(timerID)) {
-      let expiresInSeconds = getItem(Keys.expiresInSeconds);
-      let refreshInterval = expiresInSeconds
-        ? Number(expiresInSeconds) / 2
-        : 30;
-      timerID = setInterval(refreshToken, refreshInterval * 1000);
+      timerID = setInterval(refreshToken, 30 * 1000);
     }
   }
 
