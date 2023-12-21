@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, json, useParams } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import { SupplicoWebAPI_URL } from "../../utils/settings";
@@ -109,41 +109,58 @@ export default function ShopProducts() {
   async function handleOrderItems(arr) {
     arr.sort();
 
-    let result = [];
+    let groupedArray = [];
     let currentGroup = [arr[0]];
 
     for (let i = 1; i < arr.length; i++) {
       if (arr[i] === arr[i - 1]) {
         currentGroup.push(arr[i]);
       } else {
-        result.push(currentGroup);
+        groupedArray.push(currentGroup);
         currentGroup = [arr[i]];
       }
     }
 
-    result.push(currentGroup);
-    for (let i = 0; i < result.length; i++) {
+    groupedArray.push(currentGroup);
+    console.log(groupedArray);
+    let result = [[],[]];
+    if (groupedArray.length < 2) {
+      result = [[]]
+    }
+    for (let i = 0; i < groupedArray.length; i++) {
       let productId = 0;
-      let productQuantity = result[i].length;
+      let productQuantity = groupedArray[i].length;
       for (let j = 0; j < products.length; j++) {
-        if (products[j].name == result[i][0]) {
+        if (products[j].name == groupedArray[i][0]) {
           productId = products[j].id;
         }
       }
+      console.log(productId);
+      console.log(productQuantity);
+      result[i].push(productId)
+      result[i].push(productQuantity)
+    }
+    console.log(result);
+    let resultJson = JSON.stringify(result);
+    console.log(resultJson);
       try {
         const response = await axios({
           method: "post",
           url: `${SupplicoWebAPI_URL}/orderItems`,
-          data: {
-            quantity: productQuantity,
-            productId: productId,
-          },
+          data: resultJson,
           headers: { "Content-Type": "application/json" },
         });
-      } catch (err) {}
-    }
-    setOrder(true);
+      } catch (err) {
+        setErrorMessage(err.message + ", " + err.response.data);
+      }
+      finally{
+        if (!errorMessage) {
+          setOrder(true);
+        }
+      }
   }
+
+
 
   function handleSearch() {
     if (!search) {

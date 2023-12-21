@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SupplicoDAL;
+using System;
+using System.Text.Json;
+using System.Transactions;
 
 namespace SupplicoWebAPI.Controllers
 {
@@ -70,18 +73,18 @@ namespace SupplicoWebAPI.Controllers
             {
                 try
                 {
-                var orderItems = _SupplicoContext.OrderItems
-                        .Where(o => o.Order.SupplierId == userID || o.Order.BusinessId == userID || o.Order.DriverId == userID)
-                        .Include(o => o.Product)
-                        .Include(o => o.Order)
-                        .Select(o => new
-                        {
-                            Id = o.Id,
-                            Quantity = o.Quantity,
-                            Transaction = o.Order.TransactionId,
-                            ProductName = o.Product.Name
-                        }).ToList();
-                return Ok(orderItems);
+                    var orderItems = _SupplicoContext.OrderItems
+                            .Where(o => o.Order.SupplierId == userID || o.Order.BusinessId == userID || o.Order.DriverId == userID)
+                            .Include(o => o.Product)
+                            .Include(o => o.Order)
+                            .Select(o => new
+                            {
+                                Id = o.Id,
+                                Quantity = o.Quantity,
+                                Transaction = o.Order.TransactionId,
+                                ProductName = o.Product.Name
+                            }).ToList();
+                    return Ok(orderItems);
                 }
                 catch (Exception e)
                 {
@@ -132,7 +135,7 @@ namespace SupplicoWebAPI.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult> PostOrderItem(List<List<int>> jsonData)
         {
             _logger.LogInformation("PostOrderItem method initiated");
             if (!ModelState.IsValid)
@@ -142,17 +145,26 @@ namespace SupplicoWebAPI.Controllers
             }
             else
             {
-                var lastOrder = _SupplicoContext.Orders.ToList().LastOrDefault();
-                orderItem.OrderId = lastOrder.OrderId;
-                _SupplicoContext.OrderItems.Add(orderItem);
+                var transaction = await _SupplicoContext.Database.BeginTransactionAsync();
                 try
                 {
-                    await _SupplicoContext.SaveChangesAsync();
-                    return Created($"/orderItems/{orderItem.Id}", orderItem);
+                    for (int i = 0; i < jsonData.Count; i++)
+                    {
+                            OrderItem orderItem = new OrderItem();
+                            var lastOrder = _SupplicoContext.Orders.ToList().LastOrDefault();
+                            orderItem.OrderId = lastOrder.OrderId;
+                            orderItem.ProductId = jsonData[i][0];
+                            orderItem.Quantity = jsonData[i][1];
+                            _SupplicoContext.OrderItems.Add(orderItem);
+                            await _SupplicoContext.SaveChangesAsync();
+                            transaction.Commit();
+                    }
+                    return Ok("Data saved successfully");
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e, e.Message);
+                    await transaction.RollbackAsync();
+                    _logger.LogError(e, e.Message + " rollback initiated, all the items above will not go into database");
                     return StatusCode(500);
                 }
                 finally
@@ -161,6 +173,7 @@ namespace SupplicoWebAPI.Controllers
                 }
             }
         }
+
 
     }
 }
