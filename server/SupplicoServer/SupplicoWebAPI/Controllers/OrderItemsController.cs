@@ -148,17 +148,19 @@ namespace SupplicoWebAPI.Controllers
                 var transaction = await _SupplicoContext.Database.BeginTransactionAsync();
                 try
                 {
+                    var lastOrder = _SupplicoContext.Orders.ToList().LastOrDefault();
                     for (int i = 0; i < jsonData.Count; i++)
                     {
-                            OrderItem orderItem = new OrderItem();
-                            var lastOrder = _SupplicoContext.Orders.ToList().LastOrDefault();
-                            orderItem.OrderId = lastOrder.OrderId;
-                            orderItem.ProductId = jsonData[i][0];
-                            orderItem.Quantity = jsonData[i][1];
-                            _SupplicoContext.OrderItems.Add(orderItem);
-                            await _SupplicoContext.SaveChangesAsync();
-                            transaction.Commit();
+                        OrderItem orderItem = new OrderItem
+                        {
+                            OrderId = lastOrder.OrderId,
+                            ProductId = jsonData[i][0],
+                            Quantity = jsonData[i][1],
+                        };
+                        _SupplicoContext.OrderItems.Add(orderItem);
                     }
+                    await _SupplicoContext.SaveChangesAsync();
+                    transaction.Commit();
                     return Ok("Data saved successfully");
                 }
                 catch (Exception e)

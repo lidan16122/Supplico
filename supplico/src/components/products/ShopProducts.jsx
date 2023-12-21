@@ -122,7 +122,6 @@ export default function ShopProducts() {
     }
 
     groupedArray.push(currentGroup);
-    console.log(groupedArray);
     let result = [[],[]];
     if (groupedArray.length < 2) {
       result = [[]]
@@ -135,14 +134,10 @@ export default function ShopProducts() {
           productId = products[j].id;
         }
       }
-      console.log(productId);
-      console.log(productQuantity);
       result[i].push(productId)
       result[i].push(productQuantity)
     }
-    console.log(result);
     let resultJson = JSON.stringify(result);
-    console.log(resultJson);
       try {
         const response = await axios({
           method: "post",
@@ -153,11 +148,8 @@ export default function ShopProducts() {
       } catch (err) {
         setErrorMessage(err.message + ", " + err.response.data);
       }
-      finally{
-        if (!errorMessage) {
-          setOrder(true);
-        }
-      }
+    setOrder(true);
+
   }
 
 
