@@ -11,7 +11,7 @@ import AuthContext from "./components/context/AuthContext";
 import Register from "./components/registration/Register";
 import Products from "./components/products/Products";
 import Orders from "./components/orders/Orders";
-import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
+import { Keys, getItem, setLoginData, removeLoginData} from "./utils/storage";
 import { SupplicoWebAPI_URL } from "./utils/settings";
 import axios from "axios";
 import Users from "./components/users/Users";
@@ -33,7 +33,7 @@ function App() {
   let timerID = useRef();
 
   useEffect(() => {
-    if (getItem(Keys.refreshToken) && isNaN(timerID)) {
+    if (getItem(Keys.refreshToken && isNaN(timerID))) {
       setRefreshTokenInterval();
       refreshToken();
     }
@@ -41,7 +41,8 @@ function App() {
 
   function setRefreshTokenInterval() {
     if (isNaN(timerID)) {
-      timerID = setInterval(refreshToken, 30 * 1000);
+      let expiresInSeconds = getItem(Keys.expiresInSeconds);
+      timerID = setInterval(refreshToken, expiresInSeconds * 1000);
     }
   }
 

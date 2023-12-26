@@ -151,9 +151,7 @@ export default function ShopProducts() {
     setOrder(true);
 
   }
-
-
-
+  
   function handleSearch() {
     if (!search) {
       setProducts(originalProducts);

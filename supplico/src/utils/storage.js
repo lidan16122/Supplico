@@ -32,7 +32,6 @@ const Keys = {
     setItem(Keys.refreshTokenExpires, tokenData[Keys.refreshTokenExpires]);
     setItem(Keys.expiresInSeconds, tokenData[Keys.expiresInSeconds]);
   }
-  //
   function removeTokensData() {
     removeItem(Keys.accessToken);
     removeItem(Keys.accessTokenExpires);
